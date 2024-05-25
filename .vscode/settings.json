@@ -1,0 +1,33 @@
+{
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  "git.branchProtection": ["main"],
+  "eslint.experimental.useFlatConfig": true,
+
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  "vitest.commandLine": "npm run test",
+  "vitest.enable": true,
+
+  "files.readonlyInclude": {
+    // show generated & node_modules as readonly
+    "coverage/**/*": true,
+    "dist/**/*": true,
+    "node_modules/**/*": true,
+    "utils/**/*.js": true,
+    "package-lock.json": true
+  },
+  "search.exclude": {
+    ".git": true,
+    ".vscode/": true,
+    "coverage/": true,
+    "dist/": true,
+    "node_modules/": true,
+    "utils/**/*.js": true,
+    "*.log": true,
+    "package-lock.json": true
+  }
+}

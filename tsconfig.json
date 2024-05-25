@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noEmit": true,
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "react-jsx",
+    "moduleResolution": "Node",
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "types": ["vite/client", "node"],
+    "typeRoots": ["./src/global.d.ts", "node_modules/vite", "node_modules/@types"],
+    "paths": {
+      "src/*": ["./src/*"],
+      "assets/*": ["./src/assets/*"],
+      "pages/*": ["./src/pages/*"],
+      "test-utils/*": ["./test-utils/*"],
+      "virtual:reload-on-update-in-background-script": ["./src/global.d.ts"],
+      "virtual:reload-on-update-in-view": ["./src/global.d.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "test-utils",
+    "utils",
+    "vite.config.ts",
+    "node_modules/@types",
+    "eslint.config.js"
+  ],
+  "exclude": ["dist/*"]
+}

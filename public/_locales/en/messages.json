@@ -1,0 +1,10 @@
+{
+  "extensionDescription": {
+    "description": "Extension description",
+    "message": "Count your open tabs/windows, and then snooze them for later."
+  },
+  "extensionName": {
+    "description": "Extension name",
+    "message": "Tab Count Snooze"
+  }
+}
