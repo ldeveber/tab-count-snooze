@@ -8,11 +8,8 @@ import WindowsTab from "src/tabViews/WindowsTab";
 import Content from "./Content";
 import TabListHeader from "./TabListHeader";
 
-const TabPanel = styled(MuiTabPanel)(({ theme }) => ({
-  padding: theme.spacing(1, 2),
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(1),
-  },
+const TabPanel = styled(MuiTabPanel)(() => ({
+  padding: 0,
 }));
 
 export default function Body() {
@@ -24,7 +21,7 @@ export default function Body() {
   return (
     <TabContext value={tab}>
       <TabListHeader onChange={handleChange} />
-      <TabPanel value="windows" sx={{ p: 0 }}>
+      <TabPanel value="windows">
         <Content>
           <WindowsTab />
         </Content>

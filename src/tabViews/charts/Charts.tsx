@@ -22,6 +22,10 @@ import { groupTabs } from "src/utils/chrome";
 import ChartPane, { type ChartViewType } from "./ChartPane";
 import SectionBy from "./SectionBy";
 
+const BaseBox = styled(Box)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+}));
+
 const Paper = styled(MuiPaper)(({ theme }) => ({
   display: "flex",
   border: `1px solid ${theme.palette.divider}`,
@@ -74,75 +78,77 @@ export default function Charts({ windows }: { readonly windows: chrome.windows.W
   );
 
   return (
-    <Stack spacing={1}>
-      <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-        <Stack direction="row" spacing={2} alignItems="center">
-          <ToggleButtonGroup
-            value={chartType}
-            exclusive
-            onChange={handleToggleChartType}
-            aria-label="chart type"
-          >
-            <ToggleButton value="bar" aria-label="bar chart">
-              <BarChartIcon />
-            </ToggleButton>
-            <ToggleButton value="doughnut" aria-label="pie chart">
-              <PieChartIcon />
-            </ToggleButton>
-          </ToggleButtonGroup>
+    <BaseBox>
+      <Stack spacing={1}>
+        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+          <Stack direction="row" spacing={2} alignItems="center">
+            <ToggleButtonGroup
+              value={chartType}
+              exclusive
+              onChange={handleToggleChartType}
+              aria-label="chart type"
+            >
+              <ToggleButton value="bar" aria-label="bar chart">
+                <BarChartIcon />
+              </ToggleButton>
+              <ToggleButton value="doughnut" aria-label="pie chart">
+                <PieChartIcon />
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Stack>
+
+          <SectionBy tabs={tabs} />
         </Stack>
 
-        <SectionBy tabs={tabs} />
-      </Stack>
+        <ChartPane chartType={chartType} data={data} onClick={onChartClick} />
 
-      <ChartPane chartType={chartType} data={data} onClick={onChartClick} />
+        <Stack direction="row" spacing={2} alignItems="center" sx={{ display: "none" }}>
+          <Tooltip title="Advanced Settings">
+            <IconButton size="small" onClick={toggleOpen}>
+              <SettingsIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          {open && (
+            <Paper elevation={0}>
+              <Stack direction="row" spacing={2} alignItems="center">
+                <TextField
+                  id="min-match"
+                  label="Minimum Matches"
+                  type="number"
+                  size="small"
+                  variant="standard"
+                  value={minDupes}
+                  onChange={handleMinChange}
+                  inputProps={{ min: 2 }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Stack>
 
-      <Stack direction="row" spacing={2} alignItems="center" sx={{ display: "none" }}>
-        <Tooltip title="Advanced Settings">
-          <IconButton size="small" onClick={toggleOpen}>
-            <SettingsIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-        {open && (
-          <Paper elevation={0}>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <TextField
-                id="min-match"
-                label="Minimum Matches"
-                type="number"
-                size="small"
-                variant="standard"
-                value={minDupes}
-                onChange={handleMinChange}
-                inputProps={{ min: 2 }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-            </Stack>
-
-            <Box sx={{ width: 250 }}>
-              <Typography id="input-slider" gutterBottom>
-                Match Depth
-              </Typography>
-              <Grid container spacing={2} alignItems="center">
-                <Grid item>
-                  <AutoAwesomeMotionIcon />
+              <Box sx={{ width: 250 }}>
+                <Typography id="input-slider" gutterBottom>
+                  Match Depth
+                </Typography>
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item>
+                    <AutoAwesomeMotionIcon />
+                  </Grid>
+                  <Grid item xs>
+                    <Slider
+                      value={urlDepth}
+                      min={0}
+                      max={2}
+                      onChange={handleChange}
+                      aria-labelledby="input-slider"
+                    />
+                  </Grid>
                 </Grid>
-                <Grid item xs>
-                  <Slider
-                    value={urlDepth}
-                    min={0}
-                    max={2}
-                    onChange={handleChange}
-                    aria-labelledby="input-slider"
-                  />
-                </Grid>
-              </Grid>
-            </Box>
-          </Paper>
-        )}
+              </Box>
+            </Paper>
+          )}
+        </Stack>
       </Stack>
-    </Stack>
+    </BaseBox>
   );
 }
