@@ -5,7 +5,8 @@ import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import React, { useMemo } from "react";
 import { useFilters, useSearch, useSelectedTabs } from "src/contexts/WindowsTabContext";
-import { closeTabs, filterTabs, groupTabs } from "src/utils/chrome";
+import { closeTabs, groupTabs } from "src/utils/chrome";
+import { filterTabs } from "src/utils/filterTabs";
 
 export default function WindowsActions({ windows }: { windows: chrome.windows.Window[] }) {
   const selected = useSelectedTabs();

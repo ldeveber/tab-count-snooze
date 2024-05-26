@@ -1,3 +1,4 @@
+import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
@@ -19,8 +20,9 @@ beforeEach(() => {
     tabs: {
       onCreated: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
       onRemoved: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
-      group: vi.fn(),
+      group: vi.fn().mockReturnValue(Promise.resolve(faker.number.int())),
       update: vi.fn(),
+      remove: vi.fn(),
     },
     tabGroups: { query: vi.fn(), update: vi.fn() },
     windows: {

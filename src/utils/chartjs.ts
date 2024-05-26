@@ -1,12 +1,5 @@
 import { blue, green, orange, purple, red, yellow } from "@mui/material/colors";
-import type {
-  BubbleDataPoint,
-  ChartData,
-  ChartTypeRegistry,
-  Color,
-  InteractionItem,
-  Point,
-} from "chart.js";
+import type { Color } from "chart.js";
 import { DEFAULT_SHADE } from "src/themes";
 import { TAB_PROPERTIES } from "./chrome";
 
@@ -78,21 +71,4 @@ export function getChartData(
   };
 
   return chartData;
-}
-
-export function openTabsFromChart(
-  element: InteractionItem[],
-  data: ChartData<
-    keyof ChartTypeRegistry,
-    (number | Point | [number, number] | BubbleDataPoint | null)[]
-  >,
-  tabs: chrome.tabs.Tab[],
-) {
-  if (!element.length || !data.labels) return;
-
-  const { index } = element[0];
-
-  const origin = data.labels[index];
-
-  console.log(tabs, origin);
 }
