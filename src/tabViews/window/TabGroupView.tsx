@@ -5,9 +5,11 @@ import TabView from "./TabView";
 export default function TabGroupView({
   group,
   tabs,
+  windowFocused = false,
 }: {
   readonly group: chrome.tabGroups.TabGroup;
   readonly tabs: chrome.tabs.Tab[];
+  readonly windowFocused?: boolean;
 }) {
   if (tabs.length === 0) {
     return null;
@@ -17,15 +19,9 @@ export default function TabGroupView({
   const backgroundColor = colors[group.color][500];
 
   return (
-    <ListItemGroup
-      title={title}
-      backgroundColor={backgroundColor}
-      count={tabs.length}
-      indented
-      initOpen
-    >
+    <ListItemGroup title={title} backgroundColor={backgroundColor} indented initOpen>
       {tabs.map((tab) => (
-        <TabView key={tab.id} tab={tab} />
+        <TabView key={tab.id} tab={tab} windowFocused={windowFocused} />
       ))}
     </ListItemGroup>
   );

@@ -20,21 +20,19 @@ export function Loading({ children }: { children: ReactNode }) {
   return <StyledListItem sx={{ px: 0, gap: 2 }}>{children}</StyledListItem>;
 }
 
-export default forwardRef(function ListItem({
-  children,
-  primaryActionTitle,
-  onPrimaryAction,
-  secondaryAction,
-  selected,
+export default forwardRef<
+  HTMLLIElement,
+  {
+    children: ListItemButtonProps["children"];
+    primaryActionTitle?: ListItemButtonProps["title"];
+    onPrimaryAction?: ListItemButtonProps["onClick"];
+    secondaryAction?: ListItemProps["secondaryAction"];
+    selected?: ListItemButtonProps["selected"];
+  }
+>(function ListItem(
+  { children, primaryActionTitle, onPrimaryAction, secondaryAction, selected },
   ref,
-}: {
-  children: ListItemButtonProps["children"];
-  primaryActionTitle?: ListItemButtonProps["title"];
-  onPrimaryAction?: ListItemButtonProps["onClick"];
-  secondaryAction?: ListItemProps["secondaryAction"];
-  selected?: ListItemButtonProps["selected"];
-  ref: React.Ref<HTMLLIElement>;
-}) {
+) {
   return (
     <StyledListItem ref={ref} secondaryAction={secondaryAction} sx={{ px: 0 }}>
       <ListItemButton selected={selected} onClick={onPrimaryAction} title={primaryActionTitle}>

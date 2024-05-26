@@ -81,12 +81,18 @@ export function Loading() {
   );
 }
 
-export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
+export default function TabView({
+  tab,
+  windowFocused = false,
+}: {
+  readonly tab: chrome.tabs.Tab;
+  readonly windowFocused?: boolean;
+}) {
   const search = useSearch();
   const filters = useFilters();
   const selected = useSelectedTabs();
   const dispatchSelectState = useSelectedTabsDispatch();
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const goToTab = async (tab: chrome.tabs.Tab) => {
     if (!tab.id) {
@@ -106,10 +112,8 @@ export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      const actWin = ref.current?.querySelector('[data-w-act="true"]');
-      const actTab = actWin?.querySelector('[data-t-act="true"]');
-      if (actTab) {
-        actTab.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+      if (windowFocused && tab.active && ref.current) {
+        ref.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
       }
     }, 800);
 
@@ -135,7 +139,6 @@ export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
           <Checkbox edge="end" onChange={onSelection} checked={selected.includes(tab.id)} />
         ) : null
       }
-      data-t-act={tab.active}
     >
       <ListItemFavicon url={tab.url} faded={tab.discarded || tab.status === "unloaded"} />
       <ListItemText

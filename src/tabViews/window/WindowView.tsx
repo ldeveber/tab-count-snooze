@@ -86,14 +86,20 @@ export default function WindowView({
       initOpen
       cardTitle={`${tabs.length} Tabs`}
       titleTypographyProps={{ variant: "subtitle1" }}
-      data-w-act={win.focused}
     >
       {tabList.map(({ id, tab, group }) => {
         if (group) {
-          return <TabGroupView key={id} group={group.tabGroup} tabs={group.tabs} />;
+          return (
+            <TabGroupView
+              key={id}
+              group={group.tabGroup}
+              tabs={group.tabs}
+              windowFocused={win.focused}
+            />
+          );
         }
         if (tab) {
-          return <TabView key={id} tab={tab} />;
+          return <TabView key={id} tab={tab} windowFocused={win.focused} />;
         }
         return null;
       })}
