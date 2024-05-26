@@ -16,12 +16,12 @@ export function mockTab(props?: Partial<chrome.tabs.Tab>): chrome.tabs.Tab {
     pinned: faker.datatype.boolean(),
     active: faker.datatype.boolean(),
     title: faker.helpers.maybe<string | undefined>(() => faker.commerce.productName(), {
-      probability: 0.95,
+      probability: 0.99,
     }),
     url: faker.helpers.maybe<string | undefined>(
       () => faker.internet.url({ appendSlash: true }) + faker.internet.domainWord(),
       {
-        probability: 0.95,
+        probability: 0.99,
       },
     ),
 
@@ -38,7 +38,7 @@ export function mockTab(props?: Partial<chrome.tabs.Tab>): chrome.tabs.Tab {
 }
 
 export function mockTabList(count: number = 10, tabProps?: Partial<chrome.tabs.Tab>) {
-  const tabs = [];
+  const tabs: chrome.tabs.Tab[] = [];
   for (let i = 0; i < count; i++) {
     tabs.push(mockTab({ ...tabProps, index: i }));
   }
@@ -75,7 +75,7 @@ export function mockTabGroup(
         return faker.internet.emoji();
       },
       {
-        probability: 0.6,
+        probability: 0.99,
       },
     ),
     ...props,
@@ -107,7 +107,7 @@ export function mockWindow(
           // "fullscreen",
           // "locked-fullscreen",
         ]),
-      { probability: 0.9 },
+      { probability: 0.99 },
     ),
     tabs,
     // required but not used
