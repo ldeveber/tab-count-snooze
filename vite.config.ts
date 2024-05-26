@@ -1,7 +1,6 @@
 /// <reference types="vitest" />
 import react from "@vitejs/plugin-react";
 import path, { resolve } from "path";
-import removeAttr from "react-remove-attr";
 import { defineConfig } from "vite";
 import addHmr from "./utils/plugins/add-hmr";
 import customDynamicImport from "./utils/plugins/custom-dynamic-import";
@@ -36,10 +35,6 @@ export default defineConfig({
   plugins: [
     makeManifest({
       getCacheInvalidationKey,
-    }),
-    removeAttr({
-      extensions: ["jsx", "tsx"],
-      attributes: ["data-testid"],
     }),
     react(),
     customDynamicImport(),
@@ -82,6 +77,7 @@ export default defineConfig({
       reporter: ["text", "json", "json-summary", "html"],
       reportOnFailure: true,
       include: ["src/**/*.ts", "src/**/*.tsx"],
+      exclude: ["src/utils/dayjs.ts", "src/utils/debug.ts"],
       thresholds: {
         lines: 25,
         functions: 25,

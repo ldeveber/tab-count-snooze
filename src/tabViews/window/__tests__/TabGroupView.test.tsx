@@ -12,6 +12,12 @@ describe("Tab Group View", () => {
     expect(container).toBeEmptyDOMElement();
   });
 
+  test("should render default group name if missing", () => {
+    const group = mockTabGroup({ title: null });
+    const { getByRole } = render(<TabGroupView group={group} tabs={[mockTab()]} />);
+    expect(getByRole("button", { name: "Tab Group" })).toBeVisible();
+  });
+
   test("should group with tabs", () => {
     const groupTitle = faker.commerce.productName();
     const group = mockTabGroup({ title: groupTitle });

@@ -1,5 +1,6 @@
 import Grid from "@mui/material/Unstable_Grid2";
-import WindowView, { Loading as WindowLoading } from "./WindowView";
+import WindowLoading from "./WindowLoading";
+import WindowView from "./WindowView";
 
 export function Loading() {
   return <WindowLoading />;

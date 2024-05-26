@@ -1,11 +1,9 @@
 import Checkbox from "@mui/material/Checkbox";
 import ListItemText from "@mui/material/ListItemText";
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeEvent, useEffect, useRef } from "react";
-import ListItem, { Loading as ListItemLoading } from "src/components/list/ListItem";
-import ListItemFavicon, { Loading as FaviconLoading } from "src/components/list/ListItemFavicon";
+import ListItem from "src/components/list/ListItem";
+import ListItemFavicon from "src/components/list/ListItemFavicon";
 import {
   useFilters,
   useSearch,
@@ -56,28 +54,6 @@ function TabExtra({ tab }: { readonly tab: chrome.tabs.Tab }) {
     <Grid container columns={2} spacing={1} sx={{ justifyContent: "flex-end", opacity: 0.8 }}>
       {arr.map((icon) => icon)}
     </Grid>
-  );
-}
-
-export function Loading() {
-  return (
-    <>
-      <ListItemLoading>
-        <FaviconLoading />
-        <ListItemText
-          primary={
-            <Skeleton width="20%">
-              <Typography>.</Typography>
-            </Skeleton>
-          }
-          secondary={
-            <Skeleton width="80%">
-              <Typography fontSize="0.75rem">.</Typography>
-            </Skeleton>
-          }
-        />
-      </ListItemLoading>
-    </>
   );
 }
 

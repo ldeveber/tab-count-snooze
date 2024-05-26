@@ -57,7 +57,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
-    "react-remove-attr": "^0.0.6",
     "rollup": "^4.18.0",
     "sass": "^1.77.2",
     "tslib": "^2.6.2",

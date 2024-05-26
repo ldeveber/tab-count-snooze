@@ -1,7 +1,7 @@
 import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { SyntheticEvent, useMemo, useState } from "react";
+import { HTMLAttributes, SyntheticEvent, useMemo, useState } from "react";
 import { useFiltersDispatch } from "src/contexts/ChartsTabContext";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon, { getTabPropertyLabel } from "../window/TabPropertyIcon";
@@ -72,8 +72,11 @@ export default function SectionBy({ tabs }: { readonly tabs: chrome.tabs.Tab[] }
           }}
         />
       )}
-      renderOption={(props, { label, value }) => (
-        <Box component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
+      renderOption={(
+        { key, ...props }: HTMLAttributes<HTMLLIElement> & { key: string },
+        { label, value },
+      ) => (
+        <Box key={key} component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
           <TabPropertyIcon property={value} fontSize="inherit" sx={{ marginRight: 1 }} />
           {label}
         </Box>
