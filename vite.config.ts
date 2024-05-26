@@ -76,6 +76,19 @@ export default defineConfig({
     alias: {
       "test-utils": testUtilsDir,
     },
+    coverage: {
+      enabled: true,
+      provider: "v8",
+      reporter: ["text", "json", "html"],
+      include: ["src/**/*.ts", "src/**/*.tsx"],
+      thresholds: {
+        autoUpdate: true,
+        lines: 26.47,
+        functions: 29.41,
+        branches: 68,
+        statements: 26.47,
+      },
+    },
     globals: true,
     environment: "jsdom",
     include: ["**/*.test.ts", "**/*.test.tsx"],
