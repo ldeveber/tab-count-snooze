@@ -5,6 +5,20 @@ import { TAB_PROPERTIES } from "../chrome";
 import { filterSortTabs, filterTabs, sortTabs } from "../filterTabs";
 import { SORT_OPTION } from "../options";
 
+const tabMock = (props?: Partial<chrome.tabs.Tab>) => {
+  const initProps: Partial<chrome.tabs.Tab> = {
+    status: "complete",
+    title: "Tab Title",
+    url: "https://http.dog/status/418",
+  };
+  const keys = Object.keys(TAB_PROPERTIES);
+  // ensure we start with a clean slate
+  keys.forEach((property) => {
+    initProps[property as TAB_PROPERTIES] = false;
+  });
+  return mockTab({ ...initProps, ...props });
+};
+
 describe("filterTabs utils", () => {
   describe("filterTabs", () => {
     test("should return same result if no search or filters", () => {
@@ -21,12 +35,12 @@ describe("filterTabs utils", () => {
     describe("search", () => {
       test("should return results that match title", () => {
         const tabs = [];
-        tabs.push(mockTab({ index: 0 }));
-        tabs.push(mockTab({ index: 1 }));
-        tabs.push(mockTab({ index: 2 }));
-        tabs.push(mockTab({ title: "meow CAT", index: 3 }));
-        tabs.push(mockTab({ index: 4 }));
-        tabs.push(mockTab({ title: "category meow", index: 5 }));
+        tabs.push(tabMock({ index: 0 }));
+        tabs.push(tabMock({ index: 1 }));
+        tabs.push(tabMock({ index: 2 }));
+        tabs.push(tabMock({ title: "meow CAT", index: 3 }));
+        tabs.push(tabMock({ index: 4 }));
+        tabs.push(tabMock({ title: "category meow", index: 5 }));
 
         const res = filterTabs(tabs, "cat");
         expect(res).toEqual([tabs[3], tabs[5]]);
@@ -34,12 +48,12 @@ describe("filterTabs utils", () => {
 
       test("should return results that match url", () => {
         const tabs = [];
-        tabs.push(mockTab({ url: "http://cats.com", index: 0 }));
-        tabs.push(mockTab({ index: 1 }));
-        tabs.push(mockTab({ index: 2 }));
-        tabs.push(mockTab({ url: "http://meow.cats", index: 3 }));
-        tabs.push(mockTab({ index: 4 }));
-        tabs.push(mockTab({ url: "http://i-love-CATS.com", index: 5 }));
+        tabs.push(tabMock({ url: "http://cats.com", index: 0 }));
+        tabs.push(tabMock({ index: 1 }));
+        tabs.push(tabMock({ index: 2 }));
+        tabs.push(tabMock({ url: "http://meow.cats", index: 3 }));
+        tabs.push(tabMock({ index: 4 }));
+        tabs.push(tabMock({ url: "http://i-love-CATS.com", index: 5 }));
 
         const res = filterTabs(tabs, "cats");
         expect(res).toEqual([tabs[0], tabs[3], tabs[5]]);
@@ -49,12 +63,12 @@ describe("filterTabs utils", () => {
     describe("filters", () => {
       test("should return tabs with filters", () => {
         const tabs = [];
-        tabs.push(mockTab({ pinned: false, index: 0 }));
-        tabs.push(mockTab({ pinned: false, index: 1 }));
-        tabs.push(mockTab({ pinned: false, index: 2 }));
-        tabs.push(mockTab({ pinned: true, index: 3 }));
-        tabs.push(mockTab({ pinned: false, index: 4 }));
-        tabs.push(mockTab({ pinned: true, index: 5 }));
+        tabs.push(tabMock({ pinned: false, index: 0 }));
+        tabs.push(tabMock({ pinned: false, index: 1 }));
+        tabs.push(tabMock({ pinned: false, index: 2 }));
+        tabs.push(tabMock({ pinned: true, index: 3 }));
+        tabs.push(tabMock({ pinned: false, index: 4 }));
+        tabs.push(tabMock({ pinned: true, index: 5 }));
 
         const res = filterTabs(tabs, undefined, [TAB_PROPERTIES.Pinned]);
 
@@ -63,12 +77,12 @@ describe("filterTabs utils", () => {
 
       test("should handle discarded/unloaded tabs", () => {
         const tabs = [];
-        tabs.push(mockTab({ status: "complete", discarded: false, index: 0 }));
-        tabs.push(mockTab({ status: "complete", discarded: false, index: 1 }));
-        tabs.push(mockTab({ status: "complete", discarded: false, index: 2 }));
-        tabs.push(mockTab({ status: "unloaded", discarded: false, index: 3 }));
-        tabs.push(mockTab({ status: "complete", discarded: false, index: 4 }));
-        tabs.push(mockTab({ status: "complete", discarded: true, index: 5 }));
+        tabs.push(tabMock({ status: "complete", discarded: false, index: 0 }));
+        tabs.push(tabMock({ status: "complete", discarded: false, index: 1 }));
+        tabs.push(tabMock({ status: "complete", discarded: false, index: 2 }));
+        tabs.push(tabMock({ status: "unloaded", discarded: false, index: 3 }));
+        tabs.push(tabMock({ status: "complete", discarded: false, index: 4 }));
+        tabs.push(tabMock({ status: "complete", discarded: true, index: 5 }));
 
         const res = filterTabs(tabs, undefined, [TAB_PROPERTIES.Discarded]);
 

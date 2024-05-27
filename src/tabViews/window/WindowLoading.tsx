@@ -1,29 +1,38 @@
+import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import ListGroupCard from "src/components/list/ListGroupCard";
-import { Loading as ListItemLoading } from "src/components/list/ListItem";
-import { Loading as FaviconLoading } from "src/components/list/ListItemFavicon";
+import { StyledListItem } from "src/components/list/ListItem";
+import { FAVICON_SIZE } from "src/components/list/ListItemFavicon";
 
 function TabLoading() {
   return (
-    <>
-      <ListItemLoading>
-        <FaviconLoading />
-        <ListItemText
-          primary={
-            <Skeleton width="20%">
-              <Typography>.</Typography>
-            </Skeleton>
-          }
-          secondary={
-            <Skeleton width="80%">
-              <Typography fontSize="0.75rem">.</Typography>
-            </Skeleton>
-          }
+    <StyledListItem data-testid="tab-loading">
+      <Skeleton variant="rectangular">
+        <Avatar
+          variant="square"
+          sx={{
+            height: FAVICON_SIZE,
+            width: FAVICON_SIZE,
+          }}
         />
-      </ListItemLoading>
-    </>
+      </Skeleton>
+      <ListItemText
+        primary={
+          <Skeleton width="20%">
+            <Typography component="span">.</Typography>
+          </Skeleton>
+        }
+        secondary={
+          <Skeleton width="80%">
+            <Typography component="span" fontSize="0.75rem">
+              .
+            </Typography>
+          </Skeleton>
+        }
+      />
+    </StyledListItem>
   );
 }
 
@@ -33,9 +42,12 @@ export default function WindowLoading() {
       initOpen
       cardTitle={
         <Skeleton width="100%">
-          <Typography variant="subtitle1">.</Typography>
+          <Typography variant="subtitle1" component="span">
+            .
+          </Typography>
         </Skeleton>
       }
+      data-testid="window-loading"
     >
       <TabLoading />
       <TabLoading />

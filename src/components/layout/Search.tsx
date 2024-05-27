@@ -39,10 +39,10 @@ const FilledInput = styled(MuiFilledInput)(({ theme }) => ({
 }));
 
 export default function Search({
-  search,
+  value: search,
   onChange,
 }: {
-  search: string;
+  value: string;
   onChange: (value: string) => void;
 }) {
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -65,12 +65,13 @@ export default function Search({
       endAdornment={
         search.length > 0 ? (
           <InputAdornment position="end">
-            <IconButton size="small" onClick={clearSearch}>
+            <IconButton size="small" onClick={clearSearch} aria-label="Clear">
               <ClearIcon fontSize="small" />
             </IconButton>
           </InputAdornment>
         ) : null
       }
+      inputProps={{ "aria-label": "Search" }}
     />
   );
 }

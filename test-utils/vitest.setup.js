@@ -10,25 +10,43 @@ beforeEach(() => {
     },
     storage: {
       sync: {
-        onChanged: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
+        onChanged: {
+          addListener: vi.fn().mockReturnValue(Promise.resolve()),
+          removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+        },
         clear: vi.fn(),
-        get: vi.fn(),
+        get: vi.fn().mockImplementation((defaultValue) => Promise.resolve(defaultValue)),
         remove: vi.fn(),
         set: vi.fn(),
       },
     },
     tabs: {
-      onCreated: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
-      onRemoved: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
+      onCreated: {
+        addListener: vi.fn().mockReturnValue(Promise.resolve()),
+        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+      },
+      onRemoved: {
+        addListener: vi.fn().mockReturnValue(Promise.resolve()),
+        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+      },
       group: vi.fn().mockReturnValue(Promise.resolve(faker.number.int())),
       update: vi.fn(),
       remove: vi.fn(),
     },
-    tabGroups: { query: vi.fn(), update: vi.fn() },
+    tabGroups: {
+      query: vi.fn().mockReturnValue(Promise.resolve([])),
+      update: vi.fn(),
+    },
     windows: {
-      onCreated: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
-      onRemoved: { addEventListener: vi.fn(), removeEventListener: vi.fn() },
-      getAll: vi.fn(),
+      onCreated: {
+        addListener: vi.fn().mockReturnValue(Promise.resolve()),
+        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+      },
+      onRemoved: {
+        addListener: vi.fn().mockReturnValue(Promise.resolve()),
+        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+      },
+      getAll: vi.fn().mockReturnValue(Promise.resolve([])),
       update: vi.fn(),
     },
   });

@@ -70,7 +70,7 @@ export default function ThemeOptions() {
       <CardHeader title="Theme" subheader="Customize look and feel" />
       <CardContent>
         <Stack spacing={4}>
-          <ThemeMode options={options} setOptions={setOptions} />
+          <ThemeMode themeMode={options.themeMode} setOptions={setOptions} />
           <CustomColor options={options} setOptions={setOptions} />
         </Stack>
       </CardContent>

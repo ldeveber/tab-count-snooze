@@ -101,11 +101,11 @@ const StyledToggleButton = styled(ToggleButton, {
 });
 
 export default function ColorSwatches({
-  disabled,
+  disabled = false,
   hue,
   setHue,
 }: {
-  disabled: boolean;
+  disabled?: boolean;
   hue: Hue;
   setHue: React.Dispatch<React.SetStateAction<Hue>>;
 }) {
