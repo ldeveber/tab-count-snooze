@@ -3,8 +3,8 @@ import { SORT_OPTION } from "./options";
 
 export function filterTabs(
   tabs: chrome.tabs.Tab[] | undefined,
-  search: string,
-  filters: TAB_PROPERTIES[],
+  search: string = "",
+  filters: TAB_PROPERTIES[] = [],
 ) {
   if (!tabs || !tabs.length) {
     return [];
@@ -21,7 +21,9 @@ export function filterTabs(
         })
       : tabs;
   return filteredTabs.filter(
-    ({ title, url }) => (title && title.includes(search)) || (url && url.includes(search)),
+    ({ title, url }) =>
+      (title && title.toLowerCase().includes(search.toLowerCase())) ||
+      (url && url.toLowerCase().includes(search.toLowerCase())),
   );
 }
 
@@ -34,7 +36,7 @@ export function sortTabs(win: chrome.windows.Window, sort: SORT_OPTION) {
   return win;
 }
 
-export default function filterSortTabs(
+export function filterSortTabs(
   win: chrome.windows.Window,
   search: string,
   filters: TAB_PROPERTIES[],

@@ -65,17 +65,22 @@ export default function TabPropertyIcon({
 }) {
   switch (property) {
     case TAB_PROPERTIES.Active:
-      return <AutoAwesomeIcon {...props} />;
+      return <AutoAwesomeIcon {...props} data-testid={`tab-${property}-icon`} />;
+
     case TAB_PROPERTIES.Pinned:
-      return <PushPinIcon {...props} />;
+      return <PushPinIcon {...props} data-testid={`tab-${property}-icon`} />;
+
     case TAB_PROPERTIES.Highlighted:
-      return <DriveFileRenameOutlineIcon {...props} />;
+      return <DriveFileRenameOutlineIcon {...props} data-testid={`tab-${property}-icon`} />;
+
     case TAB_PROPERTIES.Discarded:
-      return <DeleteOutlineIcon {...props} />;
+      return <DeleteOutlineIcon {...props} data-testid={`tab-${property}-icon`} />;
+
     case TAB_PROPERTIES.Muted:
-      return <VolumeOffIcon {...props} />;
+      return <VolumeOffIcon {...props} data-testid={`tab-${property}-icon`} />;
+
     case TAB_PROPERTIES.Audible:
-      return <VolumeUpIcon {...props} />;
+      return <VolumeUpIcon {...props} data-testid={`tab-${property}-icon`} />;
 
     default:
       return null;

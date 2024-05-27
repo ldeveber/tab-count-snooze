@@ -1,11 +1,12 @@
 import MuiListItem, { type ListItemProps } from "@mui/material/ListItem";
 import MuiListItemButton, { type ListItemButtonProps } from "@mui/material/ListItemButton";
 import { styled } from "@mui/material/styles";
-import { ReactNode, forwardRef } from "react";
+import { forwardRef } from "react";
 
-const StyledListItem = styled(MuiListItem)(({ theme }) => ({
+export const StyledListItem = styled(MuiListItem)(({ theme }) => ({
   "&.MuiListItem-root": {
     borderTop: `1px solid ${theme.palette.divider}`,
+    gap: theme.spacing(2),
   },
 }));
 
@@ -15,10 +16,6 @@ const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
     gap: theme.spacing(2),
   },
 }));
-
-export function Loading({ children }: { children: ReactNode }) {
-  return <StyledListItem sx={{ px: 0, gap: 2 }}>{children}</StyledListItem>;
-}
 
 export default forwardRef<
   HTMLLIElement,

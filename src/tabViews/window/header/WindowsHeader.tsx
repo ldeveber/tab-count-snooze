@@ -140,7 +140,7 @@ export default function WindowsHeader({
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-            <Search search={search} onChange={onSearchChange} />
+            <Search value={search} onChange={onSearchChange} />
             <WindowsFilter tabs={tabs} />
           </Stack>
 

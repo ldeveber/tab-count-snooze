@@ -1,9 +1,7 @@
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
 import { useMemo } from "react";
 import ListGroupCard from "src/components/list/ListGroupCard";
 import TabGroupView from "./TabGroupView";
-import TabView, { Loading as TabLoading } from "./TabView";
+import TabView from "./TabView";
 
 type GroupType = {
   readonly tabGroup: chrome.tabGroups.TabGroup;
@@ -14,28 +12,6 @@ type RenderListType = {
   readonly tab?: chrome.tabs.Tab;
   readonly group?: GroupType;
 };
-
-export function Loading() {
-  return (
-    <>
-      <ListGroupCard
-        initOpen
-        cardTitle={
-          <Skeleton width="100%">
-            <Typography variant="subtitle1">.</Typography>
-          </Skeleton>
-        }
-      >
-        <TabLoading />
-        <TabLoading />
-        <TabLoading />
-        <TabLoading />
-        <TabLoading />
-        <TabLoading />
-      </ListGroupCard>
-    </>
-  );
-}
 
 export default function WindowView({
   tabGroups,

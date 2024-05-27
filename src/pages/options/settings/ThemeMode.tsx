@@ -5,13 +5,13 @@ import FormLabel from "@mui/material/FormLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { ColorOptions } from "src/utils/options";
+import { ColorOptions, Mode } from "src/utils/options";
 
 export default function ThemeMode({
-  options,
+  themeMode,
   setOptions,
 }: {
-  options: ColorOptions;
+  themeMode: Mode;
   setOptions: Dispatch<SetStateAction<ColorOptions>>;
 }) {
   const handleChange = (event: ChangeEvent<HTMLInputElement>, value: string) => {
@@ -26,7 +26,7 @@ export default function ThemeMode({
           row
           aria-labelledby="preferred-theme-group-label"
           name="themeMode"
-          value={options.themeMode}
+          value={themeMode}
           onChange={handleChange}
         >
           <FormControlLabel value="system" control={<Radio />} label="System" />

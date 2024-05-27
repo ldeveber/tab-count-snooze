@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useFilters, useSearch, useSort } from "src/contexts/WindowsTabContext";
-import filterSortTabs from "src/utils/filterTabs";
+import { filterSortTabs } from "src/utils/filterTabs";
 import { useDebounce } from "use-debounce";
 import WindowsSection, { Loading as WindowsLoading } from "./WindowsSection";
 import WindowsHeader, { Loading as HeaderLoading } from "./header/WindowsHeader";
