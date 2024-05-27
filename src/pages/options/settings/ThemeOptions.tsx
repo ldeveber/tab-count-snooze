@@ -1,33 +1,12 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import Switch from "@mui/material/Switch";
 import { useEffect, useState } from "react";
 import { Hue } from "src/themes";
 import { ColorOptions, defaultColor } from "src/utils/options";
 import CustomColor from "./CustomColor";
 import ThemeMode from "./ThemeMode";
-
-export const ColorLoading = () => {
-  return (
-    <Card variant="outlined">
-      <CardHeader
-        action={
-          <Skeleton>
-            <Switch />
-          </Skeleton>
-        }
-        title={<Skeleton variant="text" />}
-        subheader={<Skeleton variant="text" />}
-      />
-      <CardContent>
-        <Skeleton variant="rounded" height={80} width={560} />
-      </CardContent>
-    </Card>
-  );
-};
 
 const setThemeMode = async (themeMode: ColorOptions["themeMode"]) => {
   await chrome.storage.sync.set({ themeMode });

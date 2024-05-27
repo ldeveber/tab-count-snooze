@@ -11,8 +11,8 @@ beforeEach(() => {
     storage: {
       sync: {
         onChanged: {
-          addListener: vi.fn().mockReturnValue(Promise.resolve()),
-          removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+          addListener: vi.fn().mockResolvedValue(),
+          removeListener: vi.fn().mockResolvedValue(),
         },
         clear: vi.fn(),
         get: vi.fn().mockImplementation((defaultValue) => Promise.resolve(defaultValue)),
@@ -22,31 +22,31 @@ beforeEach(() => {
     },
     tabs: {
       onCreated: {
-        addListener: vi.fn().mockReturnValue(Promise.resolve()),
-        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+        addListener: vi.fn().mockResolvedValue(),
+        removeListener: vi.fn().mockResolvedValue(),
       },
       onRemoved: {
-        addListener: vi.fn().mockReturnValue(Promise.resolve()),
-        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+        addListener: vi.fn().mockResolvedValue(),
+        removeListener: vi.fn().mockResolvedValue(),
       },
       group: vi.fn().mockReturnValue(Promise.resolve(faker.number.int())),
       update: vi.fn(),
       remove: vi.fn(),
     },
     tabGroups: {
-      query: vi.fn().mockReturnValue(Promise.resolve([])),
+      query: vi.fn().mockResolvedValue(Promise.resolve([])),
       update: vi.fn(),
     },
     windows: {
       onCreated: {
-        addListener: vi.fn().mockReturnValue(Promise.resolve()),
-        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+        addListener: vi.fn().mockResolvedValue(),
+        removeListener: vi.fn().mockResolvedValue(),
       },
       onRemoved: {
-        addListener: vi.fn().mockReturnValue(Promise.resolve()),
-        removeListener: vi.fn().mockReturnValue(Promise.resolve()),
+        addListener: vi.fn().mockResolvedValue(),
+        removeListener: vi.fn().mockResolvedValue(),
       },
-      getAll: vi.fn().mockReturnValue(Promise.resolve([])),
+      getAll: vi.fn().mockResolvedValue([]),
       update: vi.fn(),
     },
   });
