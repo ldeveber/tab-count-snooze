@@ -10,7 +10,7 @@
 
 This is a browser extension for managing and snoozing tabs in chrome!
 
-![Count Snooze Logo](./public/icon-128.png)
+![Count Snooze Logo](./public/icon_128.png)
 
 ## Local Development & Setup
 

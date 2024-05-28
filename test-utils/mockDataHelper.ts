@@ -148,6 +148,14 @@ export function mockWindow(
   return win;
 }
 
+export function mockWindowList(count: number = 3, windowProps?: Partial<chrome.windows.Window>) {
+  const wins: chrome.windows.Window[] = [];
+  for (let i = 0; i < count; i++) {
+    wins.push(mockWindow({ ...windowProps }));
+  }
+  return wins;
+}
+
 export function mockChromeData({
   wins = 2,
   tabGroups = 3,
