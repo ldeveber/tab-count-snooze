@@ -11,7 +11,7 @@ describe("Window View", () => {
     win.tabs = [mockTab()];
     win.id = undefined;
     const tabGroups: chrome.tabGroups.TabGroup[] = [];
-    const { container } = render(<WindowView window={win} tabGroups={tabGroups} />);
+    const { container } = render(<WindowView win={win} tabGroups={tabGroups} />);
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -19,7 +19,7 @@ describe("Window View", () => {
   test("should not render if window has no tabs", () => {
     const win: chrome.windows.Window = mockWindow({}, false);
     const tabGroups: chrome.tabGroups.TabGroup[] = [];
-    const { container } = render(<WindowView window={win} tabGroups={tabGroups} />);
+    const { container } = render(<WindowView win={win} tabGroups={tabGroups} />);
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -39,7 +39,7 @@ describe("Window View", () => {
     win.tabs.push(tab);
     const tabGroups: chrome.tabGroups.TabGroup[] = [];
 
-    const { getByRole } = render(<WindowView window={win} tabGroups={tabGroups} />);
+    const { getByRole } = render(<WindowView win={win} tabGroups={tabGroups} />);
 
     expect(getByRole("list")).toBeVisible();
     expect(getByRole("button", { name: `${title} ${url}` })).toBeVisible();
@@ -69,7 +69,7 @@ describe("Window View", () => {
     win.tabs.push(tab2);
     const tabGroups: chrome.tabGroups.TabGroup[] = [];
 
-    const { getByRole, getAllByRole } = render(<WindowView window={win} tabGroups={tabGroups} />);
+    const { getByRole, getAllByRole } = render(<WindowView win={win} tabGroups={tabGroups} />);
 
     expect(getByRole("button", { name: "2 Tabs" })).toBeVisible();
     expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();
@@ -116,7 +116,7 @@ describe("Window View", () => {
     win.tabs.push(tab2);
     win.tabs.push(tab3);
 
-    const { getAllByRole, getByRole } = render(<WindowView window={win} tabGroups={tabGroups} />);
+    const { getAllByRole, getByRole } = render(<WindowView win={win} tabGroups={tabGroups} />);
 
     expect(getByRole("button", { name: "3 Tabs" })).toBeVisible();
 

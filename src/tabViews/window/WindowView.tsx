@@ -15,10 +15,10 @@ type RenderListType = {
 
 export default function WindowView({
   tabGroups,
-  window: win,
+  win,
 }: {
   readonly tabGroups: chrome.tabGroups.TabGroup[];
-  readonly window: chrome.windows.Window;
+  readonly win: chrome.windows.Window;
 }) {
   const tabs = win.tabs || [];
 

@@ -1,12 +1,14 @@
 import MuiBox from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Unstable_Grid2";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useFilters, useSearch, useSort } from "src/contexts/WindowsTabContext";
 import { filterSortTabs } from "src/utils/filterTabs";
 import { useDebounce } from "use-debounce";
-import WindowsSection, { Loading as WindowsLoading } from "./WindowsSection";
+import WindowLoading from "./WindowLoading";
+import WindowView from "./WindowView";
 import WindowsHeader, { Loading as HeaderLoading } from "./header/WindowsHeader";
 
 const Box = styled(MuiBox)(({ theme }) => ({
@@ -22,7 +24,7 @@ export function Loading() {
       <HeaderLoading />
       <Box>
         <Stack spacing={2} pt={1}>
-          <WindowsLoading />
+          <WindowLoading />
         </Stack>
       </Box>
     </>
@@ -66,11 +68,19 @@ export default function Windows({
       <WindowsHeader windows={windows} tabCount={tabCount} windowCount={windowCount} />
       <Box>
         <Stack spacing={2} pt={1}>
-          <WindowsSection windows={open} tabGroups={tabGroups} />
+          {open.map((w) => (
+            <Grid xs={1} key={w.id}>
+              <WindowView win={w} tabGroups={tabGroups} />
+            </Grid>
+          ))}
           {minimized.length > 0 && (
             <Stack spacing={2}>
               <Divider>Minimized</Divider>
-              <WindowsSection windows={minimized} tabGroups={tabGroups} />
+              {minimized.map((w) => (
+                <Grid xs={1} key={w.id}>
+                  <WindowView win={w} tabGroups={tabGroups} />
+                </Grid>
+              ))}
             </Stack>
           )}
         </Stack>

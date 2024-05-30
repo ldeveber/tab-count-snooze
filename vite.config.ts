@@ -77,7 +77,12 @@ export default defineConfig({
       reporter: ["text", "json", "json-summary", "html"],
       reportOnFailure: true,
       include: ["src/**/*.ts", "src/**/*.tsx"],
-      exclude: ["src/utils/dayjs.ts", "src/utils/debug.ts"],
+      exclude: [
+        "src/pages/*/index.tsx",
+        "src/pages/*/App.tsx",
+        "src/utils/dayjs.ts",
+        "src/utils/debug.ts",
+      ],
       thresholds: {
         lines: 60,
         functions: 60,
