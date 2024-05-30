@@ -8,11 +8,9 @@ import {
 } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { DEFAULT_SHADE } from "src/themes";
-import { ColorOptions, defaultColor } from "src/utils/options";
+import { ColorOptions, Mode, defaultColor } from "src/utils/options";
 
-type Theme = Parameters<typeof Experimental_CssVarsProvider>[0]["theme"];
-
-function ModeSwitcher({ colorOpts }: { colorOpts: ColorOptions }) {
+function ModeSwitcher({ themeMode }: { themeMode: Mode }) {
   const { setMode } = useColorScheme();
   const [mounted, setMounted] = useState(false);
 
@@ -21,8 +19,8 @@ function ModeSwitcher({ colorOpts }: { colorOpts: ColorOptions }) {
   }, []);
 
   useEffect(() => {
-    setMode(colorOpts.themeMode);
-  }, [colorOpts.themeMode, setMode]);
+    setMode(themeMode);
+  }, [themeMode, setMode]);
 
   if (!mounted) {
     // for server-side rendering
@@ -83,10 +81,54 @@ const components: CssVarsThemeOptions["components"] = {
   },
 };
 
-export default function ThemeWrap({ children }: { children: React.ReactNode }): React.ReactNode {
+export function ThemeWrap({
+  colorOpts,
+  children,
+}: {
+  colorOpts: ColorOptions;
+  children: React.ReactNode;
+}): React.ReactNode {
+  const { hue, themeMode } = colorOpts;
+
+  const theme = experimental_extendTheme({
+    colorSchemes: {
+      dark: {
+        palette: {
+          primary: {
+            main: colors[hue][DEFAULT_SHADE],
+          },
+        },
+      },
+      light: {
+        palette: {
+          primary: {
+            main: colors[hue][DEFAULT_SHADE],
+          },
+        },
+      },
+    },
+    shape: {
+      borderRadius: 8,
+    },
+    components,
+  });
+
+  return (
+    <Experimental_CssVarsProvider theme={theme} defaultMode={themeMode}>
+      <ModeSwitcher themeMode={themeMode} />
+      <CssBaseline />
+      {children}
+    </Experimental_CssVarsProvider>
+  );
+}
+
+export default function ThemeWrapLoader({
+  children,
+}: {
+  children: React.ReactNode;
+}): React.ReactNode {
   const [colorOpts, setColorOpts] = useState<ColorOptions>(defaultColor);
   const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState<Theme | undefined>(undefined);
 
   useEffect(() => {
     setLoading(true);
@@ -116,48 +158,9 @@ export default function ThemeWrap({ children }: { children: React.ReactNode }): 
     };
   }, []);
 
-  useEffect(() => {
-    if (loading) {
-      return;
-    }
-    const { hue } = colorOpts;
-
-    const t = experimental_extendTheme({
-      colorSchemes: {
-        dark: {
-          palette: {
-            primary: {
-              main: colors[hue][DEFAULT_SHADE],
-            },
-          },
-        },
-        light: {
-          palette: {
-            primary: {
-              main: colors[hue][DEFAULT_SHADE],
-            },
-          },
-        },
-      },
-      shape: {
-        borderRadius: 8,
-      },
-      components,
-    });
-    setTheme(t);
-  }, [colorOpts, loading]);
-
-  if (!theme) {
+  if (loading) {
     return null;
   }
 
-  return (
-    <>
-      <Experimental_CssVarsProvider theme={theme} defaultMode={colorOpts.themeMode}>
-        <ModeSwitcher colorOpts={colorOpts} />
-        <CssBaseline />
-        {children}
-      </Experimental_CssVarsProvider>
-    </>
-  );
+  return <ThemeWrap colorOpts={colorOpts}>{children}</ThemeWrap>;
 }

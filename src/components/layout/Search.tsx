@@ -52,6 +52,7 @@ export default function Search({
 
   return (
     <FilledInput
+      autoFocus
       hiddenLabel
       size="small"
       placeholder="Search..."
