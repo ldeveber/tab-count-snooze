@@ -107,9 +107,9 @@ export default function ColorSwatches({
 }: {
   disabled?: boolean;
   hue: Hue;
-  setHue: React.Dispatch<React.SetStateAction<Hue>>;
+  setHue: (hue: Hue) => void;
 }) {
-  const handleValue = (event: React.MouseEvent<HTMLElement>, value: Hue | null) => {
+  const handleValue = (_e: React.MouseEvent<HTMLElement>, value: Hue | null) => {
     if (value !== null) {
       setHue(value);
     }

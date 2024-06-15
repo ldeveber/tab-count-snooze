@@ -43,9 +43,9 @@ class ErrorBoundary extends Component<Props, State> {
         <Container>
           <Alert variant="filled" severity="error">
             <AlertTitle>Uh Oh</AlertTitle>
-            {this.state.error.message}
+            {this.state.error?.message}
 
-            {this.state.error.stack && (
+            {this.state.error?.stack && (
               <Paper
                 variant="outlined"
                 sx={{

@@ -13,7 +13,7 @@ describe("Tab Group View", () => {
   });
 
   test("should render default group name if missing", () => {
-    const group = mockTabGroup({ title: null });
+    const group = mockTabGroup({ title: undefined });
     const { getByRole } = render(<TabGroupView group={group} tabs={[mockTab()]} />);
     expect(getByRole("button", { name: "Tab Group" })).toBeVisible();
   });

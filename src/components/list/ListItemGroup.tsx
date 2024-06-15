@@ -48,7 +48,7 @@ export default function ListItemGroup({
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List
-          component={indented ? "div" : undefined}
+          component={indented ? "div" : "ul"}
           disablePadding
           dense
           sx={{ pl: indented ? 4 : undefined }}

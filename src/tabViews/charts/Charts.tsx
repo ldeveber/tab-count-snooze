@@ -43,7 +43,7 @@ export default function Charts({ windows }: { readonly windows: chrome.windows.W
   const tabs: chrome.tabs.Tab[] = useMemo(() => windows.flatMap((w) => w.tabs || []), [windows]);
 
   const handleToggleChartType = (
-    event: React.MouseEvent<HTMLElement>,
+    _e: React.MouseEvent<HTMLElement>,
     newChartType: ChartViewType,
   ) => {
     setChartType(newChartType);
@@ -64,7 +64,7 @@ export default function Charts({ windows }: { readonly windows: chrome.windows.W
     void groupTabs(tabIds as [number, ...number[]], title);
   };
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
+  const handleChange = (_e: Event, newValue: number | number[]) => {
     setUrlDepth(newValue as number);
   };
 

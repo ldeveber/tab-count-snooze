@@ -18,7 +18,7 @@ export function getChartData(
   tabs: chrome.tabs.Tab[],
   {
     minDupes = 2,
-    urlDepth,
+    urlDepth = 0,
     filters = [],
   }: {
     minDupes?: number;

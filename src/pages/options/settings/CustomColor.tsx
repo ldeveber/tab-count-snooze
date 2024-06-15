@@ -15,7 +15,7 @@ export default function CustomColor({
   options: ColorOptions;
   setOptions: Dispatch<SetStateAction<ColorOptions>>;
 }) {
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>, value: boolean) => {
+  const handleCheckboxChange = (_e: ChangeEvent<HTMLInputElement>, value: boolean) => {
     setOptions((prev) => ({ ...prev, isCustomTheme: value }));
   };
 

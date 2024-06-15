@@ -39,7 +39,7 @@ export default function WindowsFilter({ tabs }: { tabs: chrome.tabs.Tab[] }) {
     setOpen(false);
   };
 
-  const handleMenuItemClick = (event: MouseEvent<HTMLElement>, value: MenuOptionsType["value"]) => {
+  const handleMenuItemClick = (_e: MouseEvent<HTMLElement>, value: MenuOptionsType["value"]) => {
     let values: TAB_PROPERTIES[];
     if (filters.includes(value)) {
       values = filters.filter((f) => f !== value);

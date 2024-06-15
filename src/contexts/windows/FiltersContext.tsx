@@ -1,14 +1,14 @@
-import { Dispatch, createContext, useContext, useReducer } from "react";
+import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 
-const FiltersContext = createContext<TAB_PROPERTIES[]>(null);
-const FiltersDispatchContext = createContext<Dispatch<ActionType>>(null);
+const FiltersContext = createContext<TAB_PROPERTIES[]>([]);
+const FiltersDispatchContext = createContext<Dispatch<ActionType>>(() => {});
 
 type ActionType = {
   filters: TAB_PROPERTIES[];
   type: "update" | "reset";
 };
-function filtersReducer(filters: TAB_PROPERTIES[], action: ActionType): TAB_PROPERTIES[] {
+function filtersReducer(_filters: TAB_PROPERTIES[], action: ActionType): TAB_PROPERTIES[] {
   switch (action.type) {
     case "update": {
       return action.filters;
@@ -22,7 +22,7 @@ function filtersReducer(filters: TAB_PROPERTIES[], action: ActionType): TAB_PROP
   }
 }
 
-export default function FiltersProvider({ children }) {
+export default function FiltersProvider({ children }: PropsWithChildren) {
   const [filters, dispatch] = useReducer(filtersReducer, []);
 
   return (

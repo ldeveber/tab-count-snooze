@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import FiltersProvider, { useFilters, useFiltersDispatch } from "./windows/FiltersContext";
 import SearchProvider, { useSearch, useSearchDispatch } from "./windows/SearchContext";
 import SelectedTabsProvider, {
@@ -17,7 +18,7 @@ export {
   useSortDispatch,
 };
 
-export default function WindowsTabProvider({ children }) {
+export default function WindowsTabProvider({ children }: PropsWithChildren) {
   return (
     <SortProvider>
       <FiltersProvider>

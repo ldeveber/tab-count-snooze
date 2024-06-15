@@ -48,7 +48,7 @@ const TabPanel = styled(MuiTabPanel)(() => ({
 
 export default function Body() {
   const [tab, setTab] = useState("windows");
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
+  const handleChange = (_e: SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
 

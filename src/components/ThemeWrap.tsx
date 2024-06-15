@@ -8,7 +8,7 @@ import {
 } from "@mui/material/styles";
 import React, { useEffect, useState } from "react";
 import { DEFAULT_SHADE } from "src/themes";
-import { ColorOptions, Mode, defaultColor } from "src/utils/options";
+import { defaultColor, type ColorOptions, type Mode } from "src/utils/options";
 
 function ModeSwitcher({ themeMode }: { themeMode: Mode }) {
   const { setMode } = useColorScheme();
