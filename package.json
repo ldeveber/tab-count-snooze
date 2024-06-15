@@ -61,7 +61,7 @@
     "sass": "^1.77.2",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
-    "typescript-eslint": "^7.10.0",
+    "typescript-eslint": "^7.11.0",
     "vite": "^5.2.11",
     "vitest": "^1.6.0",
     "ws": "^8.17.0"
