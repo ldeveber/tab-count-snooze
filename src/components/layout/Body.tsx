@@ -17,7 +17,6 @@ import Content from "./Content";
 const TabList = styled(MuiTabList)(() => ({
   ".MuiTabs-flexContainer": {
     borderRadius: 40,
-    backgroundColor: "var(--md3-sys-color-surface)",
   },
 }));
 

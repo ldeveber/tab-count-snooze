@@ -35,10 +35,12 @@ export default function Windows({
   windows,
   tabGroups,
   tabCount,
+  activeWindowId,
 }: {
   readonly windows: chrome.windows.Window[];
   readonly tabGroups: chrome.tabGroups.TabGroup[];
   readonly tabCount: number;
+  readonly activeWindowId?: chrome.windows.Window["id"];
 }) {
   const filters = useFilters();
   const sort = useSort();
@@ -70,7 +72,7 @@ export default function Windows({
         <Stack spacing={2} pt={1}>
           {open.map((w) => (
             <Grid xs={1} key={w.id}>
-              <WindowView win={w} tabGroups={tabGroups} />
+              <WindowView win={w} tabGroups={tabGroups} focused={w.id === activeWindowId} />
             </Grid>
           ))}
           {minimized.length > 0 && (

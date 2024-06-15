@@ -16,9 +16,11 @@ type RenderListType = {
 export default function WindowView({
   tabGroups,
   win,
+  focused,
 }: {
   readonly tabGroups: chrome.tabGroups.TabGroup[];
   readonly win: chrome.windows.Window;
+  readonly focused?: boolean;
 }) {
   const tabs = win.tabs || [];
 
@@ -60,6 +62,7 @@ export default function WindowView({
     <ListGroupCard
       collapsible
       initOpen
+      selected={win.focused || focused}
       cardTitle={`${tabs.length} Tabs`}
       titleTypographyProps={{ variant: "subtitle1" }}
     >

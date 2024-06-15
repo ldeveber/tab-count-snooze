@@ -23,7 +23,7 @@ function FavIcon({
       sx={{
         opacity: faded ? 0.25 : undefined,
         bgcolor: "transparent",
-        color: "var(--md3-palette-divider)",
+        color: "var(--mui-palette-divider)",
         height: FAVICON_SIZE,
         width: FAVICON_SIZE,
       }}
