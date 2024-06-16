@@ -17,7 +17,6 @@ import Content from "./Content";
 const TabList = styled(MuiTabList)(() => ({
   ".MuiTabs-flexContainer": {
     borderRadius: 40,
-    backgroundColor: "var(--md3-sys-color-surface)",
   },
 }));
 
@@ -49,7 +48,7 @@ const TabPanel = styled(MuiTabPanel)(() => ({
 
 export default function Body() {
   const [tab, setTab] = useState("windows");
-  const handleChange = (event: SyntheticEvent, newValue: string) => {
+  const handleChange = (_e: SyntheticEvent, newValue: string) => {
     setTab(newValue);
   };
 

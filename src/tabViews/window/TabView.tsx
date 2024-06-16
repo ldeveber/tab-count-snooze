@@ -79,7 +79,10 @@ export default function TabView({
     await chrome.windows.update(tab.windowId, { focused: true });
   };
 
-  const onSelection = (e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+  const onSelection = (_e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    if (!tab.id) {
+      return;
+    }
     dispatchSelectState({
       id: tab.id,
       type: checked ? "selected" : "unselected",

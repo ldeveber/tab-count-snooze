@@ -1,13 +1,13 @@
-import { Dispatch, createContext, useContext, useReducer } from "react";
+import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
 
-const SearchContext = createContext<string>(null);
-const SearchDispatchContext = createContext<Dispatch<ActionType>>(null);
+const SearchContext = createContext<string>("");
+const SearchDispatchContext = createContext<Dispatch<ActionType>>(() => {});
 
 type ActionType = {
   value: string;
   type: "update" | "reset";
 };
-function searchReducer(search: string, action: ActionType): string {
+function searchReducer(_search: string, action: ActionType): string {
   switch (action.type) {
     case "update": {
       return action.value;
@@ -21,7 +21,7 @@ function searchReducer(search: string, action: ActionType): string {
   }
 }
 
-export default function SearchProvider({ children }) {
+export default function SearchProvider({ children }: PropsWithChildren) {
   const [search, dispatch] = useReducer(searchReducer, "");
 
   return (

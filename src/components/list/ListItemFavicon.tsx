@@ -13,7 +13,9 @@ function FavIcon({
   readonly faded: boolean;
 }) {
   const favicon = new URL(chrome.runtime.getURL("/_favicon/"));
-  favicon.searchParams.set("pageUrl", url);
+  if (url) {
+    favicon.searchParams.set("pageUrl", url);
+  }
   favicon.searchParams.set("size", "32");
 
   return (
@@ -23,7 +25,7 @@ function FavIcon({
       sx={{
         opacity: faded ? 0.25 : undefined,
         bgcolor: "transparent",
-        color: "var(--md3-palette-divider)",
+        color: "var(--mui-palette-divider)",
         height: FAVICON_SIZE,
         width: FAVICON_SIZE,
       }}

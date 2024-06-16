@@ -1,9 +1,9 @@
-import { createContext, useContext, useReducer } from "react";
+import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
 
-const SelectedTabsContext = createContext(null);
-const SelectedTabsDispatchContext = createContext(null);
+type TabIdType = Exclude<chrome.tabs.Tab["id"], undefined>;
 
-type TabIdType = Required<chrome.tabs.Tab["id"]>;
+const SelectedTabsContext = createContext<TabIdType[]>([]);
+const SelectedTabsDispatchContext = createContext<Dispatch<ActionType>>(() => {});
 
 type ActionType = {
   id: TabIdType;
@@ -26,7 +26,7 @@ function selectedTabsReducer(selectedTabs: TabIdType[], action: ActionType): Tab
   }
 }
 
-export default function SelectedTabsProvider({ children }) {
+export default function SelectedTabsProvider({ children }: PropsWithChildren) {
   const [selectedTabs, dispatch] = useReducer(selectedTabsReducer, []);
 
   return (

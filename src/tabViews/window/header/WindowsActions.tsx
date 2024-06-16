@@ -13,13 +13,13 @@ export default function WindowsActions({ windows }: { windows: chrome.windows.Wi
   const search = useSearch();
   const filters = useFilters();
 
-  const getSelectedTabIds = (): Required<chrome.tabs.Tab["id"]>[] => {
+  const getSelectedTabIds = (): Exclude<chrome.tabs.Tab["id"], undefined>[] => {
     if (selected.length > 0) {
       return selected;
     }
     const allTabs = windows.flatMap((w) => w.tabs || []);
     const tabs = filterTabs(allTabs, search, filters);
-    const tabIds: Required<chrome.tabs.Tab["id"]>[] = [];
+    const tabIds: Exclude<chrome.tabs.Tab["id"], undefined>[] = [];
     tabs.forEach(({ id }) => {
       if (!id) {
         return;

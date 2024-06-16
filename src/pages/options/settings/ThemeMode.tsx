@@ -14,7 +14,7 @@ export default function ThemeMode({
   themeMode: Mode;
   setOptions: Dispatch<SetStateAction<ColorOptions>>;
 }) {
-  const handleChange = (event: ChangeEvent<HTMLInputElement>, value: string) => {
+  const handleChange = (_e: ChangeEvent<HTMLInputElement>, value: string) => {
     setOptions((prev) => ({ ...prev, themeMode: value as ColorOptions["themeMode"] }));
   };
 
