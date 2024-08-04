@@ -2,7 +2,6 @@
 
 import eslint from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
-import vitest from "eslint-plugin-vitest";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -45,22 +44,6 @@ const config = tseslint.config(
           patterns: ["@mui/*/*/*"],
         },
       ],
-    },
-  },
-
-  {
-    // enable vitest rules on test files
-    files: ["**/__tests__/*"],
-    plugins: {
-      vitest,
-    },
-    rules: {
-      ...vitest.configs.recommended.rules,
-    },
-    languageOptions: {
-      globals: {
-        ...vitest.environments.env.globals,
-      },
     },
   },
 

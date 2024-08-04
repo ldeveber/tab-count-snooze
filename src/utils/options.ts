@@ -12,8 +12,8 @@ export const defaultColor: ColorOptions = {
   hue: Hue.pink,
 };
 
-export interface SnoozedTabOptions {}
-export const defaultSnoozedOptions: SnoozedTabOptions = {};
+// export interface SnoozedTabOptions {}
+// export const defaultSnoozedOptions: SnoozedTabOptions = {};
 
 export enum SORT_OPTION {
   Default = "default",
