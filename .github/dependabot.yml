@@ -9,6 +9,34 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    groups:
+      vite:
+        patterns:
+          - "vite"
+          - "@vitejs/"
+      test:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "jsdom"
+      prettier:
+        patterns:
+          - "prettier"
+          - "eslint-plugin-prettier"
+          - "eslint-config-prettier"
+          - "prettier-plugin-organize-imports"
+      mui:
+        patterns:
+          - "@emotion*"
+          - "@mui*/"
+      react:
+        patterns:
+          - "react*"
+          - "@types/react"
+      types:
+        patterns:
+          - "@types*"
+          - "types*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
