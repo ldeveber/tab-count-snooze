@@ -1,14 +1,16 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
-import { render } from "test-utils/react-testing-library-utils";
+import { origRender as render, waitFor } from "test-utils/react-testing-library-utils";
 import { describe, expect, test } from "vitest";
 import Body from "../Body";
 
 describe("Tab List Header", () => {
-  test("should render Windows tab", () => {
+  test("should render Windows tab", async () => {
     const { getByRole } = render(<Body />);
 
-    expect(getByRole("tablist")).toBeVisible();
+    await waitFor(() => {
+      expect(getByRole("tablist")).toBeVisible();
+    });
 
     expect(getByRole("tab", { name: "Windows" })).toBeVisible();
     expect(getByRole("tab", { name: "Charts" })).toBeVisible();

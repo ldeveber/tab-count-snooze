@@ -1,12 +1,26 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import MergeTypeIcon from "@mui/icons-material/MergeType";
-import IconButton from "@mui/material/IconButton";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
+import Tooltip, { TooltipProps } from "@mui/material/Tooltip";
 import React, { useMemo } from "react";
 import { useFilters, useSearch, useSelectedTabs } from "src/contexts/WindowsTabContext";
 import { closeTabs, groupTabs } from "src/utils/chrome";
 import { filterTabs } from "src/utils/filterTabs";
+
+interface TooltipButtonProps extends IconButtonProps {
+  tooltip: TooltipProps["title"];
+}
+function TooltipButton({ tooltip, ...props }: TooltipButtonProps) {
+  if (props.disabled) {
+    return <IconButton color="inherit" size="small" {...props} />;
+  }
+  return (
+    <Tooltip title={tooltip}>
+      <IconButton color="inherit" size="small" {...props} />
+    </Tooltip>
+  );
+}
 
 export default function WindowsActions({ windows }: { windows: chrome.windows.Window[] }) {
   const selected = useSelectedTabs();
@@ -50,16 +64,12 @@ export default function WindowsActions({ windows }: { windows: chrome.windows.Wi
 
   return (
     <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-      <Tooltip title="Group Tabs">
-        <IconButton disabled={disabled} color="inherit" size="small" onClick={onGroup}>
-          <MergeTypeIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title="Close Tabs">
-        <IconButton disabled={disabled} color="inherit" size="small" onClick={onClose}>
-          <DeleteIcon />
-        </IconButton>
-      </Tooltip>
+      <TooltipButton tooltip="Group Tabs" disabled={disabled} onClick={onGroup}>
+        <MergeTypeIcon titleAccess={disabled ? "Group Tabs" : undefined} />
+      </TooltipButton>
+      <TooltipButton tooltip="Close Tabs" disabled={disabled} onClick={onClose}>
+        <DeleteIcon titleAccess={disabled ? "Close Tabs" : undefined} />
+      </TooltipButton>
     </Stack>
   );
 }
