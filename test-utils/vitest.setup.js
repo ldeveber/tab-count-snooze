@@ -2,6 +2,9 @@ import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom/vitest";
 import { cleanup } from "@testing-library/react";
 import { afterEach, beforeEach, vi } from "vitest";
+import failOnConsole from "vitest-fail-on-console";
+
+failOnConsole();
 
 beforeEach(() => {
   vi.stubGlobal("chrome", {
@@ -38,6 +41,9 @@ beforeEach(() => {
       update: vi.fn(),
     },
     windows: {
+      getLastFocused: vi.fn().mockResolvedValue({
+        id: "focused-window-id",
+      }),
       onCreated: {
         addListener: vi.fn().mockResolvedValue(),
         removeListener: vi.fn().mockResolvedValue(),
