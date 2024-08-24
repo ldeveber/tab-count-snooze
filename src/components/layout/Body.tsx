@@ -72,15 +72,15 @@ export default function Body() {
               style: { display: "none" },
             }}
           >
-            <Tab label="Windows" value="windows" icon={<WebAssetIcon />} iconPosition="start" />
+            <Tab label="Tab" value="windows" icon={<WebAssetIcon />} iconPosition="start" />
             <Tab
-              label="Charts"
+              label="Count"
               value="charts"
               icon={<BarChartIcon />}
               iconPosition="start"
               sx={{ display: { xs: "none", sm: "inline-flex" } }}
             />
-            <Tab label="Snoozed" value="snoozed" icon={<NightsStayIcon />} iconPosition="start" />
+            <Tab label="Snooze" value="snoozed" icon={<NightsStayIcon />} iconPosition="start" />
           </TabList>
         </Paper>
       </ElevationScroll>
