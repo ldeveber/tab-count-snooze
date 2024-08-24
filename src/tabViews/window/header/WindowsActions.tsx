@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Tooltip, { TooltipProps } from "@mui/material/Tooltip";
 import React, { useMemo } from "react";
 import { useFilters, useSearch, useSelectedTabs } from "src/contexts/WindowsTabContext";
-import { closeTabs, groupTabs } from "src/utils/chrome";
+import { closeTabs, groupTabs, type TabIdType } from "src/utils/chrome";
 import { filterTabs } from "src/utils/filterTabs";
 
 interface TooltipButtonProps extends IconButtonProps {
@@ -27,13 +27,13 @@ export default function WindowsActions({ windows }: { windows: chrome.windows.Wi
   const search = useSearch();
   const filters = useFilters();
 
-  const getSelectedTabIds = (): Exclude<chrome.tabs.Tab["id"], undefined>[] => {
+  const getSelectedTabIds = (): TabIdType[] => {
     if (selected.length > 0) {
       return selected;
     }
     const allTabs = windows.flatMap((w) => w.tabs || []);
     const tabs = filterTabs(allTabs, search, filters);
-    const tabIds: Exclude<chrome.tabs.Tab["id"], undefined>[] = [];
+    const tabIds: TabIdType[] = [];
     tabs.forEach(({ id }) => {
       if (!id) {
         return;
