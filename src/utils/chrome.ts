@@ -6,6 +6,7 @@ export enum TAB_PROPERTIES {
   Audible = "audible",
   Muted = "muted",
 }
+export type TabIdType = Required<chrome.tabs.Tab>["id"];
 
 export async function closeTabs(tabIds: number[]) {
   await chrome.tabs.remove(tabIds);

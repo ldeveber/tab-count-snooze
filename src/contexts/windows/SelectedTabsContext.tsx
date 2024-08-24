@@ -1,14 +1,21 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
-
-type TabIdType = Exclude<chrome.tabs.Tab["id"], undefined>;
+import { type TabIdType } from "src/utils/chrome";
 
 const SelectedTabsContext = createContext<TabIdType[]>([]);
 const SelectedTabsDispatchContext = createContext<Dispatch<ActionType>>(() => {});
 
-type ActionType = {
-  id: TabIdType;
-  type: "selected" | "unselected" | "reset";
-};
+type ActionType =
+  | {
+      readonly type: "reset";
+    }
+  | {
+      ids: TabIdType[];
+      readonly type: "set";
+    }
+  | {
+      id: TabIdType;
+      readonly type: "selected" | "unselected";
+    };
 function selectedTabsReducer(selectedTabs: TabIdType[], action: ActionType): TabIdType[] {
   switch (action.type) {
     case "selected": {
@@ -17,11 +24,11 @@ function selectedTabsReducer(selectedTabs: TabIdType[], action: ActionType): Tab
     case "unselected": {
       return selectedTabs.filter((t) => t !== action.id);
     }
+    case "set": {
+      return action.ids;
+    }
     case "reset": {
       return [];
-    }
-    default: {
-      throw Error("Unknown action: " + action.type);
     }
   }
 }
