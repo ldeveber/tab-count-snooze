@@ -11,7 +11,7 @@ import { styled } from "@mui/material/styles";
 import { useMemo, useState } from "react";
 import ElevationScroll from "src/components/ElevationScroll";
 import Search from "src/components/layout/Search";
-import { useFilters, useSearchDispatch } from "src/contexts/WindowsTabContext";
+import { useFilterDispatch, useIsFiltered } from "src/contexts/WindowsTabContext";
 import WindowsActions from "./WindowsActions";
 import WindowsFilter from "./WindowsFilter";
 
@@ -110,15 +110,14 @@ export default function WindowsHeader({
   windows: chrome.windows.Window[];
 }) {
   const [search, setSearch] = useState("");
-  const filters = useFilters();
   const tabs: chrome.tabs.Tab[] = useMemo(() => windows.flatMap((w) => w.tabs || []), [windows]);
 
-  const dispatchSearch = useSearchDispatch();
+  const dispatchFilter = useFilterDispatch();
 
-  const showActions = search.length > 0 || filters.length > 0;
+  const showActions = useIsFiltered();
   const onSearchChange = (value: string) => {
     setSearch(value);
-    dispatchSearch({ type: "update", value });
+    dispatchFilter({ type: "search", search: value });
   };
 
   return (

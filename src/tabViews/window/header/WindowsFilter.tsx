@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import Tooltip from "@mui/material/Tooltip";
 import React, { MouseEvent, SyntheticEvent, useMemo, useRef, useState } from "react";
-import { useFiltersDispatch } from "src/contexts/WindowsTabContext";
+import { useFilterDispatch } from "src/contexts/WindowsTabContext";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon, { getTabPropertyLabel } from "../TabPropertyIcon";
 
@@ -24,7 +24,7 @@ type MenuOptionsType = {
 export default function WindowsFilter({ tabs }: { tabs: chrome.tabs.Tab[] }) {
   const [open, setOpen] = useState(false);
   const [filters, setFilters] = useState<TAB_PROPERTIES[]>(() => []);
-  const dispatchFilters = useFiltersDispatch();
+  const dispatchFilters = useFilterDispatch();
 
   const anchorRef = useRef<HTMLButtonElement>(null);
 
