@@ -1,6 +1,10 @@
 import { PropsWithChildren } from "react";
-import FiltersProvider, { useFilters, useFiltersDispatch } from "./windows/FiltersContext";
-import SearchProvider, { useSearch, useSearchDispatch } from "./windows/SearchContext";
+import FilterProvider, {
+  useFilterDispatch,
+  useFilters,
+  useIsFiltered,
+  useSearch,
+} from "./windows/FilterContext";
 import SelectedTabsProvider, {
   useSelectedTabs,
   useSelectedTabsDispatch,
@@ -8,10 +12,10 @@ import SelectedTabsProvider, {
 import SortProvider, { useSort, useSortDispatch } from "./windows/SortContext";
 
 export {
+  useFilterDispatch,
   useFilters,
-  useFiltersDispatch,
+  useIsFiltered,
   useSearch,
-  useSearchDispatch,
   useSelectedTabs,
   useSelectedTabsDispatch,
   useSort,
@@ -21,11 +25,9 @@ export {
 export default function WindowsTabProvider({ children }: PropsWithChildren) {
   return (
     <SortProvider>
-      <FiltersProvider>
-        <SearchProvider>
-          <SelectedTabsProvider>{children}</SelectedTabsProvider>
-        </SearchProvider>
-      </FiltersProvider>
+      <FilterProvider>
+        <SelectedTabsProvider>{children}</SelectedTabsProvider>
+      </FilterProvider>
     </SortProvider>
   );
 }
