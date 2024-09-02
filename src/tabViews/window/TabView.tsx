@@ -1,6 +1,6 @@
 import Checkbox from "@mui/material/Checkbox";
+import Grid from "@mui/material/Grid2";
 import ListItemText from "@mui/material/ListItemText";
-import Grid from "@mui/material/Unstable_Grid2";
 import { ChangeEvent, useEffect, useRef } from "react";
 import ListItem from "src/components/list/ListItem";
 import ListItemFavicon from "src/components/list/ListItemFavicon";

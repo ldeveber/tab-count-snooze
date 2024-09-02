@@ -1,7 +1,7 @@
 import MuiBox from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
-import Grid from "@mui/material/Unstable_Grid2";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useFilters, useSearch, useSort } from "src/contexts/WindowsTabContext";
@@ -71,7 +71,7 @@ export default function Windows({
       <Box>
         <Stack spacing={2} pt={1}>
           {open.map((w) => (
-            <Grid xs={1} key={w.id}>
+            <Grid size={{ xs: 1 }} key={w.id}>
               <WindowView win={w} tabGroups={tabGroups} focused={w.id === activeWindowId} />
             </Grid>
           ))}
@@ -79,7 +79,7 @@ export default function Windows({
             <Stack spacing={2}>
               <Divider>Minimized</Divider>
               {minimized.map((w) => (
-                <Grid xs={1} key={w.id}>
+                <Grid size={{ xs: 1 }} key={w.id}>
                   <WindowView win={w} tabGroups={tabGroups} />
                 </Grid>
               ))}
