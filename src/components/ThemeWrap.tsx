@@ -1,8 +1,8 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import * as colors from "@mui/material/colors";
 import {
-  Experimental_CssVarsProvider,
-  experimental_extendTheme,
+  Experimental_CssVarsProvider as CssVarsProvider,
+  extendTheme,
   useColorScheme,
   type CssVarsThemeOptions,
 } from "@mui/material/styles";
@@ -90,7 +90,7 @@ export function ThemeWrap({
 }): React.ReactNode {
   const { hue, themeMode } = colorOpts;
 
-  const theme = experimental_extendTheme({
+  const theme = extendTheme({
     colorSchemes: {
       dark: {
         palette: {
@@ -114,11 +114,11 @@ export function ThemeWrap({
   });
 
   return (
-    <Experimental_CssVarsProvider theme={theme} defaultMode={themeMode}>
+    <CssVarsProvider theme={theme} defaultMode={themeMode}>
       <ModeSwitcher themeMode={themeMode} />
       <CssBaseline />
       {children}
-    </Experimental_CssVarsProvider>
+    </CssVarsProvider>
   );
 }
 
