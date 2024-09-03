@@ -1,5 +1,8 @@
 import { useMemo } from "react";
 import ListGroupCard from "src/components/list/ListGroupCard";
+import { useTabGroups, useTabs, useWindow } from "src/contexts/DataProvider";
+import { useFilters, useSearch, useSort } from "src/contexts/FilterProvider";
+import { filterSortTabs } from "src/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
 
@@ -14,35 +17,37 @@ type RenderListType = {
 };
 
 export default function WindowView({
-  tabGroups,
-  win,
-  focused,
+  windowId,
 }: {
-  readonly tabGroups: chrome.tabGroups.TabGroup[];
-  readonly win: chrome.windows.Window;
-  readonly focused?: boolean;
+  readonly windowId: chrome.windows.Window["id"];
 }) {
-  const tabs = win.tabs || [];
+  const win = useWindow(windowId);
+  const groups = useTabGroups(windowId);
+  const windowTabs = useTabs(windowId);
+  const filters = useFilters();
+  const sort = useSort();
+  const search = useSearch();
 
-  const groups: chrome.tabGroups.TabGroup[] = useMemo(() => {
-    return tabGroups.filter(({ windowId }) => windowId === win.id);
-  }, [win.id, tabGroups]);
+  const visibleTabs = useMemo(
+    () => filterSortTabs(windowTabs, search, filters, sort),
+    [windowTabs, search, filters, sort],
+  );
 
   const tabList: RenderListType[] = useMemo(() => {
     const list: RenderListType[] = [];
 
-    if (!tabs.length) {
+    if (!visibleTabs.length) {
       return list;
     }
     const done: number[] = [];
 
-    tabs.forEach((tab) => {
+    visibleTabs.forEach((tab) => {
       if (done.includes(tab.groupId)) {
         return;
       }
       const tabGroup = groups.find(({ id }) => id === tab.groupId);
       if (tabGroup) {
-        const arr = tabs.filter((tab) => tab.groupId === tabGroup.id);
+        const arr = visibleTabs.filter((tab) => tab.groupId === tabGroup.id);
         list.push({ group: { tabGroup, tabs: arr }, id: tabGroup.id });
         done.push(tabGroup.id);
         return;
@@ -53,32 +58,26 @@ export default function WindowView({
     });
 
     return list;
-  }, [tabs, groups]);
+  }, [visibleTabs, groups]);
 
-  if (!win.id || tabs.length === 0) {
+  // console.log("WindowView", window); // windowId, window, windowTabs, tabList, visibleTabs);
+  if (!win?.id || visibleTabs.length === 0) {
     return null;
   }
   return (
     <ListGroupCard
       collapsible
       initOpen
-      selected={win.focused || focused}
-      cardTitle={`${tabs.length} Tabs`}
+      selected={win.focused}
+      cardTitle={`${visibleTabs.length} Tabs`}
       titleTypographyProps={{ variant: "subtitle1" }}
     >
       {tabList.map(({ id, tab, group }) => {
         if (group) {
-          return (
-            <TabGroupView
-              key={id}
-              group={group.tabGroup}
-              tabs={group.tabs}
-              windowFocused={win.focused}
-            />
-          );
+          return <TabGroupView key={id} group={group.tabGroup} tabs={group.tabs} />;
         }
         if (tab) {
-          return <TabView key={id} tab={tab} windowFocused={win.focused} />;
+          return <TabView key={id} tab={tab} />;
         }
         return null;
       })}

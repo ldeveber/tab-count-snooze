@@ -3,7 +3,7 @@ import ToggleButton, { ToggleButtonProps } from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import * as colors from "@mui/material/colors";
 import { Theme, alpha, styled } from "@mui/material/styles";
-import React from "react";
+import { MouseEvent } from "react";
 import { DEFAULT_SHADE, Hue } from "src/themes";
 
 const {
@@ -109,7 +109,7 @@ export default function ColorSwatches({
   hue: Hue;
   setHue: (hue: Hue) => void;
 }) {
-  const handleValue = (_e: React.MouseEvent<HTMLElement>, value: Hue | null) => {
+  const handleValue = (_e: MouseEvent<HTMLElement>, value: Hue | null) => {
     if (value !== null) {
       setHue(value);
     }

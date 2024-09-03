@@ -5,14 +5,15 @@ import Input from "@mui/material/Input";
 import MuiPaper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import ElevationScroll from "src/components/ElevationScroll";
 import Search from "src/components/layout/Search";
-import { useFilterDispatch, useIsFiltered } from "src/contexts/WindowsTabContext";
-import WindowsActions from "./WindowsActions";
+import { useTabCount, useWindowCount } from "src/contexts/DataProvider";
+import { useFilterDispatch, useIsFiltered } from "src/contexts/FilterProvider";
+import WindowsBulkActions from "./actions/WindowsBulkActions";
 import WindowsFilter from "./WindowsFilter";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
@@ -23,7 +24,10 @@ const Paper = styled(MuiPaper)(({ theme }) => ({
   },
 }));
 
-function Tagline({ windowCount, tabCount }: { windowCount: number; tabCount: number }) {
+function Tagline() {
+  const windowCount = useWindowCount();
+  const tabCount = useTabCount();
+
   let title = `${tabCount} Tab${tabCount === 1 ? "" : "s"}`;
   if (windowCount > 1) {
     title += ` across ${windowCount} Windows`;
@@ -100,18 +104,8 @@ export function Loading() {
   );
 }
 
-export default function WindowsHeader({
-  windowCount,
-  tabCount,
-  windows,
-}: {
-  windowCount: number;
-  tabCount: number;
-  windows: chrome.windows.Window[];
-}) {
+export default function WindowsHeader() {
   const [search, setSearch] = useState("");
-  const tabs: chrome.tabs.Tab[] = useMemo(() => windows.flatMap((w) => w.tabs || []), [windows]);
-
   const dispatchFilter = useFilterDispatch();
 
   const showActions = useIsFiltered();
@@ -140,7 +134,7 @@ export default function WindowsHeader({
         >
           <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
             <Search value={search} onChange={onSearchChange} />
-            <WindowsFilter tabs={tabs} />
+            <WindowsFilter />
           </Stack>
 
           <Box
@@ -152,11 +146,7 @@ export default function WindowsHeader({
               alignItems: "center",
             }}
           >
-            {showActions ? (
-              <WindowsActions windows={windows} />
-            ) : (
-              <Tagline windowCount={windowCount} tabCount={tabCount} />
-            )}
+            {showActions ? <WindowsBulkActions /> : <Tagline />}
           </Box>
         </Box>
       </Paper>

@@ -1,7 +1,13 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
 import { type TabIdType } from "src/utils/chrome";
 
-const SelectedTabsContext = createContext<TabIdType[]>([]);
+export type State = { tabIds: TabIdType[] };
+
+export const initialState: State = {
+  tabIds: [],
+};
+
+const SelectedTabsContext = createContext<State>(initialState);
 const SelectedTabsDispatchContext = createContext<Dispatch<ActionType>>(() => {});
 
 type ActionType =
@@ -14,27 +20,41 @@ type ActionType =
     }
   | {
       id: TabIdType;
-      readonly type: "selected" | "unselected";
+      readonly type: "select" | "unselect";
     };
-function selectedTabsReducer(selectedTabs: TabIdType[], action: ActionType): TabIdType[] {
+function selectedTabsReducer(state: State, action: ActionType): State {
   switch (action.type) {
-    case "selected": {
-      return [...selectedTabs, action.id];
+    case "select": {
+      return {
+        ...state,
+        tabIds: [...state.tabIds, action.id],
+      };
     }
-    case "unselected": {
-      return selectedTabs.filter((t) => t !== action.id);
+    case "unselect": {
+      return {
+        ...state,
+        tabIds: state.tabIds.filter((t) => t !== action.id),
+      };
     }
     case "set": {
-      return action.ids;
+      return {
+        ...state,
+        tabIds: action.ids,
+      };
     }
     case "reset": {
-      return [];
+      return initialState;
     }
   }
 }
 
-export default function SelectedTabsProvider({ children }: PropsWithChildren) {
-  const [selectedTabs, dispatch] = useReducer(selectedTabsReducer, []);
+export default function SelectedTabsProvider({
+  children,
+  testState,
+}: PropsWithChildren<{
+  testState?: State;
+}>) {
+  const [selectedTabs, dispatch] = useReducer(selectedTabsReducer, testState || initialState);
 
   return (
     <SelectedTabsContext.Provider value={selectedTabs}>
@@ -46,7 +66,7 @@ export default function SelectedTabsProvider({ children }: PropsWithChildren) {
 }
 
 export function useSelectedTabs() {
-  return useContext(SelectedTabsContext);
+  return useContext(SelectedTabsContext).tabIds;
 }
 
 export function useSelectedTabsDispatch() {

@@ -6,27 +6,24 @@ import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import VolumeUpIcon from "@mui/icons-material/VolumeUp";
 import { SvgIconOwnProps } from "@mui/material/SvgIcon";
 import { TAB_PROPERTIES } from "src/utils/chrome";
-import { filterTabs } from "src/utils/filterTabs";
+import { FILTER_TAB_PROPERTIES, filterTabs } from "src/utils/filterTabs";
 
-function getCount(property: TAB_PROPERTIES, tabs?: chrome.tabs.Tab[]) {
-  if (!tabs) {
-    return "";
-  }
+function getCount(property: TAB_PROPERTIES, tabs: chrome.tabs.Tab[] = []) {
   switch (property) {
     case TAB_PROPERTIES.Active:
-      return `(${filterTabs(tabs, "", [TAB_PROPERTIES.Active]).length})`;
+      return filterTabs(tabs, "", [FILTER_TAB_PROPERTIES.Active]).length;
     case TAB_PROPERTIES.Pinned:
-      return `(${filterTabs(tabs, "", [TAB_PROPERTIES.Pinned]).length})`;
+      return filterTabs(tabs, "", [FILTER_TAB_PROPERTIES.Pinned]).length;
     case TAB_PROPERTIES.Highlighted:
-      return `(${filterTabs(tabs, "", [TAB_PROPERTIES.Highlighted]).length})`;
+      return filterTabs(tabs, "", [FILTER_TAB_PROPERTIES.Highlighted]).length;
     case TAB_PROPERTIES.Discarded:
-      return `(${filterTabs(tabs, "", [TAB_PROPERTIES.Discarded]).length})`;
+      return filterTabs(tabs, "", [FILTER_TAB_PROPERTIES.Discarded]).length;
     case TAB_PROPERTIES.Muted:
-      return `(${filterTabs(tabs, "", [TAB_PROPERTIES.Muted]).length})`;
+      return filterTabs(tabs, "", [FILTER_TAB_PROPERTIES.Muted]).length;
     case TAB_PROPERTIES.Audible:
-      return `(${filterTabs(tabs, "", [TAB_PROPERTIES.Audible]).length})`;
+      return filterTabs(tabs, "", [FILTER_TAB_PROPERTIES.Audible]).length;
     default:
-      return "";
+      return 0;
   }
 }
 
@@ -34,22 +31,22 @@ export function getTabPropertyLabel(property: TAB_PROPERTIES, tabs?: chrome.tabs
   let label = "";
   switch (property) {
     case TAB_PROPERTIES.Active:
-      label = `Active Tabs ${getCount(TAB_PROPERTIES.Active, tabs)}`;
+      label = `Active Tabs (${getCount(TAB_PROPERTIES.Active, tabs)})`;
       break;
     case TAB_PROPERTIES.Pinned:
-      label = `Pinned Tabs ${getCount(TAB_PROPERTIES.Pinned, tabs)}`;
+      label = `Pinned Tabs (${getCount(TAB_PROPERTIES.Pinned, tabs)})`;
       break;
     case TAB_PROPERTIES.Highlighted:
-      label = `Highlighted Tabs ${getCount(TAB_PROPERTIES.Highlighted, tabs)}`;
+      label = `Highlighted Tabs (${getCount(TAB_PROPERTIES.Highlighted, tabs)})`;
       break;
     case TAB_PROPERTIES.Discarded:
-      label = `Discarded Tabs ${getCount(TAB_PROPERTIES.Discarded, tabs)}`;
+      label = `Discarded Tabs (${getCount(TAB_PROPERTIES.Discarded, tabs)})`;
       break;
     case TAB_PROPERTIES.Muted:
-      label = `Muted Tabs ${getCount(TAB_PROPERTIES.Muted, tabs)}`;
+      label = `Muted Tabs (${getCount(TAB_PROPERTIES.Muted, tabs)})`;
       break;
     case TAB_PROPERTIES.Audible:
-      label = `Audible Tabs ${getCount(TAB_PROPERTIES.Audible, tabs)}`;
+      label = `Audible Tabs (${getCount(TAB_PROPERTIES.Audible, tabs)})`;
       break;
     default:
       label = "";

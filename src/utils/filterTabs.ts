@@ -1,25 +1,42 @@
 import { TAB_PROPERTIES } from "./chrome";
 import { SORT_OPTION } from "./options";
 
+export enum FILTER_TAB_PROPERTIES {
+  Active = TAB_PROPERTIES.Active,
+  Pinned = TAB_PROPERTIES.Pinned,
+  Highlighted = TAB_PROPERTIES.Highlighted,
+  Discarded = TAB_PROPERTIES.Discarded,
+  Audible = TAB_PROPERTIES.Audible,
+  Muted = TAB_PROPERTIES.Muted,
+}
+
+export type DedupeConfig = {
+  dedupe: boolean;
+  ignoreParams: boolean;
+};
+
+function handleFilters(tabs: chrome.tabs.Tab[], filters: FILTER_TAB_PROPERTIES[] = []) {
+  if (filters.length === 0) {
+    return tabs;
+  }
+  return tabs.filter((t) => {
+    return filters.every((f) => {
+      if (f === FILTER_TAB_PROPERTIES.Discarded) {
+        return t.discarded || t.status === "unloaded";
+      }
+      return !!t[f];
+    });
+  });
+}
 export function filterTabs(
   tabs: chrome.tabs.Tab[] | undefined,
   search: string = "",
-  filters: TAB_PROPERTIES[] = [],
+  filters: FILTER_TAB_PROPERTIES[] = [],
 ) {
   if (!tabs || !tabs.length) {
     return [];
   }
-  const filteredTabs =
-    filters.length > 0
-      ? tabs.filter((t) => {
-          return filters.every((f) => {
-            if (f === TAB_PROPERTIES.Discarded) {
-              return t.discarded || t.status === "unloaded";
-            }
-            return !!t[f];
-          });
-        })
-      : tabs;
+  const filteredTabs = handleFilters(tabs, filters);
   return filteredTabs.filter(
     ({ title, url }) =>
       (title && title.toLowerCase().includes(search.toLowerCase())) ||
@@ -27,21 +44,21 @@ export function filterTabs(
   );
 }
 
-export function sortTabs(win: chrome.windows.Window, sort: SORT_OPTION) {
+export function sortTabs(tabs: chrome.tabs.Tab[], sort: SORT_OPTION) {
   if ((sort as SORT_OPTION) === SORT_OPTION.LastAccessed) {
-    win.tabs?.sort((a, b) => b.lastAccessed - a.lastAccessed);
+    tabs.sort((a, b) => b.lastAccessed - a.lastAccessed);
   } else {
-    win.tabs?.sort((a, b) => a.index - b.index);
+    tabs.sort((a, b) => a.index - b.index);
   }
-  return win;
+  return tabs;
 }
 
 export function filterSortTabs(
-  win: chrome.windows.Window,
+  tabs: chrome.tabs.Tab[],
   search: string,
-  filters: TAB_PROPERTIES[],
+  filters: FILTER_TAB_PROPERTIES[],
   sort: SORT_OPTION,
 ) {
-  const w = { ...win, tabs: filterTabs(win.tabs, search, filters) };
-  return sortTabs(w, sort);
+  const t = filterTabs(tabs, search, filters);
+  return sortTabs(t, sort);
 }

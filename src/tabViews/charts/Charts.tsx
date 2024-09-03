@@ -15,8 +15,9 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import { ChartData } from "chart.js";
-import React, { useMemo, useState } from "react";
-import { useFilters } from "src/contexts/ChartsTabContext";
+import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
+import { useAllTabs } from "src/contexts/DataProvider";
+import { useFilters } from "src/contexts/FilterProvider";
 import { getChartData } from "src/utils/chartjs";
 import { groupTabs } from "src/utils/chrome";
 import ChartPane, { type ChartViewType } from "./ChartPane";
@@ -31,27 +32,23 @@ const Paper = styled(MuiPaper)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
 }));
 
-export default function Charts({ windows }: { readonly windows: chrome.windows.Window[] }) {
+export default function Charts() {
   const [chartType, setChartType] = useState<ChartViewType>("bar");
   const [urlDepth, setUrlDepth] = useState<number>(0);
   const [minDupes, setMinDupes] = useState(3);
   const [open, setOpen] = useState(false);
+  const allTabs = useAllTabs();
   const filters = useFilters();
 
   const toggleOpen = () => setOpen(!open);
 
-  const tabs: chrome.tabs.Tab[] = useMemo(() => windows.flatMap((w) => w.tabs || []), [windows]);
-
-  const handleToggleChartType = (
-    _e: React.MouseEvent<HTMLElement>,
-    newChartType: ChartViewType,
-  ) => {
+  const handleToggleChartType = (_e: MouseEvent<HTMLElement>, newChartType: ChartViewType) => {
     setChartType(newChartType);
   };
 
   const onChartClick = (origin) => {
     const tabIds: number[] = [];
-    tabs
+    allTabs
       .filter((t) => t.url?.includes(origin))
       .forEach(({ id }) => {
         if (!id) {
@@ -68,13 +65,13 @@ export default function Charts({ windows }: { readonly windows: chrome.windows.W
     setUrlDepth(newValue as number);
   };
 
-  const handleMinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMinChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMinDupes(parseInt(event.target.value));
   };
 
   const data: ChartData = useMemo(
-    () => getChartData(tabs, { minDupes, urlDepth, filters }),
-    [tabs, minDupes, urlDepth, filters],
+    () => getChartData(allTabs, { minDupes, urlDepth, filters }),
+    [allTabs, minDupes, urlDepth, filters],
   );
 
   return (
@@ -97,7 +94,7 @@ export default function Charts({ windows }: { readonly windows: chrome.windows.W
             </ToggleButtonGroup>
           </Stack>
 
-          <SectionBy tabs={tabs} />
+          <SectionBy />
         </Stack>
 
         <ChartPane chartType={chartType} data={data} onClick={onChartClick} />

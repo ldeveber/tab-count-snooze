@@ -5,7 +5,7 @@ import Collapse from "@mui/material/Collapse";
 import List from "@mui/material/List";
 import ListItemText, { ListItemTextProps } from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
+import React, { PropsWithChildren, useState } from "react";
 import ListItem from "./ListItem";
 
 interface StyledChipProps extends ChipProps {
@@ -18,6 +18,9 @@ const Chip = styled(MuiChip, {
   return {
     color: theme.palette.getContrastText(bg),
     backgroundColor: bg,
+    borderRadius: theme.shape.borderRadius,
+    height: 24,
+    minWidth: 24,
   };
 });
 
@@ -26,14 +29,13 @@ export default function ListItemGroup({
   indented = false,
   initOpen = false,
   title,
-  backgroundColor,
-}: {
-  children: React.ReactNode;
+  groupColor,
+}: PropsWithChildren<{
   readonly indented?: boolean;
   readonly initOpen?: boolean;
   readonly title: ListItemTextProps["primary"];
-  readonly backgroundColor?: string;
-}) {
+  readonly groupColor?: string;
+}>) {
   const [open, setOpen] = useState(initOpen);
 
   const handleClick = () => {
@@ -43,7 +45,7 @@ export default function ListItemGroup({
   return (
     <React.Fragment>
       <ListItem onPrimaryAction={handleClick}>
-        <ListItemText primary={<Chip label={title} backgroundColor={backgroundColor} />} />
+        <ListItemText primary={<Chip label={title} backgroundColor={groupColor} />} sx={{ m: 0 }} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -51,7 +53,10 @@ export default function ListItemGroup({
           component={indented ? "div" : "ul"}
           disablePadding
           dense
-          sx={{ pl: indented ? 4 : undefined }}
+          sx={{
+            ml: indented ? 1 : undefined,
+            borderLeft: indented && groupColor ? `2px solid ${groupColor}` : undefined,
+          }}
         >
           {children}
         </List>

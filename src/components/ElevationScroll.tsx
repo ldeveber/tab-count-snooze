@@ -1,5 +1,5 @@
 import useScrollTrigger from "@mui/material/useScrollTrigger";
-import React from "react";
+import { cloneElement, ReactElement } from "react";
 
 export default function ElevationScroll({
   children,
@@ -10,7 +10,7 @@ export default function ElevationScroll({
    * You won't need it on your project.
    */
   window?: () => Window;
-  children: React.ReactElement;
+  children: ReactElement;
 }) {
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
@@ -21,7 +21,7 @@ export default function ElevationScroll({
     target: window ? window() : undefined,
   });
 
-  return React.cloneElement(children, {
+  return cloneElement(children, {
     elevation: trigger ? 4 : 0,
   });
 }

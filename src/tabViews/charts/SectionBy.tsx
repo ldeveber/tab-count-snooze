@@ -2,17 +2,21 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { HTMLAttributes, SyntheticEvent, useMemo, useState } from "react";
-import { useFiltersDispatch } from "src/contexts/ChartsTabContext";
+import { useAllTabs } from "src/contexts/DataProvider";
+import { useFilterDispatch } from "src/contexts/FilterProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
+import { FILTER_TAB_PROPERTIES } from "src/utils/filterTabs";
 import TabPropertyIcon, { getTabPropertyLabel } from "../window/TabPropertyIcon";
 
 type MenuOptionsType = {
   readonly label: string;
-  readonly value: TAB_PROPERTIES;
+  readonly value: FILTER_TAB_PROPERTIES;
+  readonly property: TAB_PROPERTIES;
 };
 
-export default function SectionBy({ tabs }: { readonly tabs: chrome.tabs.Tab[] }) {
-  const dispatchFilters = useFiltersDispatch();
+export default function SectionBy() {
+  const allTabs = useAllTabs();
+  const dispatchFilters = useFilterDispatch();
   const [selected, setSelected] = useState<MenuOptionsType[]>([]);
 
   const handleChange = (_: SyntheticEvent, values: MenuOptionsType[]) => {
@@ -23,28 +27,34 @@ export default function SectionBy({ tabs }: { readonly tabs: chrome.tabs.Tab[] }
   const divideOptions: MenuOptionsType[] = useMemo(
     () => [
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Active, tabs),
-        value: TAB_PROPERTIES.Active,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Active, allTabs),
+        property: TAB_PROPERTIES.Active,
+        value: FILTER_TAB_PROPERTIES.Active,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Audible, tabs),
-        value: TAB_PROPERTIES.Audible,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Audible, allTabs),
+        property: TAB_PROPERTIES.Audible,
+        value: FILTER_TAB_PROPERTIES.Audible,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Muted, tabs),
-        value: TAB_PROPERTIES.Muted,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Muted, allTabs),
+        property: TAB_PROPERTIES.Muted,
+        value: FILTER_TAB_PROPERTIES.Muted,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Discarded, tabs),
-        value: TAB_PROPERTIES.Discarded,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Discarded, allTabs),
+        property: TAB_PROPERTIES.Discarded,
+        value: FILTER_TAB_PROPERTIES.Discarded,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Highlighted, tabs),
-        value: TAB_PROPERTIES.Highlighted,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Highlighted, allTabs),
+        property: TAB_PROPERTIES.Highlighted,
+        value: FILTER_TAB_PROPERTIES.Highlighted,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Pinned, tabs),
-        value: TAB_PROPERTIES.Pinned,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Pinned, allTabs),
+        property: TAB_PROPERTIES.Pinned,
+        value: FILTER_TAB_PROPERTIES.Pinned,
       },
     ],
     [],
@@ -74,10 +84,10 @@ export default function SectionBy({ tabs }: { readonly tabs: chrome.tabs.Tab[] }
       )}
       renderOption={(
         { key, ...props }: HTMLAttributes<HTMLLIElement> & { key: string },
-        { label, value },
+        { label, property },
       ) => (
         <Box key={key} component="li" sx={{ "& > img": { mr: 2, flexShrink: 0 } }} {...props}>
-          <TabPropertyIcon property={value} fontSize="inherit" sx={{ marginRight: 1 }} />
+          <TabPropertyIcon property={property} fontSize="inherit" sx={{ marginRight: 1 }} />
           {label}
         </Box>
       )}

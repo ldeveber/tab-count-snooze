@@ -1,31 +1,32 @@
 import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom/vitest";
+import chromeMock from "test-utils/chromeMock";
 import { mockTab, mockTabGroup, mockWindow } from "test-utils/mockDataHelper";
-import { render } from "test-utils/react-testing-library-utils";
-import { describe, expect, test } from "vitest";
+import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
+import { describe, expect, test, vi } from "vitest";
 import WindowView from "../WindowView";
 
 describe("Window View", () => {
-  test("should not render if winodw has no id", () => {
-    const win = mockWindow();
-    win.tabs = [mockTab()];
-    win.id = undefined;
-    const tabGroups: chrome.tabGroups.TabGroup[] = [];
-    const { container } = render(<WindowView win={win} tabGroups={tabGroups} />);
-
-    expect(container).toBeEmptyDOMElement();
+  test("should not render if winodw does not exist", async () => {
+    const { container } = renderWithContext(<WindowView windowId={1} />);
+    await waitFor(() => {
+      expect(container).toBeEmptyDOMElement();
+    });
   });
 
-  test("should not render if window has no tabs", () => {
-    const win: chrome.windows.Window = mockWindow({}, false);
-    const tabGroups: chrome.tabGroups.TabGroup[] = [];
-    const { container } = render(<WindowView win={win} tabGroups={tabGroups} />);
+  test("should not render if window has no tabs", async () => {
+    const win: chrome.windows.Window = mockWindow({});
+    chromeMock.windows.getAll.mockResolvedValue([win]);
+    vi.stubGlobal("chrome", chromeMock);
 
-    expect(container).toBeEmptyDOMElement();
+    const { container } = renderWithContext(<WindowView windowId={win.id} />);
+    await waitFor(() => {
+      expect(container).toBeEmptyDOMElement();
+    });
   });
 
-  test("should render regular window", () => {
-    const win: chrome.windows.Window = mockWindow({}, false);
+  test("should render window with one tab", async () => {
+    const win: chrome.windows.Window = mockWindow({});
 
     const title = faker.commerce.productName();
     const url = faker.internet.url();
@@ -35,18 +36,19 @@ describe("Window View", () => {
       url,
     });
 
-    win.tabs = win.tabs || [];
-    win.tabs.push(tab);
-    const tabGroups: chrome.tabGroups.TabGroup[] = [];
+    chromeMock.windows.getAll.mockResolvedValue([win]);
+    chromeMock.tabs.query.mockResolvedValue([tab]);
+    vi.stubGlobal("chrome", chromeMock);
 
-    const { getByRole } = render(<WindowView win={win} tabGroups={tabGroups} />);
-
-    expect(getByRole("list")).toBeVisible();
+    const { getByRole } = renderWithContext(<WindowView windowId={win.id} />);
+    await waitFor(() => {
+      expect(getByRole("list")).toBeVisible();
+    });
     expect(getByRole("button", { name: `${title} ${url}` })).toBeVisible();
   });
 
-  test("should render window with multiple tabs", () => {
-    const win: chrome.windows.Window = mockWindow({}, false);
+  test("should render window with multiple tabs", async () => {
+    const win: chrome.windows.Window = mockWindow({});
 
     const title1 = faker.commerce.productName();
     const url1 = faker.internet.url();
@@ -64,25 +66,25 @@ describe("Window View", () => {
       url: url2,
     });
 
-    win.tabs = win.tabs || [];
-    win.tabs.push(tab1);
-    win.tabs.push(tab2);
-    const tabGroups: chrome.tabGroups.TabGroup[] = [];
+    chromeMock.windows.getAll.mockResolvedValue([win]);
+    chromeMock.tabs.query.mockResolvedValue([tab1, tab2]);
+    vi.stubGlobal("chrome", chromeMock);
 
-    const { getByRole, getAllByRole } = render(<WindowView win={win} tabGroups={tabGroups} />);
+    const { getByRole, getAllByRole } = renderWithContext(<WindowView windowId={win.id} />);
 
-    expect(getByRole("button", { name: "2 Tabs" })).toBeVisible();
+    await waitFor(() => {
+      expect(getByRole("button", { name: "2 Tabs" })).toBeVisible();
+    });
     expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();
     expect(getByRole("button", { name: `${title2} ${url2}` })).toBeVisible();
     expect(getAllByRole("button")).toHaveLength(3);
   });
 
-  test("should render window with tab group with multiple tabs", () => {
-    const win: chrome.windows.Window = mockWindow({}, false);
+  test("should render window with tab group with multiple tabs", async () => {
+    const win: chrome.windows.Window = mockWindow({});
 
     const groupTitle = faker.commerce.productName();
     const group = mockTabGroup({ title: groupTitle, windowId: win.id });
-    const tabGroups: chrome.tabGroups.TabGroup[] = [group];
 
     const title1 = faker.commerce.productName();
     const url1 = faker.internet.url();
@@ -111,14 +113,16 @@ describe("Window View", () => {
       groupId: group.id,
     });
 
-    win.tabs = win.tabs || [];
-    win.tabs.push(tab1);
-    win.tabs.push(tab2);
-    win.tabs.push(tab3);
+    chromeMock.windows.getAll.mockResolvedValue([win]);
+    chromeMock.tabGroups.query.mockResolvedValue([group]);
+    chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3]);
+    vi.stubGlobal("chrome", chromeMock);
 
-    const { getAllByRole, getByRole } = render(<WindowView win={win} tabGroups={tabGroups} />);
+    const { getAllByRole, getByRole } = renderWithContext(<WindowView windowId={win.id} />);
 
-    expect(getByRole("button", { name: "3 Tabs" })).toBeVisible();
+    await waitFor(() => {
+      expect(getByRole("button", { name: "3 Tabs" })).toBeVisible();
+    });
 
     expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();
     expect(getByRole("button", { name: `${groupTitle}` })).toBeVisible();

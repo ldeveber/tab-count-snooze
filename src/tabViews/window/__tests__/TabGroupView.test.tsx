@@ -1,24 +1,33 @@
 import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom/vitest";
 import { mockTab, mockTabGroup } from "test-utils/mockDataHelper";
-import { render } from "test-utils/react-testing-library-utils";
+import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
 import { describe, expect, test } from "vitest";
 import TabGroupView from "../TabGroupView";
 
 describe("Tab Group View", () => {
-  test("should not render if there are no tabs", () => {
+  test("should not render if there are no tabs", async () => {
     const group: chrome.tabGroups.TabGroup = mockTabGroup();
-    const { container } = render(<TabGroupView group={group} tabs={[]} />);
-    expect(container).toBeEmptyDOMElement();
+    const { container } = renderWithContext(<TabGroupView group={group} tabs={[]} />);
+    await waitFor(() => {
+      expect(container).toBeEmptyDOMElement();
+    });
   });
 
-  test("should render default group name if missing", () => {
+  test("should render default group name if missing", async () => {
     const group = mockTabGroup({ title: undefined });
-    const { getByRole } = render(<TabGroupView group={group} tabs={[mockTab()]} />);
+    const { getByText, getByRole } = renderWithContext(
+      <TabGroupView group={group} tabs={[mockTab()]} />,
+    );
+
+    await waitFor(() => {
+      expect(getByText("Tab Group")).toBeVisible();
+    });
+
     expect(getByRole("button", { name: "Tab Group" })).toBeVisible();
   });
 
-  test("should group with tabs", () => {
+  test("should group with tabs", async () => {
     const groupTitle = faker.commerce.productName();
     const group = mockTabGroup({ title: groupTitle });
 
@@ -37,7 +46,11 @@ describe("Tab Group View", () => {
     });
 
     const tabs: chrome.tabs.Tab[] = [tab1, tab2];
-    const { getByRole } = render(<TabGroupView group={group} tabs={tabs} />);
+    const { getByText, getByRole } = renderWithContext(<TabGroupView group={group} tabs={tabs} />);
+
+    await waitFor(() => {
+      expect(getByText(groupTitle)).toBeVisible();
+    });
 
     expect(getByRole("button", { name: `${groupTitle}` })).toBeVisible();
     expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();

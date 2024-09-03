@@ -1,51 +1,43 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import MergeTypeIcon from "@mui/icons-material/MergeType";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
-import Tooltip, { TooltipProps } from "@mui/material/Tooltip";
-import React, { useMemo } from "react";
-import { useFilters, useSearch, useSelectedTabs } from "src/contexts/WindowsTabContext";
+import { MouseEventHandler, useMemo } from "react";
+import { useAllTabs } from "src/contexts/DataProvider";
+import { useFilters, useSearch, useSelectedTabs } from "src/contexts/FilterProvider";
 import { closeTabs, groupTabs, type TabIdType } from "src/utils/chrome";
 import { filterTabs } from "src/utils/filterTabs";
+import TooltipButton from "./TooltipButton";
 
-interface TooltipButtonProps extends IconButtonProps {
-  tooltip: TooltipProps["title"];
-}
-function TooltipButton({ tooltip, ...props }: TooltipButtonProps) {
-  if (props.disabled) {
-    return <IconButton color="inherit" size="small" {...props} />;
-  }
-  return (
-    <Tooltip title={tooltip}>
-      <IconButton color="inherit" size="small" {...props} />
-    </Tooltip>
-  );
-}
-
-export default function WindowsActions({ windows }: { windows: chrome.windows.Window[] }) {
+export default function WindowsBulkActions() {
   const selected = useSelectedTabs();
   const search = useSearch();
   const filters = useFilters();
+  const allTabs = useAllTabs();
 
   const getSelectedTabIds = (): TabIdType[] => {
     if (selected.length > 0) {
       return selected;
     }
-    const allTabs = windows.flatMap((w) => w.tabs || []);
     const tabs = filterTabs(allTabs, search, filters);
     const tabIds: TabIdType[] = [];
-    tabs.forEach(({ id }) => {
-      if (!id) {
-        return;
-      }
-      if (selected.length > 0) {
+
+    if (selected.length > 0) {
+      tabs.forEach(({ id }) => {
+        if (!id) {
+          return;
+        }
         if (selected.includes(id)) {
           tabIds.push(id);
         }
-      } else {
+      });
+    } else {
+      tabs.forEach(({ id }) => {
+        if (!id) {
+          return;
+        }
         tabIds.push(id);
-      }
-    });
+      });
+    }
     return tabIds;
   };
 
@@ -53,11 +45,11 @@ export default function WindowsActions({ windows }: { windows: chrome.windows.Wi
     return getSelectedTabIds().length === 0;
   }, []);
 
-  const onGroup: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const onGroup: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
     void groupTabs(tabIds as [number, ...number[]], search);
   };
-  const onClose: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const onClose: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
     void closeTabs(tabIds);
   };

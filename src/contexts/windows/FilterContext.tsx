@@ -1,14 +1,15 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
-import { TAB_PROPERTIES } from "src/utils/chrome";
+import { FILTER_TAB_PROPERTIES } from "src/utils/filterTabs";
 
-type State = { filters: TAB_PROPERTIES[]; search: string };
+export type State = { filters: FILTER_TAB_PROPERTIES[]; search: string; dupes: { show: boolean } };
 
-const initialFilterState: State = {
+export const initialState: State = {
   filters: [],
   search: "",
+  dupes: { show: false },
 };
 
-const FilterContext = createContext<State>(initialFilterState);
+const FilterContext = createContext<State>(initialState);
 const FilterDispatchContext = createContext<Dispatch<Action>>(() => {});
 
 type Action =
@@ -18,6 +19,10 @@ type Action =
   | {
       search: State["search"];
       type: "search";
+    }
+  | {
+      dupes: State["dupes"];
+      type: "dupes";
     }
   | {
       filters: State["filters"];
@@ -37,11 +42,14 @@ function filtersReducer(state: State, action: Action): State {
         search: action.search,
       };
     }
-    case "clear": {
+    case "dupes": {
       return {
-        filters: [],
-        search: "",
+        ...state,
+        dupes: action.dupes,
       };
+    }
+    case "clear": {
+      return initialState;
     }
     default: {
       return state;
@@ -49,8 +57,13 @@ function filtersReducer(state: State, action: Action): State {
   }
 }
 
-export default function FilterProvider({ children }: PropsWithChildren) {
-  const [filterState, dispatch] = useReducer(filtersReducer, initialFilterState);
+export default function FilterProvider({
+  children,
+  testState,
+}: PropsWithChildren<{
+  testState?: State;
+}>) {
+  const [filterState, dispatch] = useReducer(filtersReducer, testState || initialState);
 
   return (
     <FilterContext.Provider value={filterState}>
@@ -70,6 +83,10 @@ export function useFilters() {
 
 export function useSearch() {
   return useContext(FilterContext).search;
+}
+
+export function useDuplicateFilter() {
+  return useContext(FilterContext).dupes;
 }
 
 export function useFilterDispatch() {
