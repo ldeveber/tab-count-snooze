@@ -3,7 +3,7 @@ import "@testing-library/jest-dom/vitest";
 import { mockTab } from "test-utils/mockDataHelper";
 import { describe, expect, test } from "vitest";
 import { getChartData } from "../chartjs";
-import { TAB_PROPERTIES } from "../chrome";
+import { FILTER_TAB_PROPERTIES } from "../filterTabs";
 
 const backgroundColor: ReadonlyArray<string> = [
   "#f44336",
@@ -209,7 +209,7 @@ describe("chartjs utils", () => {
           labels.push(base);
         }
 
-        const res = getChartData(tabs, { filters: [TAB_PROPERTIES.Pinned] });
+        const res = getChartData(tabs, { filters: [FILTER_TAB_PROPERTIES.Pinned] });
 
         expect(res).toEqual({
           labels: [],
@@ -226,7 +226,7 @@ describe("chartjs utils", () => {
       test("should map data for 10 URLs, 3 unique domains", () => {
         const { url1, url2, tabs } = getUrlMocks();
         const labels = [`${url1} (pinned)`, url1, url2];
-        const res = getChartData(tabs, { filters: [TAB_PROPERTIES.Pinned] });
+        const res = getChartData(tabs, { filters: [FILTER_TAB_PROPERTIES.Pinned] });
 
         expect(res).toEqual({
           labels,

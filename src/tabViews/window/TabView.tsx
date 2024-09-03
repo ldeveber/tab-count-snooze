@@ -1,15 +1,14 @@
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid2";
 import ListItemText from "@mui/material/ListItemText";
-import { ChangeEvent, useEffect, useRef } from "react";
+import { ChangeEvent, useRef } from "react";
 import ListItem from "src/components/list/ListItem";
 import ListItemFavicon from "src/components/list/ListItemFavicon";
 import {
-  useFilters,
-  useSearch,
+  useIsFiltered,
   useSelectedTabs,
   useSelectedTabsDispatch,
-} from "src/contexts/WindowsTabContext";
+} from "src/contexts/FilterProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon from "./TabPropertyIcon";
 
@@ -57,15 +56,8 @@ function TabExtra({ tab }: { readonly tab: chrome.tabs.Tab }) {
   );
 }
 
-export default function TabView({
-  tab,
-  windowFocused = false,
-}: {
-  readonly tab: chrome.tabs.Tab;
-  readonly windowFocused?: boolean;
-}) {
-  const search = useSearch();
-  const filters = useFilters();
+export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
+  const showMultiSelect = useIsFiltered();
   const selected = useSelectedTabs();
   const dispatchSelectState = useSelectedTabsDispatch();
   const ref = useRef<HTMLLIElement>(null);
@@ -85,27 +77,24 @@ export default function TabView({
     }
     dispatchSelectState({
       id: tab.id,
-      type: checked ? "selected" : "unselected",
+      type: checked ? "select" : "unselect",
     });
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (windowFocused && tab.active && ref.current) {
-        ref.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
-      }
-    }, 800);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+  // useEffect(() => {
+  //   // const timer = setTimeout(() => {
+  //   //   if (windowFocused && tab.active && ref.current) {
+  //   //     ref.current.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+  //   //   }
+  //   // }, 800);
+  //   // return () => {
+  //   //   clearTimeout(timer);
+  //   // };
+  // }, []);
 
   if (!tab.id) {
     return null;
   }
-
-  const showMultiSelect = search.length > 0 || filters.length > 0;
 
   return (
     <ListItem
@@ -128,6 +117,7 @@ export default function TabView({
           noWrap: true,
           fontSize: "0.75rem",
         }}
+        sx={{ m: 0 }}
       />
       <TabExtra tab={tab} />
     </ListItem>

@@ -1,46 +1,75 @@
-import { useEffect, useState } from "react";
-import WindowsProvider from "src/contexts/WindowsTabContext";
-import Windows, { Loading } from "./window/Windows";
+import MuiBox from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid2";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import { useMemo } from "react";
+import { useTabCount, useWindowCount, useWindows } from "src/contexts/DataProvider";
+import WindowsProvider from "src/contexts/FilterProvider";
+import WindowLoading from "./window/WindowLoading";
+import WindowView from "./window/WindowView";
+import WindowsHeader, { Loading as HeaderLoading } from "./window/header/WindowsHeader";
+
+const Box = styled(MuiBox)(({ theme }) => ({
+  padding: theme.spacing(1, 2),
+  [theme.breakpoints.down("sm")]: {
+    padding: theme.spacing(1),
+  },
+}));
+
+export function Loading() {
+  return (
+    <>
+      <HeaderLoading />
+      <Box>
+        <Stack spacing={2} pt={1}>
+          <WindowLoading />
+        </Stack>
+      </Box>
+    </>
+  );
+}
 
 export default function WindowsTab() {
-  const [windows, setWindows] = useState<chrome.windows.Window[]>([]);
-  const [tabGroups, setTabGroups] = useState<chrome.tabGroups.TabGroup[]>([]);
-  const [tabCount, setTabCount] = useState<number>(1);
-  const [activeWindowId, setActiveWindowId] = useState<chrome.windows.Window["id"]>(undefined);
+  const windows = useWindows();
+  const windowCount = useWindowCount();
+  const tabCount = useTabCount();
 
-  useEffect(() => {
-    void chrome.tabGroups.query({}).then((values) => {
-      setTabGroups(values);
-    });
-    void chrome.windows.getAll({ populate: true }).then((values) => {
-      const wins = values.filter((w) => w.tabs?.filter(({ title, url }) => !!title && !!url));
-      setWindows(wins);
-    });
-    void chrome.windows.getLastFocused().then((win) => {
-      setActiveWindowId(win.id);
-    });
-  }, []);
+  const { minimized, open }: { minimized: chrome.windows.Window[]; open: chrome.windows.Window[] } =
+    useMemo(
+      () => ({
+        minimized: windows.filter(({ state }) => state === "minimized"),
+        open: windows.filter(({ state }) => state === "normal"),
+      }),
+      [windows],
+    );
 
-  useEffect(() => {
-    let tCount = 0;
-    windows.forEach(({ tabs }) => {
-      tCount += tabs?.length || 0;
-    });
-    setTabCount(tCount);
-  }, [windows]);
-
-  if (windows.length === 0 || tabCount === 0) {
+  if (windowCount === 0 || tabCount === 0) {
     return <Loading />;
   }
 
   return (
     <WindowsProvider>
-      <Windows
-        windows={windows}
-        tabGroups={tabGroups}
-        tabCount={tabCount}
-        activeWindowId={activeWindowId}
-      />
+      <WindowsHeader />
+      <Box>
+        <Stack spacing={2} pt={1}>
+          {open.map((w) => (
+            <Grid size={{ xs: 1 }} key={w.id}>
+              <WindowView windowId={w.id} />
+            </Grid>
+          ))}
+          {minimized.length > 0 && (
+            <Stack spacing={2}>
+              <Divider>Minimized</Divider>
+              {minimized.map((w) => (
+                <Grid size={{ xs: 1 }} key={w.id}>
+                  <WindowView windowId={w.id} />
+                </Grid>
+              ))}
+            </Stack>
+          )}
+        </Stack>
+      </Box>
     </WindowsProvider>
   );
 }

@@ -78,6 +78,7 @@ export default defineConfig({
       reportOnFailure: true,
       include: ["src/**/*.ts", "src/**/*.tsx"],
       exclude: [
+        "**/__tests__/*.*",
         "src/pages/*/index.tsx",
         "src/pages/*/App.tsx",
         "src/utils/dayjs.ts",

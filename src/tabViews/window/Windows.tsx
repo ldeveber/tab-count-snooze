@@ -4,9 +4,7 @@ import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
-import { useFilters, useSearch, useSort } from "src/contexts/WindowsTabContext";
-import { filterSortTabs } from "src/utils/filterTabs";
-import { useDebounce } from "use-debounce";
+import { useWindows } from "src/contexts/DataProvider";
 import WindowLoading from "./WindowLoading";
 import WindowView from "./WindowView";
 import WindowsHeader, { Loading as HeaderLoading } from "./header/WindowsHeader";
@@ -31,48 +29,26 @@ export function Loading() {
   );
 }
 
-export default function Windows({
-  windows,
-  tabGroups,
-  tabCount,
-  activeWindowId,
-}: {
-  readonly windows: chrome.windows.Window[];
-  readonly tabGroups: chrome.tabGroups.TabGroup[];
-  readonly tabCount: number;
-  readonly activeWindowId?: chrome.windows.Window["id"];
-}) {
-  const filters = useFilters();
-  const sort = useSort();
-  const search = useSearch();
-  const [searchValue] = useDebounce(search, 300);
-
-  const windowCount = windows.length;
+export default function Windows() {
+  const windows = useWindows();
 
   const { minimized, open }: { minimized: chrome.windows.Window[]; open: chrome.windows.Window[] } =
-    useMemo(() => {
-      return {
-        minimized: windows
-          .filter(({ state }) => state === "minimized")
-          .map((w) => filterSortTabs(w, searchValue, filters, sort)),
-        open: windows
-          .filter(({ state }) => state === "normal")
-          .map((w) => filterSortTabs(w, searchValue, filters, sort)),
-      };
-    }, [windows, searchValue, filters, sort]);
-
-  if (windows.length === 0 || tabCount === 0) {
-    return <Loading />;
-  }
+    useMemo(
+      () => ({
+        minimized: windows.filter(({ state }) => state === "minimized"),
+        open: windows.filter(({ state }) => state === "normal"),
+      }),
+      [windows],
+    );
 
   return (
     <>
-      <WindowsHeader windows={windows} tabCount={tabCount} windowCount={windowCount} />
+      <WindowsHeader />
       <Box>
         <Stack spacing={2} pt={1}>
           {open.map((w) => (
             <Grid size={{ xs: 1 }} key={w.id}>
-              <WindowView win={w} tabGroups={tabGroups} focused={w.id === activeWindowId} />
+              <WindowView windowId={w.id} />
             </Grid>
           ))}
           {minimized.length > 0 && (
@@ -80,7 +56,7 @@ export default function Windows({
               <Divider>Minimized</Divider>
               {minimized.map((w) => (
                 <Grid size={{ xs: 1 }} key={w.id}>
-                  <WindowView win={w} tabGroups={tabGroups} />
+                  <WindowView windowId={w.id} />
                 </Grid>
               ))}
             </Stack>

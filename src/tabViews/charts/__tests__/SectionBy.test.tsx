@@ -1,19 +1,28 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
-import { render } from "test-utils/react-testing-library-utils";
+import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
 import { describe, expect, test } from "vitest";
 import SectionBy from "../SectionBy";
 
 describe("SectionBy Filter Dropdown", () => {
-  test("should basic render", () => {
-    const { getByLabelText, getByRole } = render(<SectionBy tabs={[]} />);
+  test("should basic render", async () => {
+    const { getByLabelText, getByRole } = renderWithContext(<SectionBy />);
+
+    await waitFor(() => {
+      expect(getByLabelText("Section results by")).toBeVisible();
+    });
+
     expect(getByLabelText("Section results by")).toBeEnabled();
     expect(getByRole("combobox")).toHaveValue("");
   });
 
   test("should contain options", async () => {
     const user = userEvent.setup();
-    const { getByRole } = render(<SectionBy tabs={[]} />);
+    const { getByLabelText, getByRole } = renderWithContext(<SectionBy />);
+
+    await waitFor(() => {
+      expect(getByLabelText("Section results by")).toBeVisible();
+    });
 
     expect(getByRole("combobox")).toBeEnabled();
     await user.click(getByRole("combobox"));

@@ -6,7 +6,7 @@ import {
   useColorScheme,
   type CssVarsThemeOptions,
 } from "@mui/material/styles";
-import React, { useEffect, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import { DEFAULT_SHADE } from "src/themes";
 import { defaultColor, type ColorOptions, type Mode } from "src/utils/options";
 
@@ -84,10 +84,9 @@ const components: CssVarsThemeOptions["components"] = {
 export function ThemeWrap({
   colorOpts,
   children,
-}: {
+}: PropsWithChildren<{
   colorOpts: ColorOptions;
-  children: React.ReactNode;
-}): React.ReactNode {
+}>) {
   const { hue, themeMode } = colorOpts;
 
   const theme = extendTheme({
@@ -122,11 +121,7 @@ export function ThemeWrap({
   );
 }
 
-export default function ThemeWrapLoader({
-  children,
-}: {
-  children: React.ReactNode;
-}): React.ReactNode {
+export default function ThemeWrapLoader({ children }: PropsWithChildren) {
   const [colorOpts, setColorOpts] = useState<ColorOptions>(defaultColor);
   const [loading, setLoading] = useState(true);
 

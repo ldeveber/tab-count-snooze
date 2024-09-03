@@ -1,8 +1,7 @@
 import "@testing-library/jest-dom/vitest";
-import { mockTab, mockTabList, mockWindow } from "test-utils/mockDataHelper";
+import { mockTab, mockTabList } from "test-utils/mockDataHelper";
 import { describe, expect, test } from "vitest";
-import { TAB_PROPERTIES } from "../chrome";
-import { filterSortTabs, filterTabs, sortTabs } from "../filterTabs";
+import { FILTER_TAB_PROPERTIES, filterSortTabs, filterTabs, sortTabs } from "../filterTabs";
 import { SORT_OPTION } from "../options";
 
 const tabMock = (props?: Partial<chrome.tabs.Tab>) => {
@@ -11,10 +10,10 @@ const tabMock = (props?: Partial<chrome.tabs.Tab>) => {
     title: "Tab Title",
     url: "https://http.dog/status/418",
   };
-  const keys = Object.keys(TAB_PROPERTIES);
+  const keys = Object.keys(FILTER_TAB_PROPERTIES);
   // ensure we start with a clean slate
   keys.forEach((property) => {
-    initProps[property as TAB_PROPERTIES] = false;
+    initProps[property as FILTER_TAB_PROPERTIES] = false;
   });
   return mockTab({ ...initProps, ...props });
 };
@@ -70,7 +69,7 @@ describe("filterTabs utils", () => {
         tabs.push(tabMock({ pinned: false, index: 4 }));
         tabs.push(tabMock({ pinned: true, index: 5 }));
 
-        const res = filterTabs(tabs, undefined, [TAB_PROPERTIES.Pinned]);
+        const res = filterTabs(tabs, undefined, [FILTER_TAB_PROPERTIES.Pinned]);
 
         expect(res).toEqual([tabs[3], tabs[5]]);
       });
@@ -84,7 +83,7 @@ describe("filterTabs utils", () => {
         tabs.push(tabMock({ status: "complete", discarded: false, index: 4 }));
         tabs.push(tabMock({ status: "complete", discarded: true, index: 5 }));
 
-        const res = filterTabs(tabs, undefined, [TAB_PROPERTIES.Discarded]);
+        const res = filterTabs(tabs, undefined, [FILTER_TAB_PROPERTIES.Discarded]);
 
         expect(res).toEqual([tabs[3], tabs[5]]);
       });
@@ -93,23 +92,29 @@ describe("filterTabs utils", () => {
 
   describe("sortTabs", () => {
     test("should sort by default", () => {
-      const win = mockWindow();
-      const res = sortTabs(win, SORT_OPTION.Default);
-      expect(res).toEqual(win);
+      const tab1 = mockTab({ index: 1 });
+      const tab2 = mockTab({ index: 0 });
+      const tab3 = mockTab({ index: 2 });
+      const res = sortTabs([tab1, tab2, tab3], SORT_OPTION.Default);
+      expect(res).toEqual([tab2, tab1, tab3]);
     });
 
     test("should sort by last accessed", () => {
-      const win = mockWindow();
-      const res = sortTabs(win, SORT_OPTION.LastAccessed);
-      expect(res).toEqual(win);
+      const tab1 = mockTab({ lastAccessed: 2222222222222 });
+      const tab2 = mockTab({ lastAccessed: 3333333333333 });
+      const tab3 = mockTab({ lastAccessed: 1111111111111 });
+      const res = sortTabs([tab1, tab2, tab3], SORT_OPTION.LastAccessed);
+      expect(res).toEqual([tab2, tab1, tab3]);
     });
   });
 
   describe("filterSortTabs", () => {
     test("should return input if no options", () => {
-      const win = mockWindow();
-      const res = filterSortTabs(win, "", [], SORT_OPTION.Default);
-      expect(res).toEqual(win);
+      const tab1 = mockTab({ index: 0 });
+      const tab2 = mockTab({ index: 1 });
+      const tab3 = mockTab({ index: 2 });
+      const res = filterSortTabs([tab1, tab2, tab3], "", [], SORT_OPTION.Default);
+      expect(res).toEqual([tab1, tab2, tab3]);
     });
   });
 });

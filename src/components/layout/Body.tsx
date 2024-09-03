@@ -8,7 +8,9 @@ import Paper from "@mui/material/Paper";
 import MuiTab from "@mui/material/Tab";
 import { styled } from "@mui/material/styles";
 import { SyntheticEvent, useState } from "react";
+import DataHandler from "src/DataHandler";
 import ElevationScroll from "src/components/ElevationScroll";
+import DataProvider from "src/contexts/DataProvider";
 import ChartsTab from "src/tabViews/ChartsTab";
 import SnoozeTab from "src/tabViews/SnoozeTab";
 import WindowsTab from "src/tabViews/WindowsTab";
@@ -53,52 +55,55 @@ export default function Body() {
   };
 
   return (
-    <TabContext value={tab}>
-      <ElevationScroll>
-        <Paper
-          sx={{
-            p: 1,
-            bgcolor: "background.default",
-            zIndex: "appBar",
-            position: "sticky",
-            top: 0,
-            borderRadius: 0,
-          }}
-        >
-          <TabList
-            onChange={handleChange}
-            centered
-            TabIndicatorProps={{
-              style: { display: "none" },
+    <DataProvider>
+      <DataHandler />
+      <TabContext value={tab}>
+        <ElevationScroll>
+          <Paper
+            sx={{
+              p: 1,
+              bgcolor: "background.default",
+              zIndex: "appBar",
+              position: "sticky",
+              top: 0,
+              borderRadius: 0,
             }}
           >
-            <Tab label="Tab" value="windows" icon={<WebAssetIcon />} iconPosition="start" />
-            <Tab
-              label="Count"
-              value="charts"
-              icon={<BarChartIcon />}
-              iconPosition="start"
-              sx={{ display: { xs: "none", sm: "inline-flex" } }}
-            />
-            <Tab label="Snooze" value="snoozed" icon={<NightsStayIcon />} iconPosition="start" />
-          </TabList>
-        </Paper>
-      </ElevationScroll>
-      <TabPanel value="windows">
-        <Content>
-          <WindowsTab />
-        </Content>
-      </TabPanel>
-      <TabPanel value="charts">
-        <Content>
-          <ChartsTab />
-        </Content>
-      </TabPanel>
-      <TabPanel value="snoozed">
-        <Content>
-          <SnoozeTab />
-        </Content>
-      </TabPanel>
-    </TabContext>
+            <TabList
+              onChange={handleChange}
+              centered
+              TabIndicatorProps={{
+                style: { display: "none" },
+              }}
+            >
+              <Tab label="Tab" value="windows" icon={<WebAssetIcon />} iconPosition="start" />
+              <Tab
+                label="Count"
+                value="charts"
+                icon={<BarChartIcon />}
+                iconPosition="start"
+                sx={{ display: { xs: "none", sm: "inline-flex" } }}
+              />
+              <Tab label="Snooze" value="snoozed" icon={<NightsStayIcon />} iconPosition="start" />
+            </TabList>
+          </Paper>
+        </ElevationScroll>
+        <TabPanel value="windows">
+          <Content>
+            <WindowsTab />
+          </Content>
+        </TabPanel>
+        <TabPanel value="charts">
+          <Content>
+            <ChartsTab />
+          </Content>
+        </TabPanel>
+        <TabPanel value="snoozed">
+          <Content>
+            <SnoozeTab />
+          </Content>
+        </TabPanel>
+      </TabContext>
+    </DataProvider>
   );
 }

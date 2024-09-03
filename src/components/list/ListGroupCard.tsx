@@ -112,9 +112,7 @@ export default function ListGroupCard({
       />
       <CardContent sx={{ p: 0 }}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <List dense sx={{ p: 0.5 }}>
-            {children}
-          </List>
+          <List dense>{children}</List>
         </Collapse>
       </CardContent>
     </Card>

@@ -1,5 +1,5 @@
 import { BubbleDataPoint, ChartData, ChartOptions, Point } from "chart.js";
-import React, { useRef } from "react";
+import { MouseEventHandler, useRef } from "react";
 import { Chart, getElementAtEvent } from "react-chartjs-2";
 import { ChartJSOrUndefined } from "react-chartjs-2/dist/types";
 
@@ -44,7 +44,7 @@ export default function ChartPane({
     },
   };
 
-  const onChartClick: React.MouseEventHandler<HTMLCanvasElement> = (event) => {
+  const onChartClick: MouseEventHandler<HTMLCanvasElement> = (event) => {
     const { current: chart } = chartRef;
     if (!chart) {
       return;

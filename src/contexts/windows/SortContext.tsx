@@ -1,29 +1,46 @@
 import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
 import { SORT_OPTION } from "src/utils/options";
 
-const SortContext = createContext<SORT_OPTION>(SORT_OPTION.Default);
+export type State = { key: SORT_OPTION; direction: "asc" | "desc" };
+
+export const initialState: State = {
+  key: SORT_OPTION.Default,
+  direction: "asc",
+};
+
+const SortContext = createContext<State>(initialState);
 const SortDispatchContext = createContext<Dispatch<ActionType>>(() => {});
 
-type ActionType = {
-  sort: SORT_OPTION;
-  type: "update" | "reset";
-};
-function sortReducer(_sort: SORT_OPTION, action: ActionType): SORT_OPTION {
+type ActionType =
+  | {
+      sort: SORT_OPTION;
+      direction?: "asc" | "desc";
+      type: "update";
+    }
+  | {
+      type: "reset";
+    };
+function sortReducer(state: State, action: ActionType): State {
   switch (action.type) {
     case "update": {
-      return action.sort;
+      return {
+        ...state,
+        key: action.sort,
+      };
     }
     case "reset": {
-      return SORT_OPTION.Default;
-    }
-    default: {
-      throw Error("Unknown action: " + action.type);
+      return initialState;
     }
   }
 }
 
-export default function SortProvider({ children }: PropsWithChildren) {
-  const [sort, dispatch] = useReducer(sortReducer, SORT_OPTION.Default);
+export default function SortProvider({
+  children,
+  testState,
+}: PropsWithChildren<{
+  testState?: State;
+}>) {
+  const [sort, dispatch] = useReducer(sortReducer, testState || initialState);
 
   return (
     <SortContext.Provider value={sort}>
@@ -33,7 +50,7 @@ export default function SortProvider({ children }: PropsWithChildren) {
 }
 
 export function useSort() {
-  return useContext(SortContext);
+  return useContext(SortContext).key;
 }
 
 export function useSortDispatch() {

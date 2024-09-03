@@ -10,21 +10,24 @@ import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import Tooltip from "@mui/material/Tooltip";
-import React, { MouseEvent, SyntheticEvent, useMemo, useRef, useState } from "react";
-import { useFilterDispatch } from "src/contexts/WindowsTabContext";
+import { MouseEvent, ReactNode, SyntheticEvent, useMemo, useRef, useState } from "react";
+import { useAllTabs } from "src/contexts/DataProvider";
+import { useFilterDispatch } from "src/contexts/FilterProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
+import { FILTER_TAB_PROPERTIES } from "src/utils/filterTabs";
 import TabPropertyIcon, { getTabPropertyLabel } from "../TabPropertyIcon";
 
 type MenuOptionsType = {
   readonly label: string;
-  readonly value: TAB_PROPERTIES;
-  readonly icon: React.ReactNode;
+  readonly value: FILTER_TAB_PROPERTIES;
+  readonly icon: ReactNode;
 };
 
-export default function WindowsFilter({ tabs }: { tabs: chrome.tabs.Tab[] }) {
+export default function WindowsFilter() {
   const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState<TAB_PROPERTIES[]>(() => []);
+  const [filters, setFilters] = useState<FILTER_TAB_PROPERTIES[]>(() => []);
   const dispatchFilters = useFilterDispatch();
+  const allTabs = useAllTabs();
 
   const anchorRef = useRef<HTMLButtonElement>(null);
 
@@ -40,7 +43,7 @@ export default function WindowsFilter({ tabs }: { tabs: chrome.tabs.Tab[] }) {
   };
 
   const handleMenuItemClick = (_e: MouseEvent<HTMLElement>, value: MenuOptionsType["value"]) => {
-    let values: TAB_PROPERTIES[];
+    let values: FILTER_TAB_PROPERTIES[];
     if (filters.includes(value)) {
       values = filters.filter((f) => f !== value);
     } else {
@@ -53,33 +56,33 @@ export default function WindowsFilter({ tabs }: { tabs: chrome.tabs.Tab[] }) {
   const filterOptions: MenuOptionsType[] = useMemo(
     () => [
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Active, tabs),
-        value: TAB_PROPERTIES.Active,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Active, allTabs),
+        value: FILTER_TAB_PROPERTIES.Active,
         icon: <TabPropertyIcon property={TAB_PROPERTIES.Active} sx={{ fontSize: 18 }} />,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Audible, tabs),
-        value: TAB_PROPERTIES.Audible,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Audible, allTabs),
+        value: FILTER_TAB_PROPERTIES.Audible,
         icon: <TabPropertyIcon property={TAB_PROPERTIES.Audible} sx={{ fontSize: 18 }} />,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Muted, tabs),
-        value: TAB_PROPERTIES.Muted,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Muted, allTabs),
+        value: FILTER_TAB_PROPERTIES.Muted,
         icon: <TabPropertyIcon property={TAB_PROPERTIES.Muted} sx={{ fontSize: 18 }} />,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Discarded, tabs),
-        value: TAB_PROPERTIES.Discarded,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Discarded, allTabs),
+        value: FILTER_TAB_PROPERTIES.Discarded,
         icon: <TabPropertyIcon property={TAB_PROPERTIES.Discarded} sx={{ fontSize: 18 }} />,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Highlighted, tabs),
-        value: TAB_PROPERTIES.Highlighted,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Highlighted, allTabs),
+        value: FILTER_TAB_PROPERTIES.Highlighted,
         icon: <TabPropertyIcon property={TAB_PROPERTIES.Highlighted} sx={{ fontSize: 18 }} />,
       },
       {
-        label: getTabPropertyLabel(TAB_PROPERTIES.Pinned, tabs),
-        value: TAB_PROPERTIES.Pinned,
+        label: getTabPropertyLabel(TAB_PROPERTIES.Pinned, allTabs),
+        value: FILTER_TAB_PROPERTIES.Pinned,
         icon: <TabPropertyIcon property={TAB_PROPERTIES.Pinned} sx={{ fontSize: 18 }} />,
       },
     ],
