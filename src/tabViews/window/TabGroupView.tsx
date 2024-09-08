@@ -13,11 +13,18 @@ export default function TabGroupView({
     return null;
   }
 
-  const title = group.title ?? "Tab Group";
+  const title = group.title ?? `Tab Group (${tabs.length})`;
   const groupColor = colors[group.color][500];
 
   return (
-    <ListItemGroup title={title} groupColor={groupColor} indented initOpen>
+    <ListItemGroup
+      title={title}
+      groupColor={groupColor}
+      indented
+      initOpen
+      aria-label={`Tab group: ${title}`}
+      button-aria-label={`Show/hide tabs in group: ${title}`}
+    >
       {tabs.map((tab) => (
         <TabView key={tab.id} tab={tab} />
       ))}

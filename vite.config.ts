@@ -79,6 +79,7 @@ export default defineConfig({
       include: ["src/**/*.ts", "src/**/*.tsx"],
       exclude: [
         "**/__tests__/*.*",
+        "src/**/*.d.ts",
         "src/pages/*/index.tsx",
         "src/pages/*/App.tsx",
         "src/utils/dayjs.ts",

@@ -104,9 +104,16 @@ export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
       onPrimaryAction={() => void goToTab(tab)}
       secondaryAction={
         showMultiSelect ? (
-          <Checkbox edge="end" onChange={onSelection} checked={selected.includes(tab.id)} />
+          <Checkbox
+            edge="end"
+            onChange={onSelection}
+            checked={selected.includes(tab.id)}
+            aria-label={`Select tab: ${tab.title}`}
+          />
         ) : null
       }
+      aria-label={`Tab: ${tab.title}`}
+      button-aria-label={`Jump to tab: ${tab.title}`}
     >
       <ListItemFavicon url={tab.url} faded={tab.discarded || tab.status === "unloaded"} />
       <ListItemText

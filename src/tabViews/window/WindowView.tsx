@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import ListGroupCard from "src/components/list/ListGroupCard";
 import { useTabGroups, useTabs, useWindow } from "src/contexts/DataProvider";
-import { useFilters, useSearch, useSort } from "src/contexts/FilterProvider";
+import { useFilters, useIsFiltered, useSearch, useSort } from "src/contexts/FilterProvider";
 import { filterSortTabs } from "src/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
@@ -24,6 +24,7 @@ export default function WindowView({
   const win = useWindow(windowId);
   const groups = useTabGroups(windowId);
   const windowTabs = useTabs(windowId);
+  const isFiltered = useIsFiltered();
   const filters = useFilters();
   const sort = useSort();
   const search = useSearch();
@@ -71,6 +72,7 @@ export default function WindowView({
       selected={win.focused}
       cardTitle={`${visibleTabs.length} Tabs`}
       titleTypographyProps={{ variant: "subtitle1" }}
+      list-aria-label={`${win.state} window with ${isFiltered ? `${visibleTabs.length} tabs, filtered` : `${visibleTabs.length} tabs`}`}
     >
       {tabList.map(({ id, tab, group }) => {
         if (group) {

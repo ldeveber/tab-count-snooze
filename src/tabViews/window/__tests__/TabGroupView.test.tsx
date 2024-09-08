@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom/vitest";
 import { mockTab, mockTabGroup } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
@@ -16,44 +15,39 @@ describe("Tab Group View", () => {
 
   test("should render default group name if missing", async () => {
     const group = mockTabGroup({ title: undefined });
+    const tab1 = mockTab({ groupId: group.id });
+    const tab2 = mockTab({ groupId: group.id });
+
     const { getByText, getByRole } = renderWithContext(
-      <TabGroupView group={group} tabs={[mockTab()]} />,
+      <TabGroupView group={group} tabs={[tab1, tab2]} />,
     );
 
     await waitFor(() => {
-      expect(getByText("Tab Group")).toBeVisible();
+      expect(getByText("Tab Group (2)")).toBeVisible();
     });
 
-    expect(getByRole("button", { name: "Tab Group" })).toBeVisible();
+    expect(getByRole("list", { name: "Tab group: Tab Group (2)" })).toBeVisible();
+    expect(getByRole("button", { name: "Show/hide tabs in group: Tab Group (2)" })).toBeEnabled();
+    expect(getByRole("listitem", { name: `Tab: ${tab1.title}` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab2.title}` })).toBeVisible();
   });
 
   test("should group with tabs", async () => {
-    const groupTitle = faker.commerce.productName();
-    const group = mockTabGroup({ title: groupTitle });
+    const group = mockTabGroup();
+    const tab1 = mockTab({ groupId: group.id });
+    const tab2 = mockTab({ groupId: group.id });
 
-    const title1 = faker.commerce.productName();
-    const url1 = faker.internet.url();
-    const tab1 = mockTab({
-      title: title1,
-      url: url1,
-    });
-
-    const title2 = faker.commerce.productName();
-    const url2 = faker.internet.url();
-    const tab2 = mockTab({
-      title: title2,
-      url: url2,
-    });
-
-    const tabs: chrome.tabs.Tab[] = [tab1, tab2];
-    const { getByText, getByRole } = renderWithContext(<TabGroupView group={group} tabs={tabs} />);
+    const { getByText, getByRole } = renderWithContext(
+      <TabGroupView group={group} tabs={[tab1, tab2]} />,
+    );
 
     await waitFor(() => {
-      expect(getByText(groupTitle)).toBeVisible();
+      expect(getByText(group.title)).toBeVisible();
     });
 
-    expect(getByRole("button", { name: `${groupTitle}` })).toBeVisible();
-    expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();
-    expect(getByRole("button", { name: `${title2} ${url2}` })).toBeVisible();
+    expect(getByRole("list", { name: `Tab group: ${group.title}` })).toBeVisible();
+    expect(getByRole("button", { name: `Show/hide tabs in group: ${group.title}` })).toBeEnabled();
+    expect(getByRole("listitem", { name: `Tab: ${tab1.title}` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab2.title}` })).toBeVisible();
   });
 });
