@@ -29,6 +29,7 @@ function FavIcon({
         height: FAVICON_SIZE,
         width: FAVICON_SIZE,
       }}
+      role="none"
     >
       <TabIcon />
     </Avatar>
@@ -44,6 +45,7 @@ export function Loading() {
           height: FAVICON_SIZE,
           width: FAVICON_SIZE,
         }}
+        role="none"
       />
     </Skeleton>
   );
@@ -61,7 +63,7 @@ export default function ListItemFavicon({
   }
 
   return (
-    <ListItemIcon sx={{ minWidth: FAVICON_SIZE }}>
+    <ListItemIcon sx={{ minWidth: FAVICON_SIZE }} role="none">
       <FavIcon url={url} faded={faded} />
     </ListItemIcon>
   );

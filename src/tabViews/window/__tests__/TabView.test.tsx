@@ -1,5 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
+import { useEffect } from "react";
+import { useFilterDispatch } from "src/contexts/FilterProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import { mockTab } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
@@ -9,7 +11,7 @@ import TabView from "../TabView";
 const tabMock = (props?: Partial<chrome.tabs.Tab>) => {
   const initProps: Partial<chrome.tabs.Tab> = {
     status: "complete",
-    title: "Tab Title",
+    title: "Meow Teapot",
     url: "https://http.cat/status/418",
   };
   const keys = Object.keys(TAB_PROPERTIES);
@@ -19,6 +21,18 @@ const tabMock = (props?: Partial<chrome.tabs.Tab>) => {
   });
   return mockTab({ ...initProps, ...props });
 };
+
+function TestWrap({ search, tab }: { search?: string; tab: chrome.tabs.Tab }) {
+  const dispatchFilter = useFilterDispatch();
+
+  useEffect(() => {
+    if (search) {
+      dispatchFilter({ type: "search", search });
+    }
+  }, []);
+
+  return <TabView tab={tab} />;
+}
 
 describe("Tab View", () => {
   test("should not render if tab has no id", async () => {
@@ -33,13 +47,30 @@ describe("Tab View", () => {
   describe("tab states", () => {
     test("should render regular tab", async () => {
       const tab: chrome.tabs.Tab = tabMock({});
-      const { getByText, getByRole } = renderWithContext(<TabView tab={tab} />);
+      const { getByText, getByRole, queryByLabelText } = renderWithContext(<TabView tab={tab} />);
 
       await waitFor(() => {
         expect(getByText(tab.title)).toBeVisible();
       });
 
-      expect(getByRole("button", { name: "Tab Title https://http.cat/status/418" })).toBeVisible();
+      expect(getByRole("listitem", { name: `Tab: ${tab.title}` })).toBeVisible();
+      expect(getByRole("button", { name: `Jump to tab: ${tab.title}` })).toBeEnabled();
+      expect(queryByLabelText(`Select tab: ${tab.title}`)).not.toBeInTheDocument();
+    });
+
+    test("should render tab being filtered", async () => {
+      const tab: chrome.tabs.Tab = tabMock({});
+      const { getByText, getByRole, getByLabelText } = renderWithContext(
+        <TestWrap tab={tab} search="meow" />,
+      );
+
+      await waitFor(() => {
+        expect(getByText(tab.title)).toBeVisible();
+      });
+
+      expect(getByRole("listitem", { name: `Tab: ${tab.title}` })).toBeVisible();
+      expect(getByRole("button", { name: `Jump to tab: ${tab.title}` })).toBeEnabled();
+      expect(getByLabelText(`Select tab: ${tab.title}`)).toBeEnabled();
     });
 
     test.each([
@@ -86,8 +117,7 @@ describe("Tab View", () => {
         expect(getByText(tab.title)).toBeVisible();
       });
 
-      expect(getByRole("button", { name: "Tab Title https://http.cat/status/418" })).toBeVisible();
-      await user.click(getByRole("button", { name: "Tab Title https://http.cat/status/418" }));
+      await user.click(getByRole("button", { name: `Jump to tab: ${tab.title}` }));
 
       expect(chrome.tabs.update).toHaveBeenCalledWith(tab.id, { active: true });
       expect(chrome.windows.update).toHaveBeenCalledWith(tab.windowId, { focused: true });

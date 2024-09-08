@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/vitest";
-import { mockTab, mockTabList } from "test-utils/mockDataHelper";
+import { mockTab } from "test-utils/mockDataHelper";
 import { describe, expect, test } from "vitest";
 import { FILTER_TAB_PROPERTIES, filterSortTabs, filterTabs, sortTabs } from "../filterTabs";
 import { SORT_OPTION } from "../options";
@@ -21,7 +21,7 @@ const tabMock = (props?: Partial<chrome.tabs.Tab>) => {
 describe("filterTabs utils", () => {
   describe("filterTabs", () => {
     test("should return same result if no search or filters", () => {
-      const tabs = mockTabList();
+      const tabs = [mockTab(), mockTab(), mockTab()];
       const res = filterTabs(tabs);
       expect(res).toEqual(tabs);
     });
@@ -33,26 +33,26 @@ describe("filterTabs utils", () => {
 
     describe("search", () => {
       test("should return results that match title", () => {
-        const tabs = [];
-        tabs.push(tabMock({ index: 0 }));
-        tabs.push(tabMock({ index: 1 }));
-        tabs.push(tabMock({ index: 2 }));
-        tabs.push(tabMock({ title: "meow CAT", index: 3 }));
-        tabs.push(tabMock({ index: 4 }));
-        tabs.push(tabMock({ title: "category meow", index: 5 }));
+        const tab1 = tabMock({ index: 0 });
+        const tab2 = tabMock({ index: 1 });
+        const tab3 = tabMock({ index: 2 });
+        const tab4 = tabMock({ index: 3, title: "meow CAT" });
+        const tab5 = tabMock({ index: 4 });
+        const tab6 = tabMock({ index: 5, title: "category meow" });
+        const tabs = [tab1, tab2, tab3, tab4, tab5, tab6];
 
         const res = filterTabs(tabs, "cat");
         expect(res).toEqual([tabs[3], tabs[5]]);
       });
 
       test("should return results that match url", () => {
-        const tabs = [];
-        tabs.push(tabMock({ url: "http://cats.com", index: 0 }));
-        tabs.push(tabMock({ index: 1 }));
-        tabs.push(tabMock({ index: 2 }));
-        tabs.push(tabMock({ url: "http://meow.cats", index: 3 }));
-        tabs.push(tabMock({ index: 4 }));
-        tabs.push(tabMock({ url: "http://i-love-CATS.com", index: 5 }));
+        const tab1 = tabMock({ index: 0, url: "http://cats.com" });
+        const tab2 = tabMock({ index: 1 });
+        const tab3 = tabMock({ index: 2 });
+        const tab4 = tabMock({ index: 3, url: "http://meow.cats" });
+        const tab5 = tabMock({ index: 4 });
+        const tab6 = tabMock({ index: 5, url: "http://i-love-CATS.com" });
+        const tabs = [tab1, tab2, tab3, tab4, tab5, tab6];
 
         const res = filterTabs(tabs, "cats");
         expect(res).toEqual([tabs[0], tabs[3], tabs[5]]);
@@ -61,13 +61,13 @@ describe("filterTabs utils", () => {
 
     describe("filters", () => {
       test("should return tabs with filters", () => {
-        const tabs = [];
-        tabs.push(tabMock({ pinned: false, index: 0 }));
-        tabs.push(tabMock({ pinned: false, index: 1 }));
-        tabs.push(tabMock({ pinned: false, index: 2 }));
-        tabs.push(tabMock({ pinned: true, index: 3 }));
-        tabs.push(tabMock({ pinned: false, index: 4 }));
-        tabs.push(tabMock({ pinned: true, index: 5 }));
+        const tab1 = tabMock({ index: 0, pinned: false });
+        const tab2 = tabMock({ index: 1, pinned: false });
+        const tab3 = tabMock({ index: 2, pinned: false });
+        const tab4 = tabMock({ index: 3, pinned: true });
+        const tab5 = tabMock({ index: 4, pinned: false });
+        const tab6 = tabMock({ index: 5, pinned: true });
+        const tabs = [tab1, tab2, tab3, tab4, tab5, tab6];
 
         const res = filterTabs(tabs, undefined, [FILTER_TAB_PROPERTIES.Pinned]);
 
@@ -75,13 +75,13 @@ describe("filterTabs utils", () => {
       });
 
       test("should handle discarded/unloaded tabs", () => {
-        const tabs = [];
-        tabs.push(tabMock({ status: "complete", discarded: false, index: 0 }));
-        tabs.push(tabMock({ status: "complete", discarded: false, index: 1 }));
-        tabs.push(tabMock({ status: "complete", discarded: false, index: 2 }));
-        tabs.push(tabMock({ status: "unloaded", discarded: false, index: 3 }));
-        tabs.push(tabMock({ status: "complete", discarded: false, index: 4 }));
-        tabs.push(tabMock({ status: "complete", discarded: true, index: 5 }));
+        const tab1 = tabMock({ index: 0, status: "complete", discarded: false });
+        const tab2 = tabMock({ index: 1, status: "complete", discarded: false });
+        const tab3 = tabMock({ index: 2, status: "complete", discarded: false });
+        const tab4 = tabMock({ index: 3, status: "unloaded", discarded: false });
+        const tab5 = tabMock({ index: 4, status: "complete", discarded: false });
+        const tab6 = tabMock({ index: 5, status: "complete", discarded: true });
+        const tabs = [tab1, tab2, tab3, tab4, tab5, tab6];
 
         const res = filterTabs(tabs, undefined, [FILTER_TAB_PROPERTIES.Discarded]);
 
@@ -100,9 +100,9 @@ describe("filterTabs utils", () => {
     });
 
     test("should sort by last accessed", () => {
-      const tab1 = mockTab({ lastAccessed: 2222222222222 });
-      const tab2 = mockTab({ lastAccessed: 3333333333333 });
-      const tab3 = mockTab({ lastAccessed: 1111111111111 });
+      const tab1 = mockTab({ index: 0, lastAccessed: 2222222222222 });
+      const tab2 = mockTab({ index: 1, lastAccessed: 3333333333333 });
+      const tab3 = mockTab({ index: 2, lastAccessed: 1111111111111 });
       const res = sortTabs([tab1, tab2, tab3], SORT_OPTION.LastAccessed);
       expect(res).toEqual([tab2, tab1, tab3]);
     });

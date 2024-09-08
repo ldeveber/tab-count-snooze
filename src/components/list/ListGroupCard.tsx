@@ -9,8 +9,8 @@ import MuiCardHeader, {
   type CardHeaderProps as MuiCardHeaderProps,
 } from "@mui/material/CardHeader";
 import Collapse from "@mui/material/Collapse";
-import List from "@mui/material/List";
-import { ListItemTextProps } from "@mui/material/ListItemText";
+import List, { type ListProps } from "@mui/material/List";
+import { type ListItemTextProps } from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import { ReactNode, useState } from "react";
 
@@ -79,6 +79,7 @@ type ListGroupCardProps = CardProps & {
   cardTitle?: ReactNode;
   titleTypographyProps?: CardHeaderProps["titleTypographyProps"];
   selected?: boolean;
+  "list-aria-label"?: ListProps["aria-label"];
 };
 export default function ListGroupCard({
   children,
@@ -88,6 +89,7 @@ export default function ListGroupCard({
   cardTitle,
   selected,
   titleTypographyProps,
+  "list-aria-label": listAriaLabel,
   ...props
 }: ListGroupCardProps) {
   const [open, setOpen] = useState(collapsible ? initOpen : true);
@@ -112,7 +114,9 @@ export default function ListGroupCard({
       />
       <CardContent sx={{ p: 0 }}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <List dense>{children}</List>
+          <List dense aria-label={listAriaLabel}>
+            {children}
+          </List>
         </Collapse>
       </CardContent>
     </Card>

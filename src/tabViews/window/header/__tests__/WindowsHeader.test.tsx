@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
 import { useSelectedTabsDispatch } from "src/contexts/FilterProvider";
 import chromeMock from "test-utils/chromeMock";
-import { mockTab, mockTabList, mockWindowList } from "test-utils/mockDataHelper";
+import { mockTab, mockWindow } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
 import { describe, expect, test, vi } from "vitest";
 import WindowsHeader from "../WindowsHeader";
@@ -33,14 +33,14 @@ describe("Windows Header", () => {
   });
 
   test("should render header", async () => {
-    chromeMock.windows.getAll.mockResolvedValue(mockWindowList(3));
-    chromeMock.tabs.query.mockResolvedValue(mockTabList(6));
+    chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
+    chromeMock.tabs.query.mockResolvedValue([mockTab(), mockTab(), mockTab(), mockTab()]);
     vi.stubGlobal("chrome", chromeMock);
 
     const { getByLabelText, getByRole, queryByRole } = renderWithContext(<WindowsHeader />);
 
     await waitFor(() => {
-      expect(getByLabelText("6 Tabs across 3 Windows")).toBeVisible();
+      expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
     });
 
     expect(getByRole("textbox", { name: "Search" })).toHaveValue("");
@@ -51,17 +51,22 @@ describe("Windows Header", () => {
 
   test("should handle search", async () => {
     const user = userEvent.setup();
-    chromeMock.windows.getAll.mockResolvedValue(mockWindowList(3));
-    chromeMock.tabs.query.mockResolvedValue([mockTab({ title: "meow" }), ...mockTabList(5)]);
+    chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
+    chromeMock.tabs.query.mockResolvedValue([
+      mockTab({ title: "meow" }),
+      mockTab({ title: "no", url: "no" }),
+      mockTab({ title: "no", url: "no" }),
+      mockTab({ title: "no", url: "no" }),
+    ]);
     vi.stubGlobal("chrome", chromeMock);
 
     const { getByLabelText, getByRole, getByText } = renderWithContext(<WindowsHeader />);
     await waitFor(() => {
-      expect(getByLabelText("6 Tabs across 3 Windows")).toBeVisible();
+      expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
     });
 
     expect(getByRole("textbox", { name: "Search" })).toHaveValue("");
-    expect(getByText("6 Tabs across 3 Windows")).toBeVisible();
+    expect(getByText("4 Tabs across 2 Windows")).toBeVisible();
 
     await user.type(getByRole("textbox", { name: "Search" }), "meow");
 
@@ -73,15 +78,18 @@ describe("Windows Header", () => {
   describe("bulk actions", () => {
     test("should enable if there are tabs selected", async () => {
       const user = userEvent.setup();
-      chromeMock.windows.getAll.mockResolvedValue(mockWindowList(3));
-      chromeMock.tabs.query.mockResolvedValue([mockTab({ title: "meow" }), ...mockTabList(5)]);
+      chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
+      chromeMock.tabs.query.mockResolvedValue([
+        mockTab({ title: "meow" }),
+        mockTab({ title: "no", url: "no" }),
+        mockTab({ title: "no", url: "no" }),
+        mockTab({ title: "no", url: "no" }),
+      ]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[1, 2, 3]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<TestWrap selectedTabs={[1]} />);
       await waitFor(() => {
-        expect(getByLabelText("6 Tabs across 3 Windows")).toBeVisible();
+        expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
 
       await user.type(getByRole("textbox", { name: "Search" }), "meow");
@@ -92,55 +100,47 @@ describe("Windows Header", () => {
 
     test("should handle group tabs", async () => {
       const user = userEvent.setup();
-      chromeMock.windows.getAll.mockResolvedValue(mockWindowList(3));
+      chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
       chromeMock.tabs.query.mockResolvedValue([
         mockTab({ id: 1, title: "meow" }),
         mockTab({ id: 2, title: "meow" }),
-        mockTab({ id: 3, title: "meow" }),
-        mockTab({ id: 4, title: "meow" }),
-        mockTab({ id: 5, title: "no", url: "no" }),
-        mockTab({ id: 6, title: "no", url: "no" }),
+        mockTab({ id: 3, title: "no", url: "no" }),
+        mockTab({ id: 4, title: "no", url: "no" }),
       ]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[1, 2, 3, 4]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<TestWrap selectedTabs={[1, 2]} />);
       await waitFor(() => {
-        expect(getByLabelText("6 Tabs across 3 Windows")).toBeVisible();
+        expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
 
       await user.type(getByRole("textbox", { name: "Search" }), "meow");
       await user.click(getByRole("button", { name: "Group Tabs" }));
 
-      expect(chrome.tabs.group).toHaveBeenCalledWith({ tabIds: [1, 2, 3, 4] });
+      expect(chrome.tabs.group).toHaveBeenCalledWith({ tabIds: [1, 2] });
       expect(chrome.tabGroups.update).toHaveBeenCalledWith(expect.any(Number), { title: "meow" });
     });
 
     test("should handle close tabs", async () => {
       const user = userEvent.setup();
-      chromeMock.windows.getAll.mockResolvedValue(mockWindowList(3));
+      chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
       chromeMock.tabs.query.mockResolvedValue([
         mockTab({ id: 1, title: "meow" }),
         mockTab({ id: 2, title: "meow" }),
-        mockTab({ id: 3, title: "meow" }),
-        mockTab({ id: 4, title: "meow" }),
-        mockTab({ id: 5, title: "no", url: "no" }),
-        mockTab({ id: 6, title: "no", url: "no" }),
+        mockTab({ id: 3, title: "no", url: "no" }),
+        mockTab({ id: 4, title: "no", url: "no" }),
       ]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[1, 2, 3, 4]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<TestWrap selectedTabs={[1, 2]} />);
       await waitFor(() => {
-        expect(getByLabelText("6 Tabs across 3 Windows")).toBeVisible();
+        expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
 
       await user.type(getByRole("textbox", { name: "Search" }), "meow");
       await user.click(getByRole("button", { name: "Close Tabs" }));
 
-      expect(chrome.tabs.remove).toHaveBeenCalledWith([1, 2, 3, 4]);
+      expect(chrome.tabs.remove).toHaveBeenCalledWith([1, 2]);
     });
   });
 });

@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import "@testing-library/jest-dom/vitest";
 import chromeMock from "test-utils/chromeMock";
 import { mockTab, mockTabGroup, mockWindow } from "test-utils/mockDataHelper";
@@ -27,14 +26,7 @@ describe("Window View", () => {
 
   test("should render window with one tab", async () => {
     const win: chrome.windows.Window = mockWindow({});
-
-    const title = faker.commerce.productName();
-    const url = faker.internet.url();
-    const tab = mockTab({
-      windowId: win.id,
-      title,
-      url,
-    });
+    const tab = mockTab({ windowId: win.id });
 
     chromeMock.windows.getAll.mockResolvedValue([win]);
     chromeMock.tabs.query.mockResolvedValue([tab]);
@@ -44,27 +36,15 @@ describe("Window View", () => {
     await waitFor(() => {
       expect(getByRole("list")).toBeVisible();
     });
-    expect(getByRole("button", { name: `${title} ${url}` })).toBeVisible();
+    // FIXME: plurals??
+    expect(getByRole("list", { name: `${win.state} window with 1 tabs` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab.title}` })).toBeVisible();
   });
 
   test("should render window with multiple tabs", async () => {
-    const win: chrome.windows.Window = mockWindow({});
-
-    const title1 = faker.commerce.productName();
-    const url1 = faker.internet.url();
-    const tab1 = mockTab({
-      windowId: win.id,
-      title: title1,
-      url: url1,
-    });
-
-    const title2 = faker.commerce.productName();
-    const url2 = faker.internet.url();
-    const tab2 = mockTab({
-      windowId: win.id,
-      title: title2,
-      url: url2,
-    });
+    const win = mockWindow({});
+    const tab1 = mockTab({ windowId: win.id });
+    const tab2 = mockTab({ windowId: win.id });
 
     chromeMock.windows.getAll.mockResolvedValue([win]);
     chromeMock.tabs.query.mockResolvedValue([tab1, tab2]);
@@ -75,43 +55,18 @@ describe("Window View", () => {
     await waitFor(() => {
       expect(getByRole("button", { name: "2 Tabs" })).toBeVisible();
     });
-    expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();
-    expect(getByRole("button", { name: `${title2} ${url2}` })).toBeVisible();
+    expect(getByRole("list", { name: `${win.state} window with 2 tabs` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab1.title}` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab2.title}` })).toBeVisible();
     expect(getAllByRole("button")).toHaveLength(3);
   });
 
   test("should render window with tab group with multiple tabs", async () => {
-    const win: chrome.windows.Window = mockWindow({});
-
-    const groupTitle = faker.commerce.productName();
-    const group = mockTabGroup({ title: groupTitle, windowId: win.id });
-
-    const title1 = faker.commerce.productName();
-    const url1 = faker.internet.url();
-    const tab1 = mockTab({
-      title: title1,
-      url: url1,
-      windowId: win.id,
-      groupId: -2,
-    });
-
-    const title2 = faker.commerce.productName();
-    const url2 = faker.internet.url();
-    const tab2 = mockTab({
-      title: title2,
-      url: url2,
-      windowId: win.id,
-      groupId: group.id,
-    });
-
-    const title3 = faker.commerce.productName();
-    const url3 = faker.internet.url();
-    const tab3 = mockTab({
-      title: title3,
-      url: url3,
-      windowId: win.id,
-      groupId: group.id,
-    });
+    const win = mockWindow();
+    const group = mockTabGroup({ windowId: win.id });
+    const tab1 = mockTab({ windowId: win.id, groupId: -2 });
+    const tab2 = mockTab({ windowId: win.id, groupId: group.id });
+    const tab3 = mockTab({ windowId: win.id, groupId: group.id });
 
     chromeMock.windows.getAll.mockResolvedValue([win]);
     chromeMock.tabGroups.query.mockResolvedValue([group]);
@@ -124,11 +79,11 @@ describe("Window View", () => {
       expect(getByRole("button", { name: "3 Tabs" })).toBeVisible();
     });
 
-    expect(getByRole("button", { name: `${title1} ${url1}` })).toBeVisible();
-    expect(getByRole("button", { name: `${groupTitle}` })).toBeVisible();
-
-    expect(getByRole("button", { name: `${title2} ${url2}` })).toBeVisible();
-    expect(getByRole("button", { name: `${title3} ${url3}` })).toBeVisible();
+    expect(getByRole("list", { name: `${win.state} window with 3 tabs` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab1.title}` })).toBeVisible();
+    expect(getByRole("list", { name: `Tab group: ${group.title}` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab2.title}` })).toBeVisible();
+    expect(getByRole("listitem", { name: `Tab: ${tab3.title}` })).toBeVisible();
 
     expect(getAllByRole("button")).toHaveLength(5);
   });

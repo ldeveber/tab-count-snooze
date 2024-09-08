@@ -3,7 +3,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import PieChartIcon from "@mui/icons-material/PieChart";
 import SettingsIcon from "@mui/icons-material/Settings";
 import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import IconButton from "@mui/material/IconButton";
 import MuiPaper from "@mui/material/Paper";
 import Slider from "@mui/material/Slider";
@@ -128,10 +128,10 @@ export default function Charts() {
                   Match Depth
                 </Typography>
                 <Grid container spacing={2} alignItems="center">
-                  <Grid item>
+                  <Grid>
                     <AutoAwesomeMotionIcon />
                   </Grid>
-                  <Grid item xs>
+                  <Grid size={{ xs: 1 }}>
                     <Slider
                       value={urlDepth}
                       min={0}

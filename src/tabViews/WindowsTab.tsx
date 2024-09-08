@@ -60,7 +60,7 @@ export default function WindowsTab() {
           ))}
           {minimized.length > 0 && (
             <Stack spacing={2}>
-              <Divider>Minimized</Divider>
+              <Divider aria-label="Minimized Windows">Minimized</Divider>
               {minimized.map((w) => (
                 <Grid size={{ xs: 1 }} key={w.id}>
                   <WindowView windowId={w.id} />

@@ -1,5 +1,7 @@
-import MuiListItem, { type ListItemProps } from "@mui/material/ListItem";
-import MuiListItemButton, { type ListItemButtonProps } from "@mui/material/ListItemButton";
+import MuiListItem, { type ListItemProps as MuiListItemProps } from "@mui/material/ListItem";
+import MuiListItemButton, {
+  type ListItemButtonProps as MuiListItemButtonProps,
+} from "@mui/material/ListItemButton";
 import { styled } from "@mui/material/styles";
 import { forwardRef } from "react";
 
@@ -19,22 +21,31 @@ const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
   },
 }));
 
-export default forwardRef<
-  HTMLLIElement,
+export interface ListItemProps extends MuiListItemProps {
+  primaryActionTitle?: MuiListItemButtonProps["title"];
+  onPrimaryAction?: MuiListItemButtonProps["onClick"];
+  selected?: MuiListItemButtonProps["selected"];
+  "button-aria-label"?: MuiListItemButtonProps["aria-label"];
+}
+export default forwardRef<HTMLLIElement, ListItemProps>(function ListItem(
   {
-    children: ListItemButtonProps["children"];
-    primaryActionTitle?: ListItemButtonProps["title"];
-    onPrimaryAction?: ListItemButtonProps["onClick"];
-    secondaryAction?: ListItemProps["secondaryAction"];
-    selected?: ListItemButtonProps["selected"];
-  }
->(function ListItem(
-  { children, primaryActionTitle, onPrimaryAction, secondaryAction, selected },
+    children,
+    primaryActionTitle,
+    onPrimaryAction,
+    selected,
+    "button-aria-label": buttonAriaLabel,
+    ...props
+  },
   ref,
 ) {
   return (
-    <StyledListItem ref={ref} secondaryAction={secondaryAction}>
-      <ListItemButton selected={selected} onClick={onPrimaryAction} title={primaryActionTitle}>
+    <StyledListItem ref={ref} {...props}>
+      <ListItemButton
+        selected={selected}
+        onClick={onPrimaryAction}
+        title={primaryActionTitle}
+        aria-label={buttonAriaLabel}
+      >
         {children}
       </ListItemButton>
     </StyledListItem>
