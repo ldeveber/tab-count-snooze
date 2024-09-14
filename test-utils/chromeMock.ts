@@ -8,8 +8,8 @@ const chromeMock = {
   storage: {
     sync: {
       onChanged: {
-        addListener: vi.fn(), //.mockResolvedValue(),
-        removeListener: vi.fn(), //.mockResolvedValue(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
       },
       clear: vi.fn(),
       get: vi.fn().mockImplementation((defaultValue) => Promise.resolve(defaultValue)),
@@ -19,16 +19,16 @@ const chromeMock = {
   },
   tabs: {
     onCreated: {
-      addListener: vi.fn(), //.mockResolvedValue(),
-      removeListener: vi.fn(), //.mockResolvedValue(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
     },
     onUpdated: {
-      addListener: vi.fn(), //.mockResolvedValue(),
-      removeListener: vi.fn(), //.mockResolvedValue(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
     },
     onRemoved: {
-      addListener: vi.fn(), //.mockResolvedValue(),
-      removeListener: vi.fn(), //.mockResolvedValue(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
     },
     group: vi.fn().mockReturnValue(Promise.resolve(faker.number.int())),
     update: vi.fn(),
@@ -44,12 +44,12 @@ const chromeMock = {
       id: "focused-window-id",
     }),
     onCreated: {
-      addListener: vi.fn(), //.mockResolvedValue(),
-      removeListener: vi.fn(), //.mockResolvedValue(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
     },
     onRemoved: {
-      addListener: vi.fn(), //.mockResolvedValue(),
-      removeListener: vi.fn(), //.mockResolvedValue(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
     },
     getAll: vi.fn<typeof chrome.windows.getAll>().mockResolvedValue([]),
     update: vi.fn<typeof chrome.windows.update>(),

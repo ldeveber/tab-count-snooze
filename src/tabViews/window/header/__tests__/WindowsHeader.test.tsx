@@ -79,15 +79,16 @@ describe("Windows Header", () => {
     test("should enable if there are tabs selected", async () => {
       const user = userEvent.setup();
       chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
-      chromeMock.tabs.query.mockResolvedValue([
-        mockTab({ title: "meow" }),
-        mockTab({ title: "no", url: "no" }),
-        mockTab({ title: "no", url: "no" }),
-        mockTab({ title: "no", url: "no" }),
-      ]);
+      const tab1 = mockTab({ title: "meow" });
+      const tab2 = mockTab({ title: "no", url: "no" });
+      const tab3 = mockTab({ title: "no", url: "no" });
+      const tab4 = mockTab({ title: "no", url: "no" });
+      chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(<TestWrap selectedTabs={[1]} />);
+      const { getByLabelText, getByRole } = renderWithContext(
+        <TestWrap selectedTabs={[tab1.id]} />,
+      );
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -101,15 +102,16 @@ describe("Windows Header", () => {
     test("should handle group tabs", async () => {
       const user = userEvent.setup();
       chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
-      chromeMock.tabs.query.mockResolvedValue([
-        mockTab({ id: 1, title: "meow" }),
-        mockTab({ id: 2, title: "meow" }),
-        mockTab({ id: 3, title: "no", url: "no" }),
-        mockTab({ id: 4, title: "no", url: "no" }),
-      ]);
+      const tab1 = mockTab({ title: "meow" });
+      const tab2 = mockTab({ title: "meow" });
+      const tab3 = mockTab({ title: "no", url: "no" });
+      const tab4 = mockTab({ title: "no", url: "no" });
+      chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(<TestWrap selectedTabs={[1, 2]} />);
+      const { getByLabelText, getByRole } = renderWithContext(
+        <TestWrap selectedTabs={[tab1.id, tab2.id]} />,
+      );
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -117,22 +119,23 @@ describe("Windows Header", () => {
       await user.type(getByRole("textbox", { name: "Search" }), "meow");
       await user.click(getByRole("button", { name: "Group Tabs" }));
 
-      expect(chrome.tabs.group).toHaveBeenCalledWith({ tabIds: [1, 2] });
+      expect(chrome.tabs.group).toHaveBeenCalledWith({ tabIds: [tab1.id, tab2.id] });
       expect(chrome.tabGroups.update).toHaveBeenCalledWith(expect.any(Number), { title: "meow" });
     });
 
     test("should handle close tabs", async () => {
       const user = userEvent.setup();
       chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
-      chromeMock.tabs.query.mockResolvedValue([
-        mockTab({ id: 1, title: "meow" }),
-        mockTab({ id: 2, title: "meow" }),
-        mockTab({ id: 3, title: "no", url: "no" }),
-        mockTab({ id: 4, title: "no", url: "no" }),
-      ]);
+      const tab1 = mockTab({ title: "meow" });
+      const tab2 = mockTab({ title: "meow" });
+      const tab3 = mockTab({ title: "no", url: "no" });
+      const tab4 = mockTab({ title: "no", url: "no" });
+      chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(<TestWrap selectedTabs={[1, 2]} />);
+      const { getByLabelText, getByRole } = renderWithContext(
+        <TestWrap selectedTabs={[tab1.id, tab2.id]} />,
+      );
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -140,7 +143,7 @@ describe("Windows Header", () => {
       await user.type(getByRole("textbox", { name: "Search" }), "meow");
       await user.click(getByRole("button", { name: "Close Tabs" }));
 
-      expect(chrome.tabs.remove).toHaveBeenCalledWith([1, 2]);
+      expect(chrome.tabs.remove).toHaveBeenCalledWith([tab1.id, tab2.id]);
     });
   });
 });

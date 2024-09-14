@@ -9,17 +9,17 @@ import WindowsTab from "../WindowsTab";
 describe("Windows Tab", () => {
   test("should render initial tab content", async () => {
     const win1 = mockWindow({ id: 1, state: "normal" });
-    const group1 = mockTabGroup({ id: 11, windowId: win1.id });
-    const tab1 = mockTab({ id: 2, windowId: win1.id, groupId: group1.id });
-    const tab2 = mockTab({ id: 3, windowId: win1.id, groupId: group1.id });
-    const tab3 = mockTab({ id: 4, windowId: win1.id });
+    const group1 = mockTabGroup({ id: 111, windowId: win1.id });
+    const tab1 = mockTab({ id: 10, windowId: win1.id, groupId: group1.id });
+    const tab2 = mockTab({ id: 11, windowId: win1.id, groupId: group1.id });
+    const tab3 = mockTab({ id: 12, windowId: win1.id });
 
-    const win2 = mockWindow({ id: 5, state: "normal" });
-    const tab4 = mockTab({ id: 6, windowId: win2.id });
-    const tab5 = mockTab({ id: 7, windowId: win2.id });
+    const win2 = mockWindow({ id: 2, state: "normal" });
+    const tab4 = mockTab({ id: 20, windowId: win2.id });
+    const tab5 = mockTab({ id: 21, windowId: win2.id });
 
-    const win3 = mockWindow({ id: 8, state: "minimized" });
-    const tab6 = mockTab({ id: 9, windowId: win3.id });
+    const win3 = mockWindow({ id: 3, state: "minimized" });
+    const tab6 = mockTab({ id: 30, windowId: win3.id });
 
     chromeMock.windows.getAll.mockResolvedValue([win1, win2, win3]);
     chromeMock.tabGroups.query.mockResolvedValue([group1]);
@@ -56,10 +56,10 @@ describe("Windows Tab", () => {
     const user = userEvent.setup();
 
     const win1 = mockWindow({ id: 1, state: "normal" });
-    const group1 = mockTabGroup({ id: 10, windowId: win1.id });
-    const tab1 = mockTab({ id: 11, title: "meow 1", windowId: win1.id, groupId: group1.id });
-    const tab2 = mockTab({ id: 12, title: "meow 2", windowId: win1.id, groupId: group1.id });
-    const tab3 = mockTab({ id: 13, title: "no", windowId: win1.id });
+    const group1 = mockTabGroup({ id: 111, windowId: win1.id });
+    const tab1 = mockTab({ id: 10, title: "meow 1", windowId: win1.id, groupId: group1.id });
+    const tab2 = mockTab({ id: 11, title: "meow 2", windowId: win1.id, groupId: group1.id });
+    const tab3 = mockTab({ id: 12, title: "no", windowId: win1.id });
 
     const win2 = mockWindow({ id: 2, state: "normal" });
     const tab4 = mockTab({ id: 21, windowId: win2.id });
