@@ -97,9 +97,6 @@ export default function DataProvider({
 export function useDataDispatch() {
   return useContext(DataDispatchContext);
 }
-export function useDataContext() {
-  return useContext(DataContext);
-}
 
 /**
  * @deprecated use `useDataDispatch` instead
@@ -113,3 +110,23 @@ export const useSelectedTabsDispatch = useDataDispatch;
  * @deprecated use `useDataDispatch` instead
  */
 export const useSortDispatch = useDataDispatch;
+
+function useDataContext() {
+  return useContext(DataContext);
+}
+
+export function useDisplayContext() {
+  return useDataContext().display;
+}
+
+export function useTabsContext() {
+  return useDataContext().tabs;
+}
+
+export function useTabGroupsContext() {
+  return useDataContext().tabGroups;
+}
+
+export function useWindowsContext() {
+  return useDataContext().windows;
+}

@@ -1,8 +1,11 @@
-import { useDataContext } from "./DataProvider";
+import {
+  useDisplayContext,
+  useTabGroupsContext,
+  useTabsContext,
+  useWindowsContext,
+} from "./DataProvider";
 
 // -- Display -------------------------------------------------------------- //
-
-const useDisplayContext = () => useDataContext().display;
 
 export function useIsFiltered() {
   const context = useDisplayContext();
@@ -31,8 +34,6 @@ export function useSort() {
 
 // -- Windows -------------------------------------------------------------- //
 
-const useWindowsContext = () => useDataContext().windows;
-
 export function useWindows() {
   const arr = [];
   useWindowsContext().map.forEach((w) => arr.push(w));
@@ -46,8 +47,6 @@ export function useWindow(windowId: number) {
 }
 
 // -- Tab Groups ----------------------------------------------------------- //
-
-const useTabGroupsContext = () => useDataContext().tabGroups;
 
 export function useTabGroups(windowId?: number) {
   const arr = [];
@@ -65,8 +64,6 @@ export function useTabGroup(tabGroupId: number) {
 }
 
 // -- Tabs ----------------------------------------------------------------- //
-
-const useTabsContext = () => useDataContext().tabs;
 
 export function useAllTabs() {
   const arr = [];
