@@ -15,6 +15,35 @@ export const useSelectedTabsDispatch = useDataDispatch;
  */
 export const useSortDispatch = useDataDispatch;
 
+// -- Display -------------------------------------------------------------- //
+
+const useDisplayContext = () => useDataContext().display;
+
+export function useIsFiltered() {
+  const context = useDisplayContext();
+  return (
+    context.filters.dupes ||
+    context.filters.properties.length > 0 ||
+    context.filters.search.length > 0
+  );
+}
+
+export function useFilters() {
+  return useDisplayContext().filters.properties;
+}
+
+export function useSearch() {
+  return useDisplayContext().filters.search;
+}
+
+export function useDuplicateFilter() {
+  return useDisplayContext().filters.dupes;
+}
+
+export function useSort() {
+  return useDisplayContext().sort.key;
+}
+
 // -- Windows -------------------------------------------------------------- //
 
 const useWindowsContext = () => useDataContext().windows;
@@ -77,33 +106,4 @@ export function useTab(tabId: number) {
 
 export function useSelectedTabs() {
   return useTabsContext().selectedTabIds;
-}
-
-// -- Display -------------------------------------------------------------- //
-
-const useDislayContext = () => useDataContext().display;
-
-export function useIsFiltered() {
-  const context = useDislayContext();
-  return (
-    context.filters.dupes ||
-    context.filters.properties.length > 0 ||
-    context.filters.search.length > 0
-  );
-}
-
-export function useFilters() {
-  return useDislayContext().filters.properties;
-}
-
-export function useSearch() {
-  return useDislayContext().filters.search;
-}
-
-export function useDuplicateFilter() {
-  return useDislayContext().filters.dupes;
-}
-
-export function useSort() {
-  return useDislayContext().sort.key;
 }
