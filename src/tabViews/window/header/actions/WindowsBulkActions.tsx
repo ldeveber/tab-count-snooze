@@ -2,7 +2,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MergeTypeIcon from "@mui/icons-material/MergeType";
 import Stack from "@mui/material/Stack";
 import { MouseEventHandler, useMemo } from "react";
-import { useAllTabs, useFilters, useSearch, useSelectedTabs } from "src/contexts/selectors";
+import { useAllTabs, useFilters, useSearch, useSelectedTabs } from "src/contexts";
 import { closeTabs, groupTabs, type TabIdType } from "src/utils/chrome";
 import { filterTabs } from "src/utils/filterTabs";
 import TooltipButton from "./TooltipButton";

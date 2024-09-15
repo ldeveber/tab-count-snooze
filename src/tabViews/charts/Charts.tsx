@@ -16,7 +16,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { ChartData } from "chart.js";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
-import { useAllTabs, useFilters } from "src/contexts/selectors";
+import { useAllTabs, useFilters } from "src/contexts";
 import { getChartData } from "src/utils/chartjs";
 import { groupTabs } from "src/utils/chrome";
 import ChartPane, { type ChartViewType } from "./ChartPane";

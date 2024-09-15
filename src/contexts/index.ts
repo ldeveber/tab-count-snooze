@@ -1,4 +1,4 @@
-import { useDataContext } from "../DataProvider";
+import { useDataContext } from "./DataProvider";
 
 // -- Display -------------------------------------------------------------- //
 
