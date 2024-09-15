@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useDataDispatch } from "src/contexts/DataProvider";
+import { useDataDispatch } from "./contexts/DataProvider";
 
 export default function DataHandler() {
   const dispatch = useDataDispatch();
 
   useEffect(() => {
-    void chrome.windows.getAll().then((windows) => {
-      dispatch({ type: "setWindows", windows });
+    void chrome.windows.getAll().then((wins) => {
+      dispatch({ type: "setWindows", wins });
     });
   }, []);
 

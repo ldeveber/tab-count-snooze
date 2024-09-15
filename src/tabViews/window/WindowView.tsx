@@ -1,7 +1,14 @@
 import { useMemo } from "react";
 import ListGroupCard from "src/components/list/ListGroupCard";
-import { useTabGroups, useTabs, useWindow } from "src/contexts/DataProvider";
-import { useFilters, useIsFiltered, useSearch, useSort } from "src/contexts/FilterProvider";
+import {
+  useFilters,
+  useIsFiltered,
+  useSearch,
+  useSort,
+  useTabGroups,
+  useTabs,
+  useWindow,
+} from "src/contexts";
 import { filterSortTabs } from "src/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";

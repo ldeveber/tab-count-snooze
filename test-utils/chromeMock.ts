@@ -30,7 +30,7 @@ const chromeMock = {
       addListener: vi.fn(),
       removeListener: vi.fn(),
     },
-    group: vi.fn().mockReturnValue(Promise.resolve(faker.number.int())),
+    group: vi.fn().mockResolvedValue(faker.number.int()),
     update: vi.fn(),
     remove: vi.fn(),
     query: vi.fn<typeof chrome.tabs.query>().mockResolvedValue([]),

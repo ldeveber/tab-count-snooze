@@ -11,8 +11,8 @@ import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
 import Tooltip from "@mui/material/Tooltip";
 import { MouseEvent, ReactNode, SyntheticEvent, useMemo, useRef, useState } from "react";
-import { useAllTabs } from "src/contexts/DataProvider";
-import { useFilterDispatch } from "src/contexts/FilterProvider";
+import { useAllTabs } from "src/contexts";
+import { useFilterDispatch } from "src/contexts/DataProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import { FILTER_TAB_PROPERTIES } from "src/utils/filterTabs";
 import TabPropertyIcon, { getTabPropertyLabel } from "../TabPropertyIcon";
@@ -50,7 +50,7 @@ export default function WindowsFilter() {
       values = [...filters, value];
     }
     setFilters(values);
-    dispatchFilters({ type: "update", filters: values });
+    dispatchFilters({ type: "filter", properties: values });
   };
 
   const filterOptions: MenuOptionsType[] = useMemo(

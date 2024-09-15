@@ -4,11 +4,8 @@ import ListItemText from "@mui/material/ListItemText";
 import { ChangeEvent, useRef } from "react";
 import ListItem from "src/components/list/ListItem";
 import ListItemFavicon from "src/components/list/ListItemFavicon";
-import {
-  useIsFiltered,
-  useSelectedTabs,
-  useSelectedTabsDispatch,
-} from "src/contexts/FilterProvider";
+import { useIsFiltered, useSelectedTabs } from "src/contexts";
+import { useSelectedTabsDispatch } from "src/contexts/DataProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon from "./TabPropertyIcon";
 

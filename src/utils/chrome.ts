@@ -8,8 +8,8 @@ export enum TAB_PROPERTIES {
 }
 export type TabIdType = Required<chrome.tabs.Tab>["id"];
 
-export async function closeTabs(tabIds: number[]) {
-  await chrome.tabs.remove(tabIds);
+export async function closeTabs(tabIds: ReadonlyArray<TabIdType>) {
+  await chrome.tabs.remove(tabIds as number[]);
 }
 
 export async function groupTabs(tabIds: number | [number, ...number[]], title: string) {

@@ -1,6 +1,5 @@
 import CircularProgress from "@mui/material/CircularProgress";
-import { useTabCount, useWindowCount } from "src/contexts/DataProvider";
-import FilterProvider from "src/contexts/FilterProvider";
+import { useTabCount, useWindowCount } from "src/contexts";
 import Charts from "./charts/Charts";
 
 export default function ChartsTab() {
@@ -11,9 +10,5 @@ export default function ChartsTab() {
     return <CircularProgress />;
   }
 
-  return (
-    <FilterProvider>
-      <Charts />
-    </FilterProvider>
-  );
+  return <Charts />;
 }

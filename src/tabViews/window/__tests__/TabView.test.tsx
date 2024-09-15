@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
-import { useFilterDispatch } from "src/contexts/FilterProvider";
+import { useFilterDispatch } from "src/contexts/DataProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import { mockTab } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
