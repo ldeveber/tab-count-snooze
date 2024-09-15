@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
-import { useDataDispatch } from "src/contexts/dataSelectors";
+import { useDataDispatch } from "src/contexts/DataProvider";
 import chromeMock from "test-utils/chromeMock";
 import { mockTab, mockWindow } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";

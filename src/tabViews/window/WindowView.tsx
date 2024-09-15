@@ -8,7 +8,7 @@ import {
   useTabGroups,
   useTabs,
   useWindow,
-} from "src/contexts/dataSelectors";
+} from "src/contexts/selectors";
 import { filterSortTabs } from "src/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";

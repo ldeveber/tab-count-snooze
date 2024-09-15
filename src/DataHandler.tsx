@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDataDispatch } from "./contexts/dataSelectors";
+import { useDataDispatch } from "./contexts/DataProvider";
 
 export default function DataHandler() {
   const dispatch = useDataDispatch();

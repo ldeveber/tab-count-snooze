@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
-import { useTabCount, useWindowCount, useWindows } from "src/contexts/dataSelectors";
+import { useTabCount, useWindowCount, useWindows } from "src/contexts/selectors";
 import WindowsHeader, { Loading as HeaderLoading } from "./window/header/WindowsHeader";
 import WindowLoading from "./window/WindowLoading";
 import WindowView from "./window/WindowView";

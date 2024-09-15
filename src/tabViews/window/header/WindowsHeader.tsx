@@ -11,12 +11,8 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import ElevationScroll from "src/components/ElevationScroll";
 import Search from "src/components/layout/Search";
-import {
-  useFilterDispatch,
-  useIsFiltered,
-  useTabCount,
-  useWindowCount,
-} from "src/contexts/dataSelectors";
+import { useFilterDispatch } from "src/contexts/DataProvider";
+import { useIsFiltered, useTabCount, useWindowCount } from "src/contexts/selectors";
 import WindowsBulkActions from "./actions/WindowsBulkActions";
 import WindowsFilter from "./WindowsFilter";
 

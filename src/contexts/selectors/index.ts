@@ -1,19 +1,4 @@
-import { useDataContext, useDataDispatch } from "./DataProvider";
-
-export { useDataDispatch };
-
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useFilterDispatch = useDataDispatch;
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useSelectedTabsDispatch = useDataDispatch;
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useSortDispatch = useDataDispatch;
+import { useDataContext } from "../DataProvider";
 
 // -- Display -------------------------------------------------------------- //
 
