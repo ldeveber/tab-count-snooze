@@ -8,7 +8,7 @@ import {
   useIsFiltered,
   useSelectedTabs,
   useSelectedTabsDispatch,
-} from "src/contexts/FilterProvider";
+} from "src/contexts/dataSelectors";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon from "./TabPropertyIcon";
 

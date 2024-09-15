@@ -15,7 +15,10 @@ export type DedupeConfig = {
   ignoreParams: boolean;
 };
 
-function handleFilters(tabs: chrome.tabs.Tab[], filters: FILTER_TAB_PROPERTIES[] = []) {
+function handleFilters(
+  tabs: chrome.tabs.Tab[],
+  filters: ReadonlyArray<FILTER_TAB_PROPERTIES> = [],
+) {
   if (filters.length === 0) {
     return tabs;
   }
@@ -31,7 +34,7 @@ function handleFilters(tabs: chrome.tabs.Tab[], filters: FILTER_TAB_PROPERTIES[]
 export function filterTabs(
   tabs: chrome.tabs.Tab[] | undefined,
   search: string = "",
-  filters: FILTER_TAB_PROPERTIES[] = [],
+  filters: ReadonlyArray<FILTER_TAB_PROPERTIES> = [],
 ) {
   if (!tabs || !tabs.length) {
     return [];
@@ -56,7 +59,7 @@ export function sortTabs(tabs: chrome.tabs.Tab[], sort: SORT_OPTION) {
 export function filterSortTabs(
   tabs: chrome.tabs.Tab[],
   search: string,
-  filters: FILTER_TAB_PROPERTIES[],
+  filters: ReadonlyArray<FILTER_TAB_PROPERTIES>,
   sort: SORT_OPTION,
 ) {
   const t = filterTabs(tabs, search, filters);

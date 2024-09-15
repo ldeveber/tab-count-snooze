@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
-import { useSelectedTabsDispatch } from "src/contexts/FilterProvider";
+import { useDataDispatch } from "src/contexts/dataSelectors";
 import chromeMock from "test-utils/chromeMock";
 import { mockTab, mockWindow } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
@@ -9,11 +9,11 @@ import { describe, expect, test, vi } from "vitest";
 import WindowsHeader from "../WindowsHeader";
 
 function TestWrap({ selectedTabs }: { selectedTabs?: number[] }) {
-  const dispatchSelection = useSelectedTabsDispatch();
+  const dispatch = useDataDispatch();
 
   useEffect(() => {
     if (selectedTabs) {
-      dispatchSelection({ type: "set", ids: selectedTabs });
+      dispatch({ type: "selectTabs", ids: selectedTabs });
     }
   }, []);
 

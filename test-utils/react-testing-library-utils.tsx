@@ -3,7 +3,6 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { type RenderOptions, render } from "@testing-library/react";
 import React, { type PropsWithChildren } from "react";
 import DataProviderProvider from "src/contexts/DataProvider";
-import FilterProvider from "src/contexts/FilterProvider";
 import DataHandler from "src/DataHandler";
 import "src/initializeCharts";
 
@@ -29,9 +28,7 @@ function DataProvider({ children }: PropsWithChildren) {
 function AllTheProviders({ children }: PropsWithChildren) {
   return (
     <ThemeWrapper>
-      <DataProvider>
-        <FilterProvider>{children}</FilterProvider>
-      </DataProvider>
+      <DataProvider>{children}</DataProvider>
     </ThemeWrapper>
   );
 }

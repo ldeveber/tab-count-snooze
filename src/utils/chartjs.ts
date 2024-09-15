@@ -21,9 +21,9 @@ export function getChartData(
     urlDepth = 0,
     filters = [],
   }: {
-    minDupes?: number;
-    urlDepth?: number;
-    filters?: FILTER_TAB_PROPERTIES[];
+    readonly minDupes?: number;
+    readonly urlDepth?: number;
+    filters?: ReadonlyArray<FILTER_TAB_PROPERTIES>;
   } = {},
 ) {
   const map: Record<string, number> = {};

@@ -4,11 +4,10 @@ import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
-import { useTabCount, useWindowCount, useWindows } from "src/contexts/DataProvider";
-import WindowsProvider from "src/contexts/FilterProvider";
+import { useTabCount, useWindowCount, useWindows } from "src/contexts/dataSelectors";
+import WindowsHeader, { Loading as HeaderLoading } from "./window/header/WindowsHeader";
 import WindowLoading from "./window/WindowLoading";
 import WindowView from "./window/WindowView";
-import WindowsHeader, { Loading as HeaderLoading } from "./window/header/WindowsHeader";
 
 const Box = styled(MuiBox)(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -49,7 +48,7 @@ export default function WindowsTab() {
   }
 
   return (
-    <WindowsProvider>
+    <>
       <WindowsHeader />
       <Box>
         <Stack spacing={2} pt={1}>
@@ -70,6 +69,6 @@ export default function WindowsTab() {
           )}
         </Stack>
       </Box>
-    </WindowsProvider>
+    </>
   );
 }

@@ -2,8 +2,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { HTMLAttributes, SyntheticEvent, useMemo, useState } from "react";
-import { useAllTabs } from "src/contexts/DataProvider";
-import { useFilterDispatch } from "src/contexts/FilterProvider";
+import { useAllTabs, useFilterDispatch } from "src/contexts/dataSelectors";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import { FILTER_TAB_PROPERTIES } from "src/utils/filterTabs";
 import TabPropertyIcon, { getTabPropertyLabel } from "../window/TabPropertyIcon";
@@ -21,7 +20,7 @@ export default function SectionBy() {
 
   const handleChange = (_: SyntheticEvent, values: MenuOptionsType[]) => {
     setSelected(values);
-    dispatchFilters({ type: "update", filters: values.map(({ value }) => value) });
+    dispatchFilters({ type: "filter", properties: values.map(({ value }) => value) });
   };
 
   const divideOptions: MenuOptionsType[] = useMemo(
