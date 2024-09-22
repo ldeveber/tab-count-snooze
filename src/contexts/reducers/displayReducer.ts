@@ -1,12 +1,12 @@
 import { SORT_OPTION } from "src/utils/options";
 import { FreezedObject, produce, unfreeze } from "structurajs";
 
-export type FilterState = FreezedObject<{
+type FilterState = FreezedObject<{
   dupes: boolean;
   search: string;
 }>;
 
-export type SortState = FreezedObject<{
+type SortState = FreezedObject<{
   key: SORT_OPTION;
   direction: "asc" | "desc";
 }>;

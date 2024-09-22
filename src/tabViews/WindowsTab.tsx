@@ -16,7 +16,7 @@ const Box = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export function Loading() {
+function Loading() {
   return (
     <>
       <HeaderLoading />

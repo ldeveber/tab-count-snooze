@@ -97,19 +97,6 @@ export function useDataDispatch() {
   return useContext(DataDispatchContext);
 }
 
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useFilterDispatch = useDataDispatch;
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useSelectedTabsDispatch = useDataDispatch;
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useSortDispatch = useDataDispatch;
-
 function useDataContext() {
   return useContext(DataContext);
 }
