@@ -9,15 +9,7 @@ import {
 
 export function useIsFiltered() {
   const context = useDisplayContext();
-  return (
-    context.filters.dupes ||
-    context.filters.properties.length > 0 ||
-    context.filters.search.length > 0
-  );
-}
-
-export function useFilters() {
-  return useDisplayContext().filters.properties;
+  return context.filters.dupes || context.filters.search.length > 0;
 }
 
 export function useSearch() {

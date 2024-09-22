@@ -2,7 +2,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MergeTypeIcon from "@mui/icons-material/MergeType";
 import Stack from "@mui/material/Stack";
 import { MouseEventHandler, useMemo } from "react";
-import { useAllTabs, useFilters, useSearch, useSelectedTabs } from "src/contexts";
+import { useAllTabs, useSearch, useSelectedTabs } from "src/contexts";
 import { closeTabs, groupTabs, type TabIdType } from "src/utils/chrome";
 import { filterTabs } from "src/utils/filterTabs";
 import TooltipButton from "./TooltipButton";
@@ -10,14 +10,13 @@ import TooltipButton from "./TooltipButton";
 export default function WindowsBulkActions() {
   const selected = useSelectedTabs();
   const search = useSearch();
-  const filters = useFilters();
   const allTabs = useAllTabs();
 
   const getSelectedTabIds = (): ReadonlyArray<TabIdType> => {
     if (selected.length > 0) {
       return selected;
     }
-    const tabs = filterTabs(allTabs, search, filters);
+    const tabs = filterTabs(allTabs, search);
     const tabIds: TabIdType[] = [];
 
     if (selected.length > 0) {

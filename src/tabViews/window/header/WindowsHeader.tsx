@@ -14,7 +14,6 @@ import Search from "src/components/layout/Search";
 import { useIsFiltered, useTabCount, useWindowCount } from "src/contexts";
 import { useFilterDispatch } from "src/contexts/DataProvider";
 import WindowsBulkActions from "./actions/WindowsBulkActions";
-import WindowsFilter from "./WindowsFilter";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
   borderRadius: 0,
@@ -116,14 +115,7 @@ export default function WindowsHeader() {
 
   return (
     <ElevationScroll>
-      <Paper
-        sx={{
-          // bgcolor: "background.default",
-          zIndex: "appBar",
-          position: "sticky",
-          top: 72,
-        }}
-      >
+      <Paper sx={{ zIndex: "appBar", position: "sticky", top: 72 }}>
         <Box
           sx={{
             display: "flex",
@@ -134,7 +126,6 @@ export default function WindowsHeader() {
         >
           <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
             <Search value={search} onChange={onSearchChange} />
-            <WindowsFilter />
           </Stack>
 
           <Box

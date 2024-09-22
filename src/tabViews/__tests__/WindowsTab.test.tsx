@@ -33,7 +33,6 @@ describe("Windows Tab", () => {
     });
 
     expect(getByRole("textbox", { name: "Search" })).toHaveValue("");
-    expect(getByRole("button", { name: "Filter by" })).toBeEnabled();
 
     expect(getByRole("list", { name: "normal window with 3 tabs" })).toBeVisible();
     expect(getByRole("list", { name: `Tab group: ${group1.title}` })).toBeVisible();
@@ -80,7 +79,6 @@ describe("Windows Tab", () => {
     });
 
     expect(getByRole("textbox", { name: "Search" })).toHaveValue("");
-    expect(getByRole("button", { name: "Filter by" })).toBeEnabled();
     expect(getByText("6 Tabs across 3 Windows")).toBeVisible();
 
     expect(getByRole("list", { name: "normal window with 3 tabs" })).toBeVisible();

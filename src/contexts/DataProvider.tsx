@@ -64,7 +64,6 @@ function dataReducer(state: State, action: Action): State {
       return { ...state, tabs: tabsReducer(state.tabs, action) };
     }
     case "search":
-    case "filter":
     case "resetFilter":
     case "sort":
     case "resetSort": {

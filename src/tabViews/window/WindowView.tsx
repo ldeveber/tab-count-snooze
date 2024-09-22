@@ -1,14 +1,6 @@
 import { useMemo } from "react";
 import ListGroupCard from "src/components/list/ListGroupCard";
-import {
-  useFilters,
-  useIsFiltered,
-  useSearch,
-  useSort,
-  useTabGroups,
-  useTabs,
-  useWindow,
-} from "src/contexts";
+import { useIsFiltered, useSearch, useSort, useTabGroups, useTabs, useWindow } from "src/contexts";
 import { filterSortTabs } from "src/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
@@ -32,13 +24,12 @@ export default function WindowView({
   const groups = useTabGroups(windowId);
   const windowTabs = useTabs(windowId);
   const isFiltered = useIsFiltered();
-  const filters = useFilters();
   const sort = useSort();
   const search = useSearch();
 
   const visibleTabs = useMemo(
-    () => filterSortTabs(windowTabs, search, filters, sort),
-    [windowTabs, search, filters, sort],
+    () => filterSortTabs(windowTabs, search, sort),
+    [windowTabs, search, sort],
   );
 
   const tabList: RenderListType[] = useMemo(() => {

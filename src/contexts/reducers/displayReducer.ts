@@ -1,9 +1,7 @@
-import { FILTER_TAB_PROPERTIES } from "src/utils/filterTabs";
 import { SORT_OPTION } from "src/utils/options";
 import { FreezedObject, produce, unfreeze } from "structurajs";
 
 export type FilterState = FreezedObject<{
-  properties: Array<FILTER_TAB_PROPERTIES>;
   dupes: boolean;
   search: string;
 }>;
@@ -19,7 +17,6 @@ export type State = FreezedObject<{
 }>;
 
 const initialFilterState: FilterState = {
-  properties: [],
   dupes: false,
   search: "",
 };
@@ -35,16 +32,6 @@ export type Action =
   | {
       search: string;
       type: "search";
-    }
-  | {
-      properties: FILTER_TAB_PROPERTIES[];
-      dupes?: boolean;
-      type: "filter";
-    }
-  | {
-      properties?: FILTER_TAB_PROPERTIES[];
-      dupes: boolean;
-      type: "filter";
     }
   | {
       type: "resetFilter";
@@ -70,16 +57,6 @@ export default function displayReducer(state: State, action: Action): State {
     case "resetFilter": {
       return produce(state, (draft) => {
         draft.filters = unfreeze(initialFilterState);
-      });
-    }
-    case "filter": {
-      return produce(state, (draft) => {
-        if (Array.isArray(action.properties)) {
-          draft.filters.properties = action.properties;
-        }
-        if (typeof action.dupes === "boolean") {
-          draft.filters.dupes = action.dupes;
-        }
       });
     }
 

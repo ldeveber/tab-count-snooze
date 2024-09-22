@@ -16,11 +16,10 @@ import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { ChartData } from "chart.js";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
-import { useAllTabs, useFilters } from "src/contexts";
+import { useAllTabs } from "src/contexts";
 import { getChartData } from "src/utils/chartjs";
 import { groupTabs } from "src/utils/chrome";
 import ChartPane, { type ChartViewType } from "./ChartPane";
-import SectionBy from "./SectionBy";
 
 const BaseBox = styled(Box)(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -37,7 +36,6 @@ export default function Charts() {
   const [minDupes, setMinDupes] = useState(3);
   const [open, setOpen] = useState(false);
   const allTabs = useAllTabs();
-  const filters = useFilters();
 
   const toggleOpen = () => setOpen(!open);
 
@@ -69,8 +67,8 @@ export default function Charts() {
   };
 
   const data: ChartData = useMemo(
-    () => getChartData(allTabs, { minDupes, urlDepth, filters }),
-    [allTabs, minDupes, urlDepth, filters],
+    () => getChartData(allTabs, { minDupes, urlDepth }),
+    [allTabs, minDupes, urlDepth],
   );
 
   return (
@@ -92,8 +90,6 @@ export default function Charts() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Stack>
-
-          <SectionBy />
         </Stack>
 
         <ChartPane chartType={chartType} data={data} onClick={onChartClick} />
