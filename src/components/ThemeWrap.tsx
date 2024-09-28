@@ -81,7 +81,7 @@ const components: CssVarsThemeOptions["components"] = {
   },
 };
 
-export function ThemeWrap({
+function ThemeWrap({
   colorOpts,
   children,
 }: PropsWithChildren<{

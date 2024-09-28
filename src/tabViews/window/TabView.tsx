@@ -5,7 +5,7 @@ import { ChangeEvent, useRef } from "react";
 import ListItem from "src/components/list/ListItem";
 import ListItemFavicon from "src/components/list/ListItemFavicon";
 import { useIsFiltered, useSelectedTabs } from "src/contexts";
-import { useSelectedTabsDispatch } from "src/contexts/DataProvider";
+import { useDataDispatch } from "src/contexts/DataProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon from "./TabPropertyIcon";
 
@@ -56,7 +56,7 @@ function TabExtra({ tab }: { readonly tab: chrome.tabs.Tab }) {
 export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
   const showMultiSelect = useIsFiltered();
   const selected = useSelectedTabs();
-  const dispatchSelectState = useSelectedTabsDispatch();
+  const dispatch = useDataDispatch();
   const ref = useRef<HTMLLIElement>(null);
 
   const goToTab = async (tab: chrome.tabs.Tab) => {
@@ -72,7 +72,7 @@ export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
     if (!tab.id) {
       return;
     }
-    dispatchSelectState({
+    dispatch({
       id: tab.id,
       type: checked ? "select" : "unselect",
     });

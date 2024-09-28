@@ -1,6 +1,5 @@
 import MuiBox from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid2";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
@@ -16,7 +15,7 @@ const Box = styled(MuiBox)(({ theme }) => ({
   },
 }));
 
-export function Loading() {
+function Loading() {
   return (
     <>
       <HeaderLoading />
@@ -51,19 +50,15 @@ export default function WindowsTab() {
     <>
       <WindowsHeader />
       <Box>
-        <Stack spacing={2} pt={1}>
+        <Stack spacing={2}>
           {open.map((w) => (
-            <Grid size={{ xs: 1 }} key={w.id}>
-              <WindowView windowId={w.id} />
-            </Grid>
+            <WindowView key={w.id} windowId={w.id} />
           ))}
           {minimized.length > 0 && (
             <Stack spacing={2}>
               <Divider aria-label="Minimized Windows">Minimized</Divider>
               {minimized.map((w) => (
-                <Grid size={{ xs: 1 }} key={w.id}>
-                  <WindowView windowId={w.id} />
-                </Grid>
+                <WindowView key={w.id} windowId={w.id} />
               ))}
             </Stack>
           )}

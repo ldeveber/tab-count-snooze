@@ -12,9 +12,8 @@ import { useState } from "react";
 import ElevationScroll from "src/components/ElevationScroll";
 import Search from "src/components/layout/Search";
 import { useIsFiltered, useTabCount, useWindowCount } from "src/contexts";
-import { useFilterDispatch } from "src/contexts/DataProvider";
+import { useDataDispatch } from "src/contexts/DataProvider";
 import WindowsBulkActions from "./actions/WindowsBulkActions";
-import WindowsFilter from "./WindowsFilter";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
   borderRadius: 0,
@@ -106,24 +105,17 @@ export function Loading() {
 
 export default function WindowsHeader() {
   const [search, setSearch] = useState("");
-  const dispatchFilter = useFilterDispatch();
+  const dispatch = useDataDispatch();
 
   const showActions = useIsFiltered();
   const onSearchChange = (value: string) => {
     setSearch(value);
-    dispatchFilter({ type: "search", search: value });
+    dispatch({ type: "search", search: value });
   };
 
   return (
     <ElevationScroll>
-      <Paper
-        sx={{
-          // bgcolor: "background.default",
-          zIndex: "appBar",
-          position: "sticky",
-          top: 72,
-        }}
-      >
+      <Paper sx={{ zIndex: "appBar", position: "sticky", top: 72 }}>
         <Box
           sx={{
             display: "flex",
@@ -134,7 +126,6 @@ export default function WindowsHeader() {
         >
           <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
             <Search value={search} onChange={onSearchChange} />
-            <WindowsFilter />
           </Stack>
 
           <Box

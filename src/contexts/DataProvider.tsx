@@ -64,7 +64,6 @@ function dataReducer(state: State, action: Action): State {
       return { ...state, tabs: tabsReducer(state.tabs, action) };
     }
     case "search":
-    case "filter":
     case "resetFilter":
     case "sort":
     case "resetSort": {
@@ -97,19 +96,6 @@ export default function DataProvider({
 export function useDataDispatch() {
   return useContext(DataDispatchContext);
 }
-
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useFilterDispatch = useDataDispatch;
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useSelectedTabsDispatch = useDataDispatch;
-/**
- * @deprecated use `useDataDispatch` instead
- */
-export const useSortDispatch = useDataDispatch;
 
 function useDataContext() {
   return useContext(DataContext);

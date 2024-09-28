@@ -1,7 +1,6 @@
 import { blue, green, orange, purple, red, yellow } from "@mui/material/colors";
 import type { Color } from "chart.js";
 import { DEFAULT_SHADE } from "src/themes";
-import { FILTER_TAB_PROPERTIES } from "./filterTabs";
 
 export function getChartColors(): Color[] {
   return [
@@ -19,11 +18,9 @@ export function getChartData(
   {
     minDupes = 2,
     urlDepth = 0,
-    filters = [],
   }: {
     readonly minDupes?: number;
     readonly urlDepth?: number;
-    filters?: ReadonlyArray<FILTER_TAB_PROPERTIES>;
   } = {},
 ) {
   const map: Record<string, number> = {};
@@ -41,10 +38,6 @@ export function getChartData(
             .split("/")
             .slice(0, urlDepth + 1)
             .join("/");
-      }
-      if (filters.length) {
-        const applies = filters.filter((f) => !!tab[f]);
-        path += applies.length > 0 ? ` (${applies.join(", ")})` : "";
       }
       if (map[path]) {
         map[path]++;

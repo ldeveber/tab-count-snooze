@@ -3,7 +3,6 @@ import "@testing-library/jest-dom/vitest";
 import { mockTab } from "test-utils/mockDataHelper";
 import { describe, expect, test } from "vitest";
 import { getChartData } from "../chartjs";
-import { FILTER_TAB_PROPERTIES } from "../filterTabs";
 
 const backgroundColor: ReadonlyArray<string> = [
   "#f44336",
@@ -188,51 +187,6 @@ describe("chartjs utils", () => {
           datasets: [
             {
               data: [2, 2],
-              backgroundColor,
-              borderWidth: 0,
-            },
-          ],
-        });
-      });
-    });
-
-    describe("filters", () => {
-      test("should map data for 10 unique URLs", () => {
-        const tabs = [];
-        const labels = [];
-        for (let i = 0; i < 10; i++) {
-          const base = faker.internet.url({ appendSlash: false });
-          const slug1 = faker.internet.domainWord();
-          const slug2 = faker.internet.domainWord();
-          const slug3 = faker.internet.domainWord();
-          tabs.push(mockTab({ url: base + "/" + slug1 + "/" + slug2 + "/" + slug3, index: i }));
-          labels.push(base);
-        }
-
-        const res = getChartData(tabs, { filters: [FILTER_TAB_PROPERTIES.Pinned] });
-
-        expect(res).toEqual({
-          labels: [],
-          datasets: [
-            {
-              data: [],
-              backgroundColor,
-              borderWidth: 0,
-            },
-          ],
-        });
-      });
-
-      test("should map data for 10 URLs, 3 unique domains", () => {
-        const { url1, url2, tabs } = getUrlMocks();
-        const labels = [`${url1} (pinned)`, url1, url2];
-        const res = getChartData(tabs, { filters: [FILTER_TAB_PROPERTIES.Pinned] });
-
-        expect(res).toEqual({
-          labels,
-          datasets: [
-            {
-              data: [3, 2, 2],
               backgroundColor,
               borderWidth: 0,
             },

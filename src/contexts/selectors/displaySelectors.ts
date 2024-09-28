@@ -2,23 +2,11 @@ import { useDisplayContext } from "../DataProvider";
 import { State } from "../reducers/displayReducer";
 
 export function _useIsFiltered(context: State) {
-  return (
-    context.filters.dupes ||
-    context.filters.properties.length > 0 ||
-    context.filters.search.length > 0
-  );
+  return context.filters.dupes || context.filters.search.length > 0;
 }
 
 export function useIsFiltered() {
   return _useIsFiltered(useDisplayContext());
-}
-
-export function _useFilters(context: State) {
-  return context.filters.properties;
-}
-
-export function useFilters() {
-  return _useFilters(useDisplayContext());
 }
 
 export function _useSearch(context: State) {
