@@ -86,9 +86,7 @@ describe("Windows Header", () => {
       chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[tab1.id]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<WindowsHeader />);
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -109,9 +107,7 @@ describe("Windows Header", () => {
       chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[tab1.id, tab2.id]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<WindowsHeader />);
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -133,9 +129,7 @@ describe("Windows Header", () => {
       chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[tab1.id, tab2.id]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<WindowsHeader />);
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });

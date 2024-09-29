@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import ListGroupCard from "src/components/list/ListGroupCard";
-import { useIsFiltered, useSearch, useSort, useTabGroups, useTabs, useWindow } from "src/contexts";
-import { filterSortTabs } from "src/utils/filterTabs";
+import { useIsFiltered, useTabGroups, useTabs, useWindow } from "src/contexts";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
 
@@ -22,31 +21,24 @@ export default function WindowView({
 }) {
   const win = useWindow(windowId);
   const groups = useTabGroups(windowId);
-  const windowTabs = useTabs(windowId);
+  const tabs = useTabs(windowId);
   const isFiltered = useIsFiltered();
-  const sort = useSort();
-  const search = useSearch();
-
-  const visibleTabs = useMemo(
-    () => filterSortTabs(windowTabs, search, sort),
-    [windowTabs, search, sort],
-  );
 
   const tabList: RenderListType[] = useMemo(() => {
     const list: RenderListType[] = [];
 
-    if (!visibleTabs.length) {
+    if (!tabs.length) {
       return list;
     }
     const done: number[] = [];
 
-    visibleTabs.forEach((tab) => {
+    tabs.forEach((tab) => {
       if (done.includes(tab.groupId)) {
         return;
       }
       const tabGroup = groups.find(({ id }) => id === tab.groupId);
       if (tabGroup) {
-        const arr = visibleTabs.filter((tab) => tab.groupId === tabGroup.id);
+        const arr = tabs.filter((tab) => tab.groupId === tabGroup.id);
         list.push({ group: { tabGroup, tabs: arr }, id: tabGroup.id });
         done.push(tabGroup.id);
         return;
@@ -57,10 +49,10 @@ export default function WindowView({
     });
 
     return list;
-  }, [visibleTabs, groups]);
+  }, [tabs, groups]);
 
   // console.log("WindowView", window); // windowId, window, windowTabs, tabList, visibleTabs);
-  if (!win?.id || visibleTabs.length === 0) {
+  if (!win?.id || tabs.length === 0) {
     return null;
   }
   return (
@@ -68,9 +60,9 @@ export default function WindowView({
       collapsible
       initOpen
       selected={win.focused}
-      cardTitle={`${visibleTabs.length} Tabs`}
+      cardTitle={`${tabs.length} Tabs`}
       titleTypographyProps={{ variant: "subtitle1" }}
-      list-aria-label={`${win.state} window with ${isFiltered ? `${visibleTabs.length} tabs, filtered` : `${visibleTabs.length} tabs`}`}
+      list-aria-label={`${win.state} window with ${tabs.length} tabs${isFiltered ? ", filtered" : ""}`}
     >
       {tabList.map(({ id, tab, group }) => {
         if (group) {

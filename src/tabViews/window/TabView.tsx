@@ -4,7 +4,7 @@ import ListItemText from "@mui/material/ListItemText";
 import { ChangeEvent, useRef } from "react";
 import ListItem from "src/components/list/ListItem";
 import ListItemFavicon from "src/components/list/ListItemFavicon";
-import { useIsFiltered, useSelectedTabs } from "src/contexts";
+import { useIsFiltered, useSelectedTabIds } from "src/contexts";
 import { useDataDispatch } from "src/contexts/DataProvider";
 import { TAB_PROPERTIES } from "src/utils/chrome";
 import TabPropertyIcon from "./TabPropertyIcon";
@@ -55,7 +55,7 @@ function TabExtra({ tab }: { readonly tab: chrome.tabs.Tab }) {
 
 export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
   const showMultiSelect = useIsFiltered();
-  const selected = useSelectedTabs();
+  const selected = useSelectedTabIds();
   const dispatch = useDataDispatch();
   const ref = useRef<HTMLLIElement>(null);
 
@@ -105,7 +105,7 @@ export default function TabView({ tab }: { readonly tab: chrome.tabs.Tab }) {
             edge="end"
             onChange={onSelection}
             checked={selected.includes(tab.id)}
-            aria-label={`Select tab: ${tab.title}`}
+            inputProps={{ "aria-label": `Select tab: ${tab.title}` }}
           />
         ) : null
       }

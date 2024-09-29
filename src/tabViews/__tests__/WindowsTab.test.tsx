@@ -106,12 +106,15 @@ describe("Windows Tab", () => {
     expect(getByRole("list", { name: "normal window with 2 tabs, filtered" })).toBeVisible();
     expect(getByRole("list", { name: `Tab group: ${group1.title}` })).toBeVisible();
     expect(getByRole("listitem", { name: `Tab: ${tab1.title}` })).toBeVisible();
+    expect(getByRole("checkbox", { name: `Select tab: ${tab1.title}` })).toBeChecked();
     expect(getByRole("listitem", { name: `Tab: ${tab2.title}` })).toBeVisible();
+    expect(getByRole("checkbox", { name: `Select tab: ${tab2.title}` })).toBeChecked();
 
     expect(getByText("Minimized")).toBeVisible();
     expect(getByRole("separator", { name: "Minimized Windows" })).toBeVisible();
 
     expect(getByRole("list", { name: "minimized window with 1 tabs, filtered" })).toBeVisible();
     expect(getByRole("listitem", { name: `Tab: ${tab6.title}` })).toBeVisible();
+    expect(getByRole("checkbox", { name: `Select tab: ${tab6.title}` })).toBeChecked();
   });
 });

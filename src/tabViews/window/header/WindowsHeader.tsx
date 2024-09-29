@@ -106,8 +106,8 @@ export function Loading() {
 export default function WindowsHeader() {
   const [search, setSearch] = useState("");
   const dispatch = useDataDispatch();
-
   const showActions = useIsFiltered();
+
   const onSearchChange = (value: string) => {
     setSearch(value);
     dispatch({ type: "search", search: value });

@@ -57,19 +57,30 @@ export function useTabGroup(tabGroupId: number) {
 
 // -- Tabs ----------------------------------------------------------------- //
 
+function _useTabs(windowId?: number) {
+  const arr = [];
+  const search = useSearch();
+  useTabsContext().map.forEach((t) => {
+    if (typeof windowId === "number" && windowId !== t.windowId) {
+      return;
+    }
+    if (
+      t.title?.toLowerCase().includes(search.toLowerCase()) ||
+      t.url?.toLowerCase().includes(search.toLowerCase())
+    ) {
+      arr.push(t);
+    }
+  });
+  return arr;
+}
+
 export function useAllTabs() {
   const arr = [];
   useTabsContext().map.forEach((t) => arr.push(t));
   return arr;
 }
 export function useTabs(windowId: number) {
-  const arr = [];
-  useTabsContext().map.forEach((t) => {
-    if (windowId === t.windowId) {
-      arr.push(t);
-    }
-  });
-  return arr;
+  return _useTabs(windowId);
 }
 export function useTabCount() {
   return useTabsContext().map.size;
@@ -78,6 +89,6 @@ export function useTab(tabId: number) {
   return useTabsContext().map.get(tabId);
 }
 
-export function useSelectedTabs() {
-  return useTabsContext().selectedTabIds;
+export function useSelectedTabIds() {
+  return _useTabs().map((t) => t.id);
 }
