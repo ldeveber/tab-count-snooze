@@ -36,14 +36,11 @@ const chromeMock = {
     query: vi.fn<typeof chrome.tabs.query>().mockResolvedValue([]),
   },
   tabGroups: {
-    query: vi.fn<typeof chrome.tabGroups.query>().mockResolvedValue([]),
-    update: vi.fn(),
-  },
-  windows: {
-    getLastFocused: vi.fn().mockResolvedValue({
-      id: "focused-window-id",
-    }),
     onCreated: {
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    },
+    onUpdated: {
       addListener: vi.fn(),
       removeListener: vi.fn(),
     },
@@ -51,6 +48,25 @@ const chromeMock = {
       addListener: vi.fn(),
       removeListener: vi.fn(),
     },
+    query: vi.fn<typeof chrome.tabGroups.query>().mockResolvedValue([]),
+    update: vi.fn(),
+  },
+  windows: {
+    onCreated: {
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    },
+    onFocusChanged: {
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    },
+    onRemoved: {
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+    },
+    getLastFocused: vi.fn().mockResolvedValue({
+      id: "focused-window-id",
+    }),
     getAll: vi.fn<typeof chrome.windows.getAll>().mockResolvedValue([]),
     update: vi.fn<typeof chrome.windows.update>(),
   },

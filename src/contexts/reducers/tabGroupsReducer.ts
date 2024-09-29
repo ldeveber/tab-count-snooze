@@ -14,11 +14,11 @@ export type Action =
     }
   | {
       type: "addTabGroup";
-      tabGroup: chrome.tabGroups.TabGroup;
+      group: chrome.tabGroups.TabGroup;
     }
   | {
       type: "updateTabGroup";
-      tabGroup: chrome.tabGroups.TabGroup;
+      group: chrome.tabGroups.TabGroup;
     }
   | {
       type: "removeTabGroup";
@@ -37,7 +37,7 @@ export default function tabGroupsReducer(state: State, action: Action): State {
     case "addTabGroup":
     case "updateTabGroup": {
       return produce(state, (draft) => {
-        draft.map.set(action.tabGroup.id, action.tabGroup);
+        draft.map.set(action.group.id, action.group);
       });
     }
     case "removeTabGroup": {
