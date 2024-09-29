@@ -1,3 +1,4 @@
+import { SORT_OPTION } from "src/utils/options";
 import {
   useDisplayContext,
   useTabGroupsContext,
@@ -57,6 +58,16 @@ export function useTabGroup(tabGroupId: number) {
 
 // -- Tabs ----------------------------------------------------------------- //
 
+function sortTabs(tabs: Array<chrome.tabs.Tab>) {
+  const sort = useSort();
+  if (sort === SORT_OPTION.LastAccessed) {
+    tabs.sort((a, b) => b.lastAccessed - a.lastAccessed);
+  } else {
+    tabs.sort((a, b) => a.index - b.index);
+  }
+  return tabs;
+}
+
 function _useTabs(windowId?: number) {
   const arr = [];
   const search = useSearch();
@@ -71,7 +82,7 @@ function _useTabs(windowId?: number) {
       arr.push(t);
     }
   });
-  return arr;
+  return sortTabs(arr);
 }
 
 export function useAllTabs() {

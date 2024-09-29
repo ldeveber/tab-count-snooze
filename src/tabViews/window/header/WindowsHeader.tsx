@@ -1,18 +1,15 @@
 import FilterAlt from "@mui/icons-material/FilterAlt";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
 import MuiPaper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
 import ElevationScroll from "src/components/ElevationScroll";
-import Search from "src/components/layout/Search";
 import { useIsFiltered, useTabCount, useWindowCount } from "src/contexts";
-import { useDataDispatch } from "src/contexts/DataProvider";
+import SearchTabs, { Loading as SearchTabsLoading } from "./actions/SearchTabs";
 import WindowsBulkActions from "./actions/WindowsBulkActions";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
@@ -69,9 +66,7 @@ export function Loading() {
         }}
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-          <Skeleton>
-            <Input />
-          </Skeleton>
+          <SearchTabsLoading />
           <Skeleton variant="circular">
             <IconButton size="small">
               <FilterAlt fontSize="small" />
@@ -104,14 +99,7 @@ export function Loading() {
 }
 
 export default function WindowsHeader() {
-  const [search, setSearch] = useState("");
-  const dispatch = useDataDispatch();
   const showActions = useIsFiltered();
-
-  const onSearchChange = (value: string) => {
-    setSearch(value);
-    dispatch({ type: "search", search: value });
-  };
 
   return (
     <ElevationScroll>
@@ -125,7 +113,7 @@ export default function WindowsHeader() {
           }}
         >
           <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-            <Search value={search} onChange={onSearchChange} />
+            <SearchTabs />
           </Stack>
 
           <Box
