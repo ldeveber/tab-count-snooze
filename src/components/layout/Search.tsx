@@ -41,14 +41,25 @@ const FilledInput = styled(MuiFilledInput)(({ theme }) => ({
 export default function Search({
   value: search,
   onChange,
+  onClear,
 }: {
   value: string;
   onChange: (value: string) => void;
+  onClear?: () => void;
 }) {
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    onChange(value);
+    if (value.length === 0) {
+      clearSearch();
+    } else {
+      onChange(value);
+    }
   };
-  const clearSearch = () => onChange("");
+  const clearSearch = () => {
+    onChange("");
+    if (typeof onClear === "function") {
+      onClear();
+    }
+  };
 
   return (
     <FilledInput

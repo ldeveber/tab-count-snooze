@@ -20,7 +20,7 @@ function Loading() {
     <>
       <HeaderLoading />
       <Box>
-        <Stack spacing={2} pt={1}>
+        <Stack spacing={2}>
           <WindowLoading />
         </Stack>
       </Box>

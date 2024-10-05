@@ -1,24 +1,10 @@
 import "@testing-library/jest-dom/vitest";
 import userEvent from "@testing-library/user-event";
-import { useEffect } from "react";
-import { useDataDispatch } from "src/contexts/DataProvider";
 import chromeMock from "test-utils/chromeMock";
 import { mockTab, mockWindow } from "test-utils/mockDataHelper";
 import { renderWithContext, waitFor } from "test-utils/react-testing-library-utils";
 import { describe, expect, test, vi } from "vitest";
 import WindowsHeader from "../WindowsHeader";
-
-function TestWrap({ selectedTabs }: { selectedTabs?: number[] }) {
-  const dispatch = useDataDispatch();
-
-  useEffect(() => {
-    if (selectedTabs) {
-      dispatch({ type: "selectTabs", ids: selectedTabs });
-    }
-  }, []);
-
-  return <WindowsHeader />;
-}
 
 describe("Windows Header", () => {
   test("should not blow up with no windows or tabs", async () => {
@@ -86,9 +72,7 @@ describe("Windows Header", () => {
       chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[tab1.id]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<WindowsHeader />);
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -102,16 +86,14 @@ describe("Windows Header", () => {
     test("should handle group tabs", async () => {
       const user = userEvent.setup();
       chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
-      const tab1 = mockTab({ title: "meow" });
-      const tab2 = mockTab({ title: "meow" });
-      const tab3 = mockTab({ title: "no", url: "no" });
-      const tab4 = mockTab({ title: "no", url: "no" });
+      const tab1 = mockTab({ title: "meow", index: 1 });
+      const tab2 = mockTab({ title: "meow", index: 2 });
+      const tab3 = mockTab({ title: "no", url: "no", index: 3 });
+      const tab4 = mockTab({ title: "no", url: "no", index: 4 });
       chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[tab1.id, tab2.id]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<WindowsHeader />);
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
@@ -126,16 +108,14 @@ describe("Windows Header", () => {
     test("should handle close tabs", async () => {
       const user = userEvent.setup();
       chromeMock.windows.getAll.mockResolvedValue([mockWindow(), mockWindow()]);
-      const tab1 = mockTab({ title: "meow" });
-      const tab2 = mockTab({ title: "meow" });
-      const tab3 = mockTab({ title: "no", url: "no" });
-      const tab4 = mockTab({ title: "no", url: "no" });
+      const tab1 = mockTab({ title: "meow", index: 1 });
+      const tab2 = mockTab({ title: "meow", index: 2 });
+      const tab3 = mockTab({ title: "no", url: "no", index: 3 });
+      const tab4 = mockTab({ title: "no", url: "no", index: 4 });
       chromeMock.tabs.query.mockResolvedValue([tab1, tab2, tab3, tab4]);
       vi.stubGlobal("chrome", chromeMock);
 
-      const { getByLabelText, getByRole } = renderWithContext(
-        <TestWrap selectedTabs={[tab1.id, tab2.id]} />,
-      );
+      const { getByLabelText, getByRole } = renderWithContext(<WindowsHeader />);
       await waitFor(() => {
         expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
