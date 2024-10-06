@@ -2,6 +2,7 @@
 
 import eslint from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
+import html from "eslint-plugin-html";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -18,6 +19,11 @@ const ignores = [
 // @see https://eslint.org/docs/latest/use/configure/configuration-files-new
 // @see https://typescript-eslint.io/users/configs
 const config = tseslint.config(
+  {
+    files: ["**/*.html", "**/*.htm"],
+    plugins: { html },
+  },
+
   {
     files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
     languageOptions: {

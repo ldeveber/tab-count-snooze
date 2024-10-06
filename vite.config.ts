@@ -50,13 +50,14 @@ export default defineConfig({
     reportCompressedSize: isProduction,
     rollupOptions: {
       input: {
-        background: resolve(pagesDir, "background", "index.ts"),
-        popup: resolve(pagesDir, "popup", "index.html"),
-        options: resolve(pagesDir, "options", "index.html"),
-        sidepanel: resolve(pagesDir, "sidepanel", "index.html"),
+        "service-worker": resolve(pagesDir, "service-worker.ts"),
+        popup: resolve(pagesDir, "popup.html"),
+        options: resolve(pagesDir, "options.html"),
+        sidepanel: resolve(pagesDir, "sidepanel.html"),
+        page: resolve(pagesDir, "page.html"),
       },
       output: {
-        entryFileNames: "src/pages/[name]/index.js",
+        entryFileNames: "src/pages/[name].js",
         chunkFileNames: isDev ? "assets/js/[name].js" : "assets/js/[name].[hash].js",
         assetFileNames: (assetInfo) => {
           const { name } = path.parse(assetInfo.name);
@@ -80,8 +81,8 @@ export default defineConfig({
       exclude: [
         "**/__tests__/*.*",
         "src/**/*.d.ts",
-        "src/pages/*/index.tsx",
-        "src/pages/*/App.tsx",
+        "src/pages/*",
+        "!src/pages/service-worker.ts",
         "src/utils/dayjs.ts",
         "src/utils/debug.ts",
       ],
