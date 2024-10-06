@@ -1,7 +1,7 @@
 import reloadOnUpdate from "virtual:reload-on-update-in-background-script";
 import "webextension-polyfill";
 
-reloadOnUpdate("pages/background");
+reloadOnUpdate("pages/service-worker");
 
 let tabCount = 0;
 let windowCount = 0;
