@@ -4,7 +4,7 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { createRoot } from "react-dom/client";
 import refreshOnUpdate from "virtual:reload-on-update-in-view";
-import App from "./options/OptionsApp";
+import App from "./OptionsApp";
 
 refreshOnUpdate("pages/options");
 
