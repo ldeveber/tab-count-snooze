@@ -1,41 +1,12 @@
-import { Dispatch, PropsWithChildren, createContext, useContext, useReducer } from "react";
-import displayReducer, {
-  Action as DisplayAction,
-  initialState as initialDisplayState,
-  type State as DisplayState,
-} from "./reducers/displayReducer";
-import tabGroupsReducer, {
-  Action as TabGroupsAction,
-  initialState as initialTabGroupsState,
-  type State as TabGroupsState,
-} from "./reducers/tabGroupsReducer";
-import tabsReducer, {
-  Action as TabsAction,
-  initialState as initialTabsState,
-  type State as TabsState,
-} from "./reducers/tabsReducer";
-import windowsReducer, {
-  Action as WindowsAction,
-  initialState as initialWindowsState,
-  type State as WindowsState,
-} from "./reducers/windowsReducer";
+import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
+import displayReducer, { Action as DisplayAction } from "./reducers/displayReducer";
+import tabGroupsReducer, { Action as TabGroupsAction } from "./reducers/tabGroupsReducer";
+import tabsReducer, { Action as TabsAction } from "./reducers/tabsReducer";
+import windowsReducer, { Action as WindowsAction } from "./reducers/windowsReducer";
+import { initialState, type State } from "./state";
 
-type State = {
-  windows: WindowsState;
-  tabGroups: TabGroupsState;
-  tabs: TabsState;
-  display: DisplayState;
-};
-
-export const initialState: State = {
-  windows: initialWindowsState,
-  tabGroups: initialTabGroupsState,
-  tabs: initialTabsState,
-  display: initialDisplayState,
-};
-
-const DataContext = createContext<State>(initialState);
-const DataDispatchContext = createContext<Dispatch<Action>>(() => {});
+export const DataContext = createContext<State>(initialState);
+export const DataDispatchContext = createContext<Dispatch<Action>>(() => {});
 
 type Action = WindowsAction | TabGroupsAction | TabsAction | DisplayAction | { type: "clear" };
 function dataReducer(state: State, action: Action): State {
@@ -91,28 +62,4 @@ export default function DataProvider({
       <DataDispatchContext.Provider value={dispatch}>{children}</DataDispatchContext.Provider>
     </DataContext.Provider>
   );
-}
-
-export function useDataDispatch() {
-  return useContext(DataDispatchContext);
-}
-
-function useDataContext() {
-  return useContext(DataContext);
-}
-
-export function useDisplayContext() {
-  return useDataContext().display;
-}
-
-export function useTabsContext() {
-  return useDataContext().tabs;
-}
-
-export function useTabGroupsContext() {
-  return useDataContext().tabGroups;
-}
-
-export function useWindowsContext() {
-  return useDataContext().windows;
 }

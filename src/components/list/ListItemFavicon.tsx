@@ -3,7 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Skeleton from "@mui/material/Skeleton";
 
-export const FAVICON_SIZE = 24;
+const FAVICON_SIZE = 24;
 
 function FavIcon({
   url,

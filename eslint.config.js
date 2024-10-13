@@ -3,18 +3,11 @@
 import eslint from "@eslint/js";
 import prettierConfig from "eslint-config-prettier";
 import html from "eslint-plugin-html";
+import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-const ignores = [
-  "node_modules/**",
-  "dist/**",
-  "build/**",
-  "coverage/**",
-  "watch.js",
-  // generated from rollup
-  "utils/**/*.js",
-];
+const ignores = ["node_modules/**", "dist/**", "build/**", "coverage/**", "watch.js"];
 
 // @see https://eslint.org/docs/latest/use/configure/configuration-files-new
 // @see https://typescript-eslint.io/users/configs
@@ -38,6 +31,15 @@ const config = tseslint.config(
     },
   },
   { ignores },
+  {
+    ignores: ["**/*.test.{ts,tsx,js,jsx}", "**/test-utils/**"],
+    plugins: {
+      "react-refresh": reactRefresh,
+    },
+    rules: {
+      "react-refresh/only-export-components": "warn",
+    },
+  },
 
   eslint.configs.recommended,
 
