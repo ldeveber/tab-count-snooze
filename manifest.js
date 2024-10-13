@@ -25,15 +25,15 @@ const manifest = {
     },
   ],
   side_panel: {
-    default_path: "src/pages/sidepanel.html",
+    default_path: "sidepanel.html",
   },
-  options_page: "src/pages/options.html",
+  options_page: "options.html",
   background: {
-    service_worker: "src/pages/service-worker.js",
+    service_worker: "service_worker.js",
     type: "module",
   },
   action: {
-    default_popup: "src/pages/popup.html",
+    default_popup: "popup.html",
   },
   icons: {
     32: "icon_32.png",

@@ -1,23 +1,14 @@
-import Avatar from "@mui/material/Avatar";
 import ListItemText from "@mui/material/ListItemText";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 import ListGroupCard from "src/components/list/ListGroupCard";
 import { StyledListItem } from "src/components/list/ListItem";
-import { FAVICON_SIZE } from "src/components/list/ListItemFavicon";
+import { Loading as IconLoading } from "src/components/list/ListItemFavicon";
 
 function TabLoading() {
   return (
     <StyledListItem data-testid="tab-loading">
-      <Skeleton variant="rectangular">
-        <Avatar
-          variant="square"
-          sx={{
-            height: FAVICON_SIZE,
-            width: FAVICON_SIZE,
-          }}
-        />
-      </Skeleton>
+      <IconLoading />
       <ListItemText
         primary={
           <Skeleton width="20%">

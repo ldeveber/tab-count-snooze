@@ -1,9 +1,29 @@
-import {
-  useDisplayContext,
-  useTabGroupsContext,
-  useTabsContext,
-  useWindowsContext,
-} from "./DataProvider";
+import { useContext } from "react";
+import { DataContext, DataDispatchContext } from "./DataProvider";
+
+export function useDataDispatch() {
+  return useContext(DataDispatchContext);
+}
+
+function useDataContext() {
+  return useContext(DataContext);
+}
+
+export function useDisplayContext() {
+  return useDataContext().display;
+}
+
+export function useTabsContext() {
+  return useDataContext().tabs;
+}
+
+export function useTabGroupsContext() {
+  return useDataContext().tabGroups;
+}
+
+export function useWindowsContext() {
+  return useDataContext().windows;
+}
 
 // -- Display -------------------------------------------------------------- //
 

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDataDispatch } from "./contexts/DataProvider";
+import { useDataDispatch } from "./contexts";
 
 function TabHandler() {
   const dispatch = useDataDispatch();

@@ -18,10 +18,7 @@
     "paths": {
       "src/*": ["./src/*"],
       "assets/*": ["./src/assets/*"],
-      "pages/*": ["./src/pages/*"],
-      "test-utils/*": ["./test-utils/*"],
-      "virtual:reload-on-update-in-background-script": ["./src/global.d.ts"],
-      "virtual:reload-on-update-in-view": ["./src/global.d.ts"]
+      "test-utils/*": ["./test-utils/*"]
     }
   },
   "include": [
@@ -30,7 +27,9 @@
     "utils",
     "vite.config.ts",
     "node_modules/@types",
-    "eslint.config.js"
+    "eslint.config.js",
+    "scripts",
+    "manifest.js"
   ],
   "exclude": ["dist/*"]
 }

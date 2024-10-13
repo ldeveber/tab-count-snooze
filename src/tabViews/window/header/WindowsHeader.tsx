@@ -11,8 +11,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import ElevationScroll from "src/components/ElevationScroll";
 import Search from "src/components/layout/Search";
-import { useIsFiltered, useTabCount, useWindowCount } from "src/contexts";
-import { useDataDispatch } from "src/contexts/DataProvider";
+import { useDataDispatch, useIsFiltered, useTabCount, useWindowCount } from "src/contexts";
 import WindowsBulkActions from "./actions/WindowsBulkActions";
 
 const Paper = styled(MuiPaper)(({ theme }) => ({
