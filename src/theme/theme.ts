@@ -1,5 +1,13 @@
 import { teal } from "@mui/material/colors";
-import { CssVarsThemeOptions } from "@mui/material/styles";
+import { ComponentsPropsList, CssVarsThemeOptions } from "@mui/material/styles";
+
+export const defaultProps: {
+  [P in keyof ComponentsPropsList]?: Partial<ComponentsPropsList[P]>;
+} = {
+  MuiStack: {
+    useFlexGap: true,
+  },
+};
 
 export const themeOptions: CssVarsThemeOptions = {
   colorSchemes: {
@@ -20,13 +28,6 @@ export const themeOptions: CssVarsThemeOptions = {
   },
   shape: {
     borderRadius: 20,
-  },
-  components: {
-    MuiStack: {
-      defaultProps: {
-        useFlexGap: true,
-      },
-    },
   },
   typography: {
     button: {
