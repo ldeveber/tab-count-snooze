@@ -18,7 +18,6 @@ const Chip = styled(MuiChip, {
   return {
     color: theme.palette.getContrastText(bg),
     backgroundColor: bg,
-    borderRadius: theme.shape.borderRadius,
     height: 24,
     minWidth: 24,
   };
