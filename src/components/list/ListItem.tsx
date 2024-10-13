@@ -15,7 +15,7 @@ export const StyledListItem = styled(MuiListItem)(({ theme }) => ({
 
 const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
   "&.MuiListItemButton-root": {
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: 8,
     gap: theme.spacing(2),
     // padding: theme.spacing(0.5, 1.5),
   },

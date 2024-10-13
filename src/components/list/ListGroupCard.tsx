@@ -1,6 +1,6 @@
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
-import MuiCard, { type CardProps } from "@mui/material/Card";
+import Card, { type CardProps } from "@mui/material/Card";
 import MuiCardActionArea, {
   type CardActionAreaProps as MuiCardActionAreaProps,
 } from "@mui/material/CardActionArea";
@@ -14,17 +14,12 @@ import { type ListItemTextProps } from "@mui/material/ListItemText";
 import { styled } from "@mui/material/styles";
 import { ReactNode, useState } from "react";
 
-const Card = styled(MuiCard)(({ theme }) => ({
-  borderRadius: theme.shape.borderRadius * 3,
-}));
-
 interface CardActionAreaProps extends MuiCardActionAreaProps {
   selected?: boolean;
 }
 const CardActionArea = styled(MuiCardActionArea, {
   shouldForwardProp: (prop) => prop !== "selected",
 })<CardActionAreaProps>(({ selected }) => ({
-  borderRadius: 22,
   backgroundColor: selected
     ? "rgba(var(--mui-palette-primary-mainChannel) / var(--mui-palette-action-selectedOpacity))"
     : undefined,
