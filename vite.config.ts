@@ -24,6 +24,13 @@ export default defineConfig(({ command, mode }) => {
           options: resolve(__dirname, "options.html"),
         },
         output: {
+          chunkFileNames: (chunk) => {
+            if (chunk?.name && chunk.name.startsWith("_")) {
+              // files starting with _ are reserved files on windows
+              return "c[name]-[hash].js";
+            }
+            return "[name]-[hash].js";
+          },
           entryFileNames: (chunk) => {
             if (chunk.name === "service_worker") {
               // keep this for manifest reference
