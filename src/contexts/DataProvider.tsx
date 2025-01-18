@@ -28,6 +28,7 @@ function dataReducer(state: State, action: Action): State {
     case "updateTab":
     case "removeTab":
     case "bulkSelect":
+    case "clearSelection":
     case "select":
     case "unselect":
     case "selectTabs":
