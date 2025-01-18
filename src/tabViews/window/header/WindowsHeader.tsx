@@ -110,6 +110,9 @@ export default function WindowsHeader() {
   const onSearchChange = (value: string) => {
     setSearch(value);
     dispatch({ type: "search", search: value });
+    if (value === "") {
+      dispatch({ type: "clearSelection" });
+    }
   };
 
   return (

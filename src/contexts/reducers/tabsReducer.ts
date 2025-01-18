@@ -40,7 +40,8 @@ export type Action =
       ids: TabIdType[];
       readonly type: "selectTabs" | "unselectTabs";
     }
-  | { type: "clear" };
+  | { type: "clear" }
+  | { type: "clearSelection" };
 export default function tabsReducer(state: State, action: Action): State {
   switch (action.type) {
     case "setTabs": {
@@ -83,6 +84,11 @@ export default function tabsReducer(state: State, action: Action): State {
     case "unselectTabs": {
       return produce(state, (draft) => {
         draft.selectedTabIds.filter((id) => action.ids.includes(id));
+      });
+    }
+    case "clearSelection": {
+      return produce(state, (draft) => {
+        draft.selectedTabIds = [];
       });
     }
     case "clear": {
