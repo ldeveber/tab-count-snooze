@@ -9,6 +9,7 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    open-pull-requests-limit: 0
     groups:
       vite:
         patterns:
