@@ -1,9 +1,8 @@
-**/coverage
-**/dist
+**/.output
 **/node_modules
-.gitignore
-.github
 .eslintignore
+.github
+.gitignore
 .nvmrc
 .prettierignore
 LICENSE

@@ -3,9 +3,7 @@
   "files.insertFinalNewline": true,
 
   "git.branchProtection": ["main"],
-  "eslint.experimental.useFlatConfig": true,
 
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
 
@@ -14,20 +12,20 @@
 
   "files.readonlyInclude": {
     // show generated & node_modules as readonly
-    "coverage/**/*": true,
-    "dist/**/*": true,
+    ".output/**/*": true,
+    ".wxt/": true,
     "node_modules/**/*": true,
-    "utils/**/*.js": true,
     "package-lock.json": true
   },
   "search.exclude": {
     ".git": true,
+    ".output/": true,
     ".vscode/": true,
-    "coverage/": true,
-    "dist/": true,
+    ".wxt/": true,
     "node_modules/": true,
-    "utils/**/*.js": true,
-    "*.log": true,
     "package-lock.json": true
+  },
+  "files.associations": {
+    "*.css": "bradlc.vscode-tailwindcss"
   }
 }

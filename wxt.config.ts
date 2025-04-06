@@ -1,0 +1,25 @@
+import { defineConfig } from "wxt";
+import tailwindcss from "@tailwindcss/vite";
+
+// @see https://wxt.dev/api/config.html
+export default defineConfig({
+  modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
+  autoIcons: {},
+  manifest: ({ mode, command }) => {
+    const manifest = {
+      name: "Tab Count Snooze",
+      // @see https://wxt.dev/guide/essentials/config/manifest.html#permissions
+      permissions: ["tabs", "tabGroups", "activeTab", "sidePanel", "storage", "favicon"],
+    };
+    if (mode === "development" && command === "serve") {
+      return {
+        ...manifest,
+        name: "Tab Count Snooze (Dev)",
+      };
+    }
+    return manifest;
+  },
+  vite: () => ({
+    plugins: [tailwindcss()],
+  }),
+});
