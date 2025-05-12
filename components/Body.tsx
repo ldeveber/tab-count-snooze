@@ -15,7 +15,6 @@ import ChartsTab from "@/components/tabs/count/ChartsTab";
 import SnoozeTab from "@/components/tabs/snooze/SnoozeTab";
 import WindowsTab from "@/components/tabs/tab/WindowsTab";
 import Content from "./layout/Content";
-import "@/utils/charts/initializeCharts";
 
 const TabList = styled(MuiTabList)(() => ({
   ".MuiTabs-flexContainer": {
