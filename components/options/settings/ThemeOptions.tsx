@@ -1,7 +1,4 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardHeader from "@mui/material/CardHeader";
-import Stack from "@mui/material/Stack";
+import { Card, CardContent, CardHeader, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Hue } from "@/components/layout/theme/themeHelpers";
 import { ColorOptions, defaultColor } from "@/utils/options";

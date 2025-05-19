@@ -1,8 +1,5 @@
-import ClearIcon from "@mui/icons-material/Clear";
-import SearchIcon from "@mui/icons-material/Search";
-import MuiFilledInput from "@mui/material/FilledInput";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
+import { Clear, Search as SearchIcon } from "@mui/icons-material";
+import { FilledInput as MuiFilledInput, IconButton, InputAdornment } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ChangeEventHandler } from "react";
 
@@ -67,7 +64,7 @@ export default function Search({
         search.length > 0 ? (
           <InputAdornment position="end">
             <IconButton size="small" onClick={clearSearch} aria-label="Clear">
-              <ClearIcon fontSize="small" />
+              <Clear fontSize="small" />
             </IconButton>
           </InputAdornment>
         ) : null

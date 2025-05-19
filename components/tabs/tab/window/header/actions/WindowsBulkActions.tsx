@@ -1,6 +1,5 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import MergeTypeIcon from "@mui/icons-material/MergeType";
-import Stack from "@mui/material/Stack";
+import { Delete as DeleteIcon, MergeType as MergeTypeIcon } from "@mui/icons-material";
+import { Stack } from "@mui/material";
 import { MouseEventHandler, useMemo } from "react";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
 import { closeTabs, groupTabs, type TabIdType } from "@/utils/chrome";

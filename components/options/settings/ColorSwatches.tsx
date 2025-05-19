@@ -1,6 +1,4 @@
-import Box from "@mui/material/Box";
-import ToggleButton, { ToggleButtonProps } from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { Box, ToggleButton, ToggleButtonProps, ToggleButtonGroup } from "@mui/material";
 import * as colors from "@mui/material/colors";
 import { Theme, alpha, styled } from "@mui/material/styles";
 import { MouseEvent } from "react";

@@ -1,6 +1,4 @@
-import MuiBox from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
+import { Box as MuiBox, Divider, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useMemo } from "react";
 import { useTabCount, useWindowCount, useWindows } from "@/utils/dataStore";

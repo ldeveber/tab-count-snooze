@@ -1,10 +1,12 @@
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import DriveFileRenameOutlineIcon from "@mui/icons-material/DriveFileRenameOutline";
-import PushPinIcon from "@mui/icons-material/PushPin";
-// import VolumeOffIcon from "@mui/icons-material/VolumeOff";
-import VolumeUpIcon from "@mui/icons-material/VolumeUp";
-import { SvgIconOwnProps } from "@mui/material/SvgIcon";
+import {
+  AutoAwesome as AutoAwesomeIcon,
+  DeleteOutline as DeleteOutlineIcon,
+  DriveFileRenameOutline as DriveFileRenameOutlineIcon,
+  PushPin as PushPinIcon,
+  // VolumeOff as VolumeOffIcon,
+  VolumeUp as VolumeUpIcon,
+} from "@mui/icons-material";
+import { SvgIconOwnProps } from "@mui/material";
 import { TAB_PROPERTIES } from "@/utils/chrome";
 
 export default function TabPropertyIcon({

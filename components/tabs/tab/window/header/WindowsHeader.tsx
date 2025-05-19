@@ -1,13 +1,15 @@
-import FilterAlt from "@mui/icons-material/FilterAlt";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
-import Input from "@mui/material/Input";
-import MuiPaper from "@mui/material/Paper";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
+import { FilterAlt } from "@mui/icons-material";
+import {
+  Box,
+  IconButton,
+  Input,
+  Paper as MuiPaper,
+  Skeleton,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import ElevationScroll from "@/components/ElevationScroll";
 import Search from "@/components/layout/Search";

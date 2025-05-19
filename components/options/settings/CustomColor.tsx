@@ -1,8 +1,4 @@
-import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import Grow from "@mui/material/Grow";
+import { Box, Checkbox, FormControlLabel, FormGroup, Grow } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Hue } from "@/components/layout/theme/themeHelpers";
 import { ColorOptions } from "@/utils/options";

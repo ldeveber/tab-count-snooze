@@ -1,6 +1,4 @@
-import ListItemText from "@mui/material/ListItemText";
-import Skeleton from "@mui/material/Skeleton";
-import Typography from "@mui/material/Typography";
+import { ListItemText, Skeleton, Typography } from "@mui/material";
 import ListGroupCard from "@/components/list/ListGroupCard";
 import { StyledListItem } from "@/components/list/ListItem";
 import { Loading as IconLoading } from "@/components/list/ListItemFavicon";

@@ -1,6 +1,4 @@
-import Checkbox from "@mui/material/Checkbox";
-import Grid from "@mui/material/Grid2";
-import ListItemText from "@mui/material/ListItemText";
+import { Checkbox, Grid, ListItemText } from "@mui/material";
 import { ChangeEvent, useRef } from "react";
 import ListItem from "@/components/list/ListItem";
 import ListItemFavicon from "@/components/list/ListItemFavicon";
