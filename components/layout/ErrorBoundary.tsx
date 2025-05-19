@@ -1,7 +1,4 @@
-import MuiAlert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
+import { Alert as MuiAlert, AlertTitle, Container, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { Component, ReactNode } from "react";
 

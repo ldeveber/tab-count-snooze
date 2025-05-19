@@ -1,5 +1,4 @@
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
+import { Box, Stack } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const BaseBox = styled(Box)(({ theme }) => ({

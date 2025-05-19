@@ -1,9 +1,12 @@
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import MuiChip, { type ChipProps } from "@mui/material/Chip";
-import Collapse from "@mui/material/Collapse";
-import List, { type ListProps as MuiListProps } from "@mui/material/List";
-import ListItemText from "@mui/material/ListItemText";
+import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import {
+  Chip as MuiChip,
+  type ChipProps,
+  Collapse,
+  List,
+  type ListProps as MuiListProps,
+  ListItemText,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React, { PropsWithChildren, useState } from "react";
 import ListItem, { type ListItemProps } from "./ListItem";

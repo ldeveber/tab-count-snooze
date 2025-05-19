@@ -1,4 +1,4 @@
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline } from "@mui/material";
 import DefaultPropsProvider from "@mui/material/DefaultPropsProvider";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { PropsWithChildren } from "react";

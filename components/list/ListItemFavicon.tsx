@@ -1,7 +1,5 @@
-import TabIcon from "@mui/icons-material/Tab";
-import Avatar from "@mui/material/Avatar";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Skeleton from "@mui/material/Skeleton";
+import { Tab as TabIcon } from "@mui/icons-material";
+import { Avatar, ListItemIcon, Skeleton } from "@mui/material";
 
 const FAVICON_SIZE = 24;
 

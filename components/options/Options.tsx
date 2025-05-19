@@ -1,9 +1,4 @@
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import { AppBar, Box, Container, Stack, Toolbar, Typography } from "@mui/material";
 import ResetToDefaults from "./ResetToDefaults";
 import ThemeOptions from "./settings/ThemeOptions";
 

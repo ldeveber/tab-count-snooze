@@ -1,11 +1,10 @@
-import BarChartIcon from "@mui/icons-material/BarChart";
-import NightsStayIcon from "@mui/icons-material/NightsStay";
-import WebAssetIcon from "@mui/icons-material/WebAsset";
-import TabContext from "@mui/lab/TabContext";
-import MuiTabList from "@mui/lab/TabList";
-import MuiTabPanel from "@mui/lab/TabPanel";
-import Paper from "@mui/material/Paper";
-import MuiTab from "@mui/material/Tab";
+import {
+  BarChart as BarChartIcon,
+  NightsStay as NightsStayIcon,
+  WebAsset as WebAssetIcon,
+} from "@mui/icons-material";
+import { TabContext, TabList as MuiTabList, TabPanel as MuiTabPanel } from "@mui/lab";
+import { Paper, Tab as MuiTab } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { SyntheticEvent, useState } from "react";
 import DataHandler from "@/utils/dataStore/DataHandler";

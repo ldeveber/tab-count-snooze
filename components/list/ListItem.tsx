@@ -1,7 +1,9 @@
-import MuiListItem, { type ListItemProps as MuiListItemProps } from "@mui/material/ListItem";
-import MuiListItemButton, {
+import {
+  ListItem as MuiListItem,
+  type ListItemProps as MuiListItemProps,
+  ListItemButton as MuiListItemButton,
   type ListItemButtonProps as MuiListItemButtonProps,
-} from "@mui/material/ListItemButton";
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { forwardRef } from "react";
 

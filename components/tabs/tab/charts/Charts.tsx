@@ -1,19 +1,23 @@
-import AutoAwesomeMotionIcon from "@mui/icons-material/AutoAwesomeMotion";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import PieChartIcon from "@mui/icons-material/PieChart";
-import SettingsIcon from "@mui/icons-material/Settings";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid2";
-import IconButton from "@mui/material/IconButton";
-import MuiPaper from "@mui/material/Paper";
-import Slider from "@mui/material/Slider";
-import Stack from "@mui/material/Stack";
+import {
+  AutoAwesomeMotion as AutoAwesomeMotionIcon,
+  BarChart as BarChartIcon,
+  PieChart as PieChartIcon,
+  Settings as SettingsIcon,
+} from "@mui/icons-material";
+import {
+  Box,
+  Grid,
+  IconButton,
+  Paper as MuiPaper,
+  Slider,
+  Stack,
+  TextField,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import Tooltip from "@mui/material/Tooltip";
-import Typography from "@mui/material/Typography";
 import { ChartData } from "chart.js";
 import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
 import { useAllTabs } from "@/utils/dataStore";

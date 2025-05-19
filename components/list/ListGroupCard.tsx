@@ -1,16 +1,18 @@
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import Box from "@mui/material/Box";
-import Card, { type CardProps } from "@mui/material/Card";
-import MuiCardActionArea, {
+import { ExpandMore } from "@mui/icons-material";
+import {
+  Box,
+  Card,
+  type CardProps,
+  CardActionArea as MuiCardActionArea,
   type CardActionAreaProps as MuiCardActionAreaProps,
-} from "@mui/material/CardActionArea";
-import MuiCardContent from "@mui/material/CardContent";
-import MuiCardHeader, {
+  CardContent as MuiCardContent,
+  CardHeader as MuiCardHeader,
   type CardHeaderProps as MuiCardHeaderProps,
-} from "@mui/material/CardHeader";
-import Collapse from "@mui/material/Collapse";
-import List, { type ListProps } from "@mui/material/List";
-import { type ListItemTextProps } from "@mui/material/ListItemText";
+  Collapse,
+  List,
+  type ListProps,
+  type ListItemTextProps,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ReactNode, useState } from "react";
 

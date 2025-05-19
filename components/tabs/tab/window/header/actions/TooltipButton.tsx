@@ -1,5 +1,4 @@
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
-import Tooltip, { TooltipProps } from "@mui/material/Tooltip";
+import { IconButton, IconButtonProps, Tooltip, TooltipProps } from "@mui/material";
 
 interface TooltipButtonProps extends IconButtonProps {
   tooltip: TooltipProps["title"];
