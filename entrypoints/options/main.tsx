@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ErrorBoundary } from "react-error-boundary";
-import App from "./App.tsx";
+import { Suspense } from "react";
+import AppWrap from "@/components/AppWrap";
+import Options, { Loading } from "@/components/options/Options.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ErrorBoundary fallback={<div>Something went boom :(</div>}>
-      <App />
-    </ErrorBoundary>
+    <AppWrap>
+      <Suspense fallback={<Loading />}>
+        <Options />
+      </Suspense>
+    </AppWrap>
   </React.StrictMode>,
 );

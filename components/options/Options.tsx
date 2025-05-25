@@ -1,10 +1,10 @@
-import { AppBar, Box, Container, Stack, Toolbar, Typography } from "@mui/material";
+import { AppBar, CircularProgress, Container, Toolbar, Typography } from "@mui/material";
 import ResetToDefaults from "./ResetToDefaults";
 import ThemeOptions from "./settings/ThemeOptions";
 
-export default function Options() {
+export function Loading() {
   return (
-    <Box>
+    <div className="flex min-h-300 flex-col">
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -12,12 +12,27 @@ export default function Options() {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container sx={{ maxWidth: 650, py: 3 }}>
-        <Stack spacing={3} alignItems="center">
-          <ThemeOptions />
-          <ResetToDefaults />
-        </Stack>
+      <div className="flex flex-col items-center justify-center gap-4 px-4 py-2">
+        <CircularProgress />
+      </div>
+    </div>
+  );
+}
+
+export default function Options() {
+  return (
+    <div className="flex min-h-300 flex-col">
+      <AppBar position="static">
+        <Toolbar>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Tab Count Snooze Options
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Container className="flex flex-col items-center gap-4 px-4 py-2">
+        <ThemeOptions />
+        <ResetToDefaults />
       </Container>
-    </Box>
+    </div>
   );
 }
