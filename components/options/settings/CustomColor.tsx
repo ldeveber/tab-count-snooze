@@ -1,4 +1,4 @@
-import { Box, Checkbox, FormControlLabel, FormGroup, Grow } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Grow } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Hue } from "@/components/layout/theme/themeHelpers";
 import { ColorOptions } from "@/utils/options";
@@ -20,23 +20,19 @@ export default function CustomColor({
   };
 
   return (
-    <Box>
-      <FormGroup>
-        <FormControlLabel
-          control={<Checkbox checked={options.isCustomTheme} onChange={handleCheckboxChange} />}
-          label="Enable custom primary color"
-        />
+    <FormGroup>
+      <FormControlLabel
+        control={<Checkbox checked={options.isCustomTheme} onChange={handleCheckboxChange} />}
+        label="Enable custom primary color"
+      />
 
-        <Grow in={options.isCustomTheme}>
-          <Box>
-            <ColorSwatches
-              disabled={!options.isCustomTheme}
-              hue={options.hue}
-              setHue={handleColorSwatchChange}
-            />
-          </Box>
-        </Grow>
-      </FormGroup>
-    </Box>
+      <Grow in={options.isCustomTheme}>
+        <ColorSwatches
+          disabled={!options.isCustomTheme}
+          hue={options.hue}
+          setHue={handleColorSwatchChange}
+        />
+      </Grow>
+    </FormGroup>
   );
 }

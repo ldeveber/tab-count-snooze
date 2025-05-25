@@ -1,8 +1,7 @@
-import { Card, CardContent, CardHeader, Stack } from "@mui/material";
+import { Card, CardContent, CardHeader } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Hue } from "@/components/layout/theme/themeHelpers";
 import { ColorOptions, defaultColor } from "@/utils/options";
-import CustomColor from "./CustomColor";
 import ThemeMode from "./ThemeMode";
 
 const setThemeMode = async (themeMode: ColorOptions["themeMode"]) => {
@@ -42,13 +41,12 @@ export default function ThemeOptions() {
   }, [options.themeMode]);
 
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" className="w-full">
       <CardHeader title="Theme" subheader="Customize look and feel" />
       <CardContent>
-        <Stack spacing={4}>
+        <div className="flex flex-col gap-4">
           <ThemeMode themeMode={options.themeMode} setOptions={setOptions} />
-          <CustomColor options={options} setOptions={setOptions} />
-        </Stack>
+        </div>
       </CardContent>
     </Card>
   );
