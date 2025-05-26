@@ -7,7 +7,7 @@ import ChartsTab, { Loading as ChartsTabLoading } from "@/components/tabs/Charts
 import SnoozeTab, { Loading as SnoozeTabLoading } from "@/components/tabs/SnoozeTab";
 import WindowsTab, { Loading as WindowsTabLoading } from "@/components/tabs/WindowsTab";
 import "@/utils/charts/initializeCharts";
-import ErrorDisplay from "./layout/ErrorDisplay";
+import ErrorDisplay from "./ErrorDisplay";
 import { ErrorBoundary } from "react-error-boundary";
 import { TabValue } from "./tabs/types";
 import TabSubMenuBar, { Loading as TabSubMenuBarLoading } from "./tabs/TabSubMenuBar";

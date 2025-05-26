@@ -1,5 +1,5 @@
 import { Component, ReactNode } from "react";
-import ErrorDisplay from "./ErrorDisplay";
+import ErrorDisplay from "@/components/ErrorDisplay";
 
 interface Props {
   children?: ReactNode;
