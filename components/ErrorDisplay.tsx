@@ -24,8 +24,8 @@ export default function ErrorDisplay({ error, resetErrorBoundary }: ErrorDisplay
       </div>
 
       {error?.stack && (
-        <div className="line-clamp-5 overflow-scroll rounded-2xl border border-dashed border-neutral-500 px-4 py-2">
-          <pre style={{ margin: 0 }}>
+        <div className="rounded-2xl border border-dashed border-neutral-500 px-4 py-2">
+          <pre className="line-clamp-5 size-full overflow-scroll">
             <code>{error.stack}</code>
           </pre>
         </div>

@@ -1,14 +1,9 @@
-import TabCountSnooze, { Loading } from "@/components/TabCountSnooze";
-import React, { Suspense } from "react";
+import App from "@/components/App";
+import React from "react";
 import ReactDOM from "react-dom/client";
-import AppWrap from "@/components/AppWrap";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <AppWrap>
-      <Suspense fallback={<Loading />}>
-        <TabCountSnooze />
-      </Suspense>
-    </AppWrap>
+    <App />
   </React.StrictMode>,
 );
