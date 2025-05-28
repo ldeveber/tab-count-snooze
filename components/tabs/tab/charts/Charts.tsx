@@ -1,7 +1,5 @@
 import {
   AutoAwesomeMotion as AutoAwesomeMotionIcon,
-  BarChart as BarChartIcon,
-  PieChart as PieChartIcon,
   Settings as SettingsIcon,
 } from "@mui/icons-material";
 import {
@@ -12,14 +10,12 @@ import {
   Slider,
   Stack,
   TextField,
-  ToggleButton,
-  ToggleButtonGroup,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ChartData } from "chart.js";
-import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
+import { ChangeEvent, useMemo, useState } from "react";
 import { useAllTabs } from "@/utils/dataStore";
 import { getChartData } from "@/utils/charts/chartjs";
 import { groupTabs } from "@/utils/chrome";
@@ -34,18 +30,13 @@ const Paper = styled(MuiPaper)(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
 }));
 
-export default function Charts() {
-  const [chartType, setChartType] = useState<ChartViewType>("bar");
+export default function Charts({ chartType }: { chartType: ChartViewType }) {
   const [urlDepth, setUrlDepth] = useState<number>(0);
   const [minDupes, setMinDupes] = useState(3);
   const [open, setOpen] = useState(false);
   const allTabs = useAllTabs();
 
   const toggleOpen = () => setOpen(!open);
-
-  const handleToggleChartType = (_e: MouseEvent<HTMLElement>, newChartType: ChartViewType) => {
-    setChartType(newChartType);
-  };
 
   const onChartClick = (origin: string) => {
     const tabIds: number[] = [];
@@ -78,24 +69,6 @@ export default function Charts() {
   return (
     <BaseBox>
       <Stack spacing={1}>
-        <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
-          <Stack direction="row" spacing={2} alignItems="center">
-            <ToggleButtonGroup
-              value={chartType}
-              exclusive
-              onChange={handleToggleChartType}
-              aria-label="chart type"
-            >
-              <ToggleButton value="bar" aria-label="bar chart">
-                <BarChartIcon />
-              </ToggleButton>
-              <ToggleButton value="doughnut" aria-label="pie chart">
-                <PieChartIcon />
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Stack>
-        </Stack>
-
         <ChartPane chartType={chartType} data={data} onClick={onChartClick} />
 
         <Stack direction="row" spacing={2} alignItems="center" sx={{ display: "none" }}>

@@ -10,12 +10,11 @@ import "@/utils/charts/initializeCharts";
 import ErrorDisplay from "./ErrorDisplay";
 import { ErrorBoundary } from "react-error-boundary";
 import { TabValue } from "./tabs/types";
-import TabSubMenuBar, { Loading as TabSubMenuBarLoading } from "./tabs/TabSubMenuBar";
 import TabMenuBar, { Loading as TabMenuBarLoading } from "./tabs/TabMenuBar";
 
 function TabPanel({ children, ...props }: TabPanelProps) {
   return (
-    <MuiTabPanel {...props} sx={{ p: 0 }} className="flex size-full grow flex-col px-4 py-2">
+    <MuiTabPanel {...props} sx={{ p: 0 }} className="size-full grow">
       <ErrorBoundary FallbackComponent={ErrorDisplay}>{children}</ErrorBoundary>
     </MuiTabPanel>
   );
@@ -25,8 +24,7 @@ export function Loading() {
   return (
     <div className="flex min-h-screen w-full flex-col">
       <TabMenuBarLoading />
-      <TabSubMenuBarLoading />
-      <div className="flex h-full grow flex-col items-center justify-center gap-4 px-4 py-2">
+      <div className="flex size-full grow items-center justify-center">
         <CircularProgress />
       </div>
     </div>
@@ -45,7 +43,6 @@ export default function TabCountSnooze() {
         <DataHandler />
         <TabContext value={tab}>
           <TabMenuBar onChange={handleChange} />
-          <TabSubMenuBar value={tab} />
           <TabPanel value={TabValue.Tab}>
             <Suspense fallback={<WindowsTabLoading />}>
               <WindowsTab />
