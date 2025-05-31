@@ -28,7 +28,7 @@ export default function StickyTabSubMenuBar({ children }: PropsWithChildren) {
       <Paper
         square
         elevation={0}
-        className="flex min-h-14 items-center justify-between"
+        className="flex h-14 min-h-14 items-center justify-between gap-4"
         sx={{ zIndex: "appBar", position: "sticky", top: 72 }}
       >
         {children}

@@ -60,7 +60,7 @@ export default function WindowsTab() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex size-full grow flex-col">
       <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4">
           <Search value={search} onChange={onSearchChange} />
