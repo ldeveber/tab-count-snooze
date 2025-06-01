@@ -20,7 +20,7 @@ export function Loading() {
 
 export default function SnoozeTab() {
   return (
-    <div className="flex flex-col">
+    <div className="flex size-full grow flex-col">
       <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4"></div>
         <div className="flex shrink items-center gap-4">
