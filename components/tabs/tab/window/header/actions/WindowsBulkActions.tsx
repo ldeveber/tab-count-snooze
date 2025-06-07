@@ -1,5 +1,5 @@
 import { Delete as DeleteIcon, MergeType as MergeTypeIcon } from "@mui/icons-material";
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { MouseEventHandler, useMemo } from "react";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
 import { closeTabs, groupTabs, type TabIdType } from "@/utils/chrome";
@@ -38,6 +38,10 @@ export default function WindowsBulkActions() {
     return tabIds;
   };
 
+  const filtleredCount = useMemo(() => {
+    return filterTabs(allTabs, search).length;
+  }, [allTabs, search]);
+
   const disabled = useMemo(() => {
     return getSelectedTabIds().length === 0;
   }, []);
@@ -53,6 +57,9 @@ export default function WindowsBulkActions() {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
+      <Typography>
+        {filtleredCount} tab {filtleredCount === 1 ? "match" : "matches"}
+      </Typography>
       <TooltipButton tooltip="Group Tabs" disabled={disabled} onClick={onGroup}>
         <MergeTypeIcon titleAccess={disabled ? "Group Tabs" : undefined} />
       </TooltipButton>
