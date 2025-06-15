@@ -4,7 +4,7 @@ import { MouseEventHandler, useMemo } from "react";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
 import { closeTabs, groupTabs, type TabIdType } from "@/utils/chrome";
 import { filterTabs } from "@/utils/filterTabs";
-import TooltipButton from "./TooltipButton";
+import TooltipButton from "@/components/TooltipButton";
 
 export default function WindowsBulkActions() {
   const selected = useSelectedTabs();

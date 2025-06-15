@@ -35,9 +35,15 @@ export default function tabGroupsReducer(state: State, action: Action): State {
       });
     }
     case "addTabGroup":
-    case "updateTabGroup": {
       return produce(state, (draft) => {
         draft.map.set(action.group.id, action.group);
+      });
+    case "updateTabGroup": {
+      return produce(state, (draft) => {
+        draft.map.set(action.group.id, {
+          ...(draft.map.get(action.group.id!) ?? {}),
+          ...action.group,
+        });
       });
     }
     case "removeTabGroup": {
