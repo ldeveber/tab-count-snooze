@@ -31,10 +31,17 @@ export default function windowsReducer(state: State, action: Action): State {
         draft.map = new Map<WindowId, Browser.windows.Window>(action.wins.map((w) => [w.id!, w]));
       });
     }
-    case "addWindow":
-    case "updateWindow": {
+    case "addWindow": {
       return produce(state, (draft) => {
         draft.map.set(action.win.id!, action.win);
+      });
+    }
+    case "updateWindow": {
+      return produce(state, (draft) => {
+        draft.map.set(action.win.id!, {
+          ...(draft.map.get(action.win.id!) ?? {}),
+          ...action.win,
+        });
       });
     }
     case "removeWindow": {

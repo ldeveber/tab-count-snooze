@@ -51,7 +51,7 @@ export function Loading() {
         <div className="flex grow items-center gap-4">
           <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
         </div>
-        <div className="flex shrink items-center gap-4">
+        <div className="flex shrink items-center gap-4 @4xl/main:px-8">
           <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
         </div>
       </StickyTabSubMenuBarLoading>
@@ -105,7 +105,7 @@ export default function ChartsTab() {
         </div>
       </StickyTabSubMenuBar>
 
-      <div className="flex grow flex-col gap-4 px-4 py-2">
+      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
         <Suspense fallback={<div>Loading chart...</div>}>
           <Chart chartType={chartType} />
         </Suspense>

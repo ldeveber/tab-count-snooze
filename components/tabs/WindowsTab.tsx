@@ -7,12 +7,11 @@ import {
   useWindowCount,
   useWindows,
 } from "@/utils/dataStore";
-import WindowLoading from "./tab/window/WindowLoading";
-import WindowView from "./tab/window/WindowView";
 import StickyTabSubMenuBar, { Loading as StickyTabSubMenuBarLoading } from "./StickyTabSubMenuBar";
-import WindowsBulkActions from "./tab/window/header/actions/WindowsBulkActions";
+import WindowsBulkActions from "./WindowsBulkActions";
 import TabCountTagline from "./TabCountTagline";
 import Search from "../layout/Search";
+import WindowList, { Loading as WindowListLoading } from "../tabList/WindowList";
 
 export function Loading() {
   return (
@@ -20,8 +19,8 @@ export function Loading() {
       <StickyTabSubMenuBarLoading>
         <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
       </StickyTabSubMenuBarLoading>
-      <div className="flex grow flex-col gap-4 px-4 py-2">
-        <WindowLoading />
+      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
+        <WindowListLoading />
       </div>
     </div>
   );
@@ -70,14 +69,10 @@ export default function WindowsTab() {
         </div>
       </StickyTabSubMenuBar>
 
-      <div className="flex grow flex-col gap-4 px-4 py-2">
-        {open.map((w) => (
-          <WindowView key={w.id} windowId={w.id!} />
-        ))}
+      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
+        <WindowList windows={open} state="normal" />
         {minimized.length > 0 && <Divider aria-label="Minimized Windows">Minimized</Divider>}
-        {minimized.map((w) => (
-          <WindowView key={w.id} windowId={w.id!} />
-        ))}
+        <WindowList windows={minimized} state="minimized" />
       </div>
     </div>
   );

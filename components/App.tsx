@@ -9,7 +9,7 @@ function Loading() {
 
 export default function App() {
   return (
-    <div className="flex min-h-screen w-full flex-col">
+    <div className="@container/main flex min-h-screen w-full flex-col">
       <DataProvider>
         <DataHandler />
         <AppWrap>

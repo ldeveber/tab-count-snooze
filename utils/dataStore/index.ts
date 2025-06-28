@@ -85,7 +85,7 @@ export function useAllTabs() {
   useTabsContext().map.forEach((t) => arr.push(t));
   return arr;
 }
-export function useTabs(windowId: number) {
+export function useTabs(windowId?: number) {
   const arr: Array<Browser.tabs.Tab> = [];
   useTabsContext().map.forEach((t) => {
     if (windowId === t.windowId) {
