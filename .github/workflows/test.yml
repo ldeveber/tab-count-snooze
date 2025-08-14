@@ -2,14 +2,14 @@ name: Test
 
 on:
   pull_request:
+    branches: [main]
 
 jobs:
   test:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
-
     permissions:
       contents: read
-
     steps:
       - uses: actions/checkout@v4
       - name: Setup Node.js
@@ -26,3 +26,4 @@ jobs:
         with:
           name: coverage
           path: coverage
+          retention-days: 3

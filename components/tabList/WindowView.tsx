@@ -128,7 +128,7 @@ export default function WindowView({
   }
   return (
     <Card id={`window-${id}`} raised={focused} className="h-auto w-full" data-win={id}>
-      <CardActionArea onClick={handleExpandClick}>
+      <CardActionArea onClick={handleExpandClick} aria-expanded={expanded}>
         <CardHeader
           title={`${visibleTabs.length} Tabs`}
           subheader={lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}

@@ -1,10 +1,11 @@
 import { defineConfig } from "wxt";
 import tailwindcss from "@tailwindcss/vite";
 
-// @see https://wxt.dev/api/config.html
+// @see https://wxt.dev/api/reference/wxt/interfaces/InlineConfig.html
 export default defineConfig({
   modules: ["@wxt-dev/module-react", "@wxt-dev/auto-icons"],
   autoIcons: {},
+  analysis: { enabled: true },
   manifest: ({ mode, command }) => {
     const manifest = {
       name: "Tab Count Snooze",
