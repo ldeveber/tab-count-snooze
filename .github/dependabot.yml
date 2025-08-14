@@ -9,31 +9,46 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 2
+    open-pull-requests-limit: 1
     groups:
-      vite:
+      ci:
         patterns:
+          - "@babel/*"
+          - "@esbuild/*"
+          - "@rollup/*"
+          - "@vitejs/*"
+          - "@wxt-dev/*"
           - "vite"
-          - "@vitejs/"
+          - "vite-node"
+          - "wxt"
       test:
         patterns:
-          - "vitest"
+          - "@faker-js/*"
+          - "@testing-library/*"
           - "@vitest/*"
           - "jsdom"
+          - "vitest"
       prettier:
         patterns:
+          - "@eslint/*"
+          - "@prettier/*"
+          - "eslint"
+          - "eslint-*"
           - "prettier"
-          - "eslint-plugin-prettier"
-          - "eslint-config-prettier"
-          - "prettier-plugin-organize-imports"
-      mui:
+          - "prettier-*"
+      styles:
         patterns:
           - "@emotion*"
-          - "@mui*/"
+          - "@mui*/*"
+          - "tailwind"
+          - "@tailwindcss/*"
+      charts:
+        patterns:
+          - "@nivo/*"
       react:
         patterns:
           - "react*"
-          - "@types/react"
+          - "@types/react*"
       types:
         patterns:
           - "@types*"
@@ -42,3 +57,4 @@ updates:
     directory: "/"
     schedule:
       interval: "monthly"
+    open-pull-requests-limit: 1
