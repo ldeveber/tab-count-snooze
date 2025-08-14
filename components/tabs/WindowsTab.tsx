@@ -62,7 +62,7 @@ export default function WindowsTab() {
     <div className="flex size-full grow flex-col">
       <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4">
-          <Search value={search} onChange={onSearchChange} />
+          <Search autoFocus label="Search Tabs" value={search} onChange={onSearchChange} />
         </div>
         <div className="flex shrink items-center gap-4">
           {isFiltered ? <WindowsBulkActions /> : <TabCountTagline />}
@@ -72,7 +72,7 @@ export default function WindowsTab() {
       <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
         <WindowList windows={open} state="normal" />
         {minimized.length > 0 && <Divider aria-label="Minimized Windows">Minimized</Divider>}
-        <WindowList windows={minimized} state="minimized" />
+        {minimized.length > 0 && <WindowList windows={minimized} state="minimized" />}
       </div>
     </div>
   );

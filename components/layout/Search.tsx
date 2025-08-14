@@ -1,75 +1,54 @@
-import { Clear, Search as SearchIcon } from "@mui/icons-material";
-import { FilledInput as MuiFilledInput, IconButton, InputAdornment } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { Search as SearchIcon } from "@mui/icons-material";
+import { InputAdornment, TextField as MuiTextField, TextFieldProps, styled } from "@mui/material";
 import { ChangeEventHandler } from "react";
 
-const FilledInput = styled(MuiFilledInput)(({ theme }) => ({
-  borderRadius: 28,
-  "& .MuiFilledInput-input": {
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      flexGrow: 1,
-    },
+const TextField = styled(MuiTextField)(({ theme }) => ({
+  width: "100%",
+  ".MuiFormLabel-root": {
+    display: "none",
   },
-  "&::before": {
-    border: "none",
-  },
-  "&::after": {
-    border: "none",
-  },
-  "&:hover:not(.Mui-disabled, .Mui-error)": {
-    "&::before": {
-      border: "none",
-    },
-    "&::after": {
-      border: "none",
-    },
-  },
-  "&.MuiFocused": {
-    "&::before": {
-      border: "none",
-    },
-    "&::after": {
-      border: "none",
+  ".MuiInputBase-root.MuiFilledInput-root": {
+    borderRadius: 28,
+    width: 250,
+    transition: theme.transitions.create(["width"], {
+      duration: theme.transitions.duration.standard,
+    }),
+    "&.Mui-focused": {
+      width: "100%",
     },
   },
 }));
 
-export default function Search({
-  value: search,
-  onChange,
-}: {
-  value: string;
+interface SearchProps extends Omit<TextFieldProps, "onChange" | "value" | "sx"> {
+  readonly value: string;
   onChange: (value: string) => void;
-}) {
+}
+
+export default function Search({ onChange, label, ...props }: SearchProps) {
   const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
     onChange(value);
   };
-  const clearSearch = () => onChange("");
-
   return (
-    <FilledInput
-      autoFocus
+    <TextField
       hiddenLabel
+      variant="filled"
       size="small"
       placeholder="Search..."
-      value={search}
+      type="search"
+      label={label}
+      {...props}
       onChange={handleSearch}
-      startAdornment={
-        <InputAdornment position="start">
-          <SearchIcon fontSize="small" />
-        </InputAdornment>
-      }
-      endAdornment={
-        search.length > 0 ? (
-          <InputAdornment position="end">
-            <IconButton size="small" onClick={clearSearch} aria-label="Clear">
-              <Clear fontSize="small" />
-            </IconButton>
-          </InputAdornment>
-        ) : null
-      }
-      inputProps={{ "aria-label": "Search" }}
+      slotProps={{
+        input: {
+          "aria-label": typeof label === "string" ? label : "Search",
+          disableUnderline: true,
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon fontSize="small" />
+            </InputAdornment>
+          ),
+        },
+      }}
     />
   );
 }

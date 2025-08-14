@@ -6,14 +6,14 @@ export const themeOptions: CssVarsThemeOptions = {
     dark: {
       palette: {
         primary: {
-          main: teal[500],
+          main: teal[700],
         },
       },
     },
     light: {
       palette: {
         primary: {
-          main: teal[500],
+          main: teal[700],
         },
       },
     },

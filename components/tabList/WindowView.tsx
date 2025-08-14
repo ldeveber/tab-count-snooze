@@ -71,7 +71,7 @@ export default function WindowView({
   const search = useSearch();
   const [focused, setFocused] = useState(win.focused);
   const [lastViewed, setLastViewed] = useState<Date | null>(focused ? new Date() : null);
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(true);
 
   const onFocusChanged = (id: number) => {
     setFocused(id === win.id);

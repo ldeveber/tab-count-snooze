@@ -27,9 +27,11 @@ const Tab = styled(MuiTab)(({ theme }) => {
     alignContent: "center",
     alignItems: "center",
     color: theme.palette.text.secondary,
-    padding: theme.spacing(2, 3),
+    padding: theme.spacing(1.5, 3),
     textTransform: "none",
-    fontWeight: theme.typography.fontWeightRegular,
+    fontSize: "1rem",
+    letterSpacing: "0.05rem",
+    fontWeight: theme.typography.fontWeightMedium,
     borderRadius: 40,
     minHeight: "initial",
     "&:hover": {
