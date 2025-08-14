@@ -57,6 +57,7 @@ export function mockTabGroup(
       "orange",
     ]),
     title: faker.internet.emoji(),
+    shared: false,
     ...props,
   };
   return group;

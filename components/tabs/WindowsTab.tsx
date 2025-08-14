@@ -70,9 +70,9 @@ export default function WindowsTab() {
       </StickyTabSubMenuBar>
 
       <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
-        <WindowList windows={open} state="normal" />
+        <WindowList windows={open} />
         {minimized.length > 0 && <Divider aria-label="Minimized Windows">Minimized</Divider>}
-        {minimized.length > 0 && <WindowList windows={minimized} state="minimized" />}
+        {minimized.length > 0 && <WindowList windows={minimized} minimized />}
       </div>
     </div>
   );

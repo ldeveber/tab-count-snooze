@@ -6,10 +6,10 @@ export function Loading() {
 }
 
 export default function WindowList({
-  state,
+  minimized = false,
   windows,
 }: {
-  readonly state: Browser.windows.windowStateEnum;
+  readonly minimized?: boolean;
   windows: Array<Browser.windows.Window>;
 }) {
   return (
@@ -20,7 +20,7 @@ export default function WindowList({
         ))}
       </div>
       <div className={`hidden peer-empty:block`}>
-        <Empty message={`No ${state} windows match search`} />
+        <Empty message={`No ${minimized ? "minimized" : ""} windows match search`} />
       </div>
     </>
   );

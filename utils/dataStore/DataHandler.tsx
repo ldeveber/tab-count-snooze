@@ -10,7 +10,7 @@ function TabHandler() {
 
   const onTabUpdate = (
     _tabId: number,
-    _changeInfo: Browser.tabs.TabChangeInfo,
+    _changeInfo: Browser.tabs.OnUpdatedInfo,
     tab: Browser.tabs.Tab,
   ) => {
     dispatch({ type: "updateTab", tab });
