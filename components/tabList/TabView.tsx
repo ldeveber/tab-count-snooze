@@ -92,7 +92,7 @@ export default function TabView({
     });
   };
 
-  const onActivated = (info: Browser.tabs.TabActiveInfo) => {
+  const onActivated = (info: Browser.tabs.OnActivatedInfo) => {
     if (info.windowId === tab.windowId && info.tabId === tab.id) {
       setActive(true);
       setLastViewed(new Date());
