@@ -6,10 +6,6 @@
 
   "editor.formatOnSave": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-
-  "vitest.commandLine": "npm run test",
-  "vitest.enable": true,
-
   "files.readonlyInclude": {
     // show generated & node_modules as readonly
     ".output/**/*": true,
@@ -26,6 +22,6 @@
     "package-lock.json": true
   },
   "files.associations": {
-    "*.css": "bradlc.vscode-tailwindcss"
+    "*.css": "tailwindcss"
   }
 }
