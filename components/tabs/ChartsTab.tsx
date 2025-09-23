@@ -8,13 +8,19 @@ import {
   SelectChangeEvent,
   Skeleton,
 } from "@mui/material";
-import { AccountTree, BarChart as BarChartIcon, Flare } from "@mui/icons-material";
+import {
+  AccountTree,
+  BarChart as BarChartIcon,
+  Flare,
+} from "@mui/icons-material";
 import BarChart from "@/components/charts/BarChart";
 import SankeyChart from "@/components/charts/SankeyChart";
 import SunburstChart from "@/components/charts/SunburstChart";
 import ErrorDisplay from "@/components/ErrorDisplay";
 import { ErrorBoundary } from "react-error-boundary";
-import StickyTabSubMenuBar, { Loading as StickyTabSubMenuBarLoading } from "./StickyTabSubMenuBar";
+import StickyTabSubMenuBar, {
+  Loading as StickyTabSubMenuBarLoading,
+} from "./StickyTabSubMenuBar";
 import TabCountTagline from "./TabCountTagline";
 
 type ChartViewType = "sunburst" | "bar" | "sankey";

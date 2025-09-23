@@ -13,7 +13,11 @@ const BoxWrap = styled(Box)(({ theme }) => ({
   },
 }));
 
-export default function ExpandMoreIcon({ expanded }: { readonly expanded: boolean }) {
+export default function ExpandMoreIcon({
+  expanded,
+}: {
+  readonly expanded: boolean;
+}) {
   return (
     <BoxWrap>
       <ExpandMore className={expanded ? "Mui-expanded" : ""} />

@@ -84,7 +84,11 @@ export default function TabGroupView({
         button-aria-label={buttonAriaLabel}
         data-group={group.id}
       >
-        <ListItemButton className="w-full" onClick={handleClick} aria-label={buttonAriaLabel}>
+        <ListItemButton
+          className="w-full"
+          onClick={handleClick}
+          aria-label={buttonAriaLabel}
+        >
           <ListItemText
             primary={<Chip label={title} backgroundColor={groupColor} />}
             secondary={`${tabs.length} tabs`}

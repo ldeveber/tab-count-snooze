@@ -29,7 +29,9 @@ function _updateNode(nodes: Array<ItemNode>, depth: number, source: string) {
 }
 
 function _updateLink(links: Array<ItemLink>, source: string, target: string) {
-  let sourceLink = links.find((l) => l.source === source && l.target === target);
+  let sourceLink = links.find(
+    (l) => l.source === source && l.target === target,
+  );
   if (!sourceLink) {
     sourceLink = {
       source,
@@ -76,17 +78,31 @@ export function _getSankeyData(
 
   tabData.forEach((tab) => {
     const { origin, segments } = tab;
-    _addLinkData(allLinks, allNodes, 1, ALL_TABS_LABEL, origin, segments.slice(0, 2));
+    _addLinkData(
+      allLinks,
+      allNodes,
+      1,
+      ALL_TABS_LABEL,
+      origin,
+      segments.slice(0, 2),
+    );
   });
-  const nodes = allNodes.filter((n) => n.value > minValue).sort((a, b) => b.value - a.value);
+  const nodes = allNodes
+    .filter((n) => n.value > minValue)
+    .sort((a, b) => b.value - a.value);
   const links = allLinks.filter(
-    (l) => nodes.some((n) => n.id === l.source) && nodes.some((n) => n.id === l.target),
+    (l) =>
+      nodes.some((n) => n.id === l.source) &&
+      nodes.some((n) => n.id === l.target),
   );
 
   return { nodes, links };
 }
 
-export default function useSankeyData(): SankeyDataProps<ItemNode, ItemLink>["data"] {
+export default function useSankeyData(): SankeyDataProps<
+  ItemNode,
+  ItemLink
+>["data"] {
   const tabData = useParsedTabData();
   return _getSankeyData(tabData);
 }

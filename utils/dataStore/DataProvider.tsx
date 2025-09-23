@@ -1,14 +1,25 @@
 import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
-import displayReducer, { Action as DisplayAction } from "./reducers/displayReducer";
-import tabGroupsReducer, { Action as TabGroupsAction } from "./reducers/tabGroupsReducer";
+import displayReducer, {
+  Action as DisplayAction,
+} from "./reducers/displayReducer";
+import tabGroupsReducer, {
+  Action as TabGroupsAction,
+} from "./reducers/tabGroupsReducer";
 import tabsReducer, { Action as TabsAction } from "./reducers/tabsReducer";
-import windowsReducer, { Action as WindowsAction } from "./reducers/windowsReducer";
+import windowsReducer, {
+  Action as WindowsAction,
+} from "./reducers/windowsReducer";
 import { initialState, type State } from "./state";
 
 export const DataContext = createContext<State>(initialState);
 export const DataDispatchContext = createContext<Dispatch<Action>>(() => {});
 
-type Action = WindowsAction | TabGroupsAction | TabsAction | DisplayAction | { type: "clear" };
+type Action =
+  | WindowsAction
+  | TabGroupsAction
+  | TabsAction
+  | DisplayAction
+  | { type: "clear" };
 function dataReducer(state: State, action: Action): State {
   switch (action.type) {
     case "setWindows":
@@ -60,7 +71,9 @@ export default function DataProvider({
 
   return (
     <DataContext.Provider value={state}>
-      <DataDispatchContext.Provider value={dispatch}>{children}</DataDispatchContext.Provider>
+      <DataDispatchContext.Provider value={dispatch}>
+        {children}
+      </DataDispatchContext.Provider>
     </DataContext.Provider>
   );
 }

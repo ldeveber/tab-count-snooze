@@ -3,9 +3,15 @@ import { CircularProgress } from "@mui/material";
 import { Suspense, SyntheticEvent, useState } from "react";
 import DataHandler from "@/utils/dataStore/DataHandler";
 import DataProvider from "@/utils/dataStore/DataProvider";
-import ChartsTab, { Loading as ChartsTabLoading } from "@/components/tabs/ChartsTab";
-import SnoozeTab, { Loading as SnoozeTabLoading } from "@/components/tabs/SnoozeTab";
-import WindowsTab, { Loading as WindowsTabLoading } from "@/components/tabs/WindowsTab";
+import ChartsTab, {
+  Loading as ChartsTabLoading,
+} from "@/components/tabs/ChartsTab";
+import SnoozeTab, {
+  Loading as SnoozeTabLoading,
+} from "@/components/tabs/SnoozeTab";
+import WindowsTab, {
+  Loading as WindowsTabLoading,
+} from "@/components/tabs/WindowsTab";
 import ErrorDisplay from "./ErrorDisplay";
 import { ErrorBoundary } from "react-error-boundary";
 import { TabValue } from "./tabs/types";
@@ -13,7 +19,11 @@ import TabMenuBar, { Loading as TabMenuBarLoading } from "./tabs/TabMenuBar";
 
 function TabPanel({ children, ...props }: TabPanelProps) {
   return (
-    <MuiTabPanel {...props} sx={{ p: 0 }} className="flex size-full grow flex-col">
+    <MuiTabPanel
+      {...props}
+      sx={{ p: 0 }}
+      className="flex size-full grow flex-col"
+    >
       <ErrorBoundary FallbackComponent={ErrorDisplay}>{children}</ErrorBoundary>
     </MuiTabPanel>
   );

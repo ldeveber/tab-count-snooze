@@ -9,7 +9,11 @@ import {
 } from "@mui/material";
 import { ChangeEvent } from "react";
 import TabFavicon, { FAVICON_SIZE } from "./TabFavicon";
-import { useDataDispatch, useIsFiltered, useSelectedTabs } from "@/utils/dataStore";
+import {
+  useDataDispatch,
+  useIsFiltered,
+  useSelectedTabs,
+} from "@/utils/dataStore";
 import TabState from "./TabState";
 import { styled } from "@mui/material/styles";
 

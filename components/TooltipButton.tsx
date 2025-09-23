@@ -1,9 +1,17 @@
-import { IconButton, IconButtonProps, Tooltip, TooltipProps } from "@mui/material";
+import {
+  IconButton,
+  IconButtonProps,
+  Tooltip,
+  TooltipProps,
+} from "@mui/material";
 
 interface TooltipButtonProps extends IconButtonProps {
   tooltip: TooltipProps["title"];
 }
-export default function TooltipButton({ tooltip, ...props }: TooltipButtonProps) {
+export default function TooltipButton({
+  tooltip,
+  ...props
+}: TooltipButtonProps) {
   if (props.disabled) {
     return <IconButton color="inherit" size="small" {...props} />;
   }

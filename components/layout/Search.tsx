@@ -1,5 +1,10 @@
 import { Search as SearchIcon } from "@mui/icons-material";
-import { InputAdornment, TextField as MuiTextField, TextFieldProps, styled } from "@mui/material";
+import {
+  InputAdornment,
+  TextField as MuiTextField,
+  TextFieldProps,
+  styled,
+} from "@mui/material";
 import { ChangeEventHandler } from "react";
 
 const TextField = styled(MuiTextField)(({ theme }) => ({
@@ -19,13 +24,16 @@ const TextField = styled(MuiTextField)(({ theme }) => ({
   },
 }));
 
-interface SearchProps extends Omit<TextFieldProps, "onChange" | "value" | "sx"> {
+interface SearchProps
+  extends Omit<TextFieldProps, "onChange" | "value" | "sx"> {
   readonly value: string;
   onChange: (value: string) => void;
 }
 
 export default function Search({ onChange, label, ...props }: SearchProps) {
-  const handleSearch: ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
+  const handleSearch: ChangeEventHandler<HTMLInputElement> = ({
+    target: { value },
+  }) => {
     onChange(value);
   };
   return (

@@ -1,5 +1,7 @@
 import { CircularProgress, Skeleton } from "@mui/material";
-import StickyTabSubMenuBar, { Loading as StickyTabSubMenuBarLoading } from "./StickyTabSubMenuBar";
+import StickyTabSubMenuBar, {
+  Loading as StickyTabSubMenuBarLoading,
+} from "./StickyTabSubMenuBar";
 import TabCountTagline from "./TabCountTagline";
 
 export function Loading() {

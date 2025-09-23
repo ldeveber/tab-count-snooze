@@ -11,7 +11,10 @@ export default function CustomColor({
   options: ColorOptions;
   setOptions: Dispatch<SetStateAction<ColorOptions>>;
 }) {
-  const handleCheckboxChange = (_e: ChangeEvent<HTMLInputElement>, value: boolean) => {
+  const handleCheckboxChange = (
+    _e: ChangeEvent<HTMLInputElement>,
+    value: boolean,
+  ) => {
     setOptions((prev) => ({ ...prev, isCustomTheme: value }));
   };
 
@@ -22,7 +25,12 @@ export default function CustomColor({
   return (
     <FormGroup>
       <FormControlLabel
-        control={<Checkbox checked={options.isCustomTheme} onChange={handleCheckboxChange} />}
+        control={
+          <Checkbox
+            checked={options.isCustomTheme}
+            onChange={handleCheckboxChange}
+          />
+        }
         label="Enable custom primary color"
       />
 

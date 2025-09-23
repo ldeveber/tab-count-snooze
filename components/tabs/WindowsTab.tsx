@@ -7,11 +7,15 @@ import {
   useWindowCount,
   useWindows,
 } from "@/utils/dataStore";
-import StickyTabSubMenuBar, { Loading as StickyTabSubMenuBarLoading } from "./StickyTabSubMenuBar";
+import StickyTabSubMenuBar, {
+  Loading as StickyTabSubMenuBarLoading,
+} from "./StickyTabSubMenuBar";
 import WindowsBulkActions from "./WindowsBulkActions";
 import TabCountTagline from "./TabCountTagline";
 import Search from "../layout/Search";
-import WindowList, { Loading as WindowListLoading } from "../tabList/WindowList";
+import WindowList, {
+  Loading as WindowListLoading,
+} from "../tabList/WindowList";
 
 export function Loading() {
   return (
@@ -46,13 +50,14 @@ export default function WindowsTab() {
   const {
     minimized,
     open,
-  }: { minimized: Browser.windows.Window[]; open: Browser.windows.Window[] } = useMemo(
-    () => ({
-      minimized: windows.filter(({ state }) => state === "minimized"),
-      open: windows.filter(({ state }) => state === "normal"),
-    }),
-    [windows],
-  );
+  }: { minimized: Browser.windows.Window[]; open: Browser.windows.Window[] } =
+    useMemo(
+      () => ({
+        minimized: windows.filter(({ state }) => state === "minimized"),
+        open: windows.filter(({ state }) => state === "normal"),
+      }),
+      [windows],
+    );
 
   if (windowCount === 0 || tabCount === 0) {
     return <Loading />;
@@ -62,7 +67,12 @@ export default function WindowsTab() {
     <div className="flex size-full grow flex-col">
       <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4">
-          <Search autoFocus label="Search Tabs" value={search} onChange={onSearchChange} />
+          <Search
+            autoFocus
+            label="Search Tabs"
+            value={search}
+            onChange={onSearchChange}
+          />
         </div>
         <div className="flex shrink items-center gap-4">
           {isFiltered ? <WindowsBulkActions /> : <TabCountTagline />}
@@ -71,7 +81,9 @@ export default function WindowsTab() {
 
       <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
         <WindowList windows={open} />
-        {minimized.length > 0 && <Divider aria-label="Minimized Windows">Minimized</Divider>}
+        {minimized.length > 0 && (
+          <Divider aria-label="Minimized Windows">Minimized</Divider>
+        )}
         {minimized.length > 0 && <WindowList windows={minimized} minimized />}
       </div>
     </div>

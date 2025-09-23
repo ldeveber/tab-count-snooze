@@ -1,4 +1,7 @@
-import { Delete as DeleteIcon, MergeType as MergeTypeIcon } from "@mui/icons-material";
+import {
+  Delete as DeleteIcon,
+  MergeType as MergeTypeIcon,
+} from "@mui/icons-material";
 import { Stack, Typography } from "@mui/material";
 import { MouseEventHandler, useMemo } from "react";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";

@@ -5,7 +5,10 @@ interface ErrorDisplayProps extends FallbackProps {
   error: Error;
 }
 
-export default function ErrorDisplay({ error, resetErrorBoundary }: ErrorDisplayProps) {
+export default function ErrorDisplay({
+  error,
+  resetErrorBoundary,
+}: ErrorDisplayProps) {
   return (
     <div className="flex size-full flex-col gap-4">
       <div className="flex flex-row gap-4 rounded-2xl bg-red-700 px-4 py-2">

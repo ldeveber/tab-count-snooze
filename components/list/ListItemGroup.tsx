@@ -48,8 +48,14 @@ export default function ListItemGroup({
 
   return (
     <React.Fragment>
-      <ListItem onPrimaryAction={handleClick} button-aria-label={buttonAriaLabel}>
-        <ListItemText primary={<Chip label={title} backgroundColor={groupColor} />} sx={{ m: 0 }} />
+      <ListItem
+        onPrimaryAction={handleClick}
+        button-aria-label={buttonAriaLabel}
+      >
+        <ListItemText
+          primary={<Chip label={title} backgroundColor={groupColor} />}
+          sx={{ m: 0 }}
+        />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -58,7 +64,8 @@ export default function ListItemGroup({
           dense
           sx={{
             ml: indented ? 1 : undefined,
-            borderLeft: indented && groupColor ? `2px solid ${groupColor}` : undefined,
+            borderLeft:
+              indented && groupColor ? `2px solid ${groupColor}` : undefined,
           }}
           {...props}
         >

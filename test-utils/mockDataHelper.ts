@@ -16,7 +16,8 @@ export function mockTab(props?: Partial<Browser.tabs.Tab>): Browser.tabs.Tab {
     pinned: faker.datatype.boolean(),
     active: faker.datatype.boolean(),
     title: faker.commerce.productName(),
-    url: faker.internet.url({ appendSlash: true }) + faker.internet.domainWord(),
+    url:
+      faker.internet.url({ appendSlash: true }) + faker.internet.domainWord(),
 
     // required but not used
     highlighted: faker.datatype.boolean(),
@@ -69,7 +70,9 @@ export function mockTabGroup(
  * @param props Properties to override
  * @returns chrome.windows.Window
  */
-export function mockWindow(props?: Partial<Browser.windows.Window>): Browser.windows.Window {
+export function mockWindow(
+  props?: Partial<Browser.windows.Window>,
+): Browser.windows.Window {
   const id = faker.number.int();
   const win: Browser.windows.Window = {
     id,

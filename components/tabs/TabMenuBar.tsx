@@ -78,7 +78,12 @@ export default function TabMenuBar({ onChange }: TabMenuBarProps) {
             indicator: { style: { display: "none" } },
           }}
         >
-          <Tab label="Tab" value={TabValue.Tab} icon={<WebAssetIcon />} iconPosition="start" />
+          <Tab
+            label="Tab"
+            value={TabValue.Tab}
+            icon={<WebAssetIcon />}
+            iconPosition="start"
+          />
           <Tab
             label="Count"
             value={TabValue.Count}

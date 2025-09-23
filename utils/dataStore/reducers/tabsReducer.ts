@@ -46,7 +46,9 @@ export default function tabsReducer(state: State, action: Action): State {
   switch (action.type) {
     case "setTabs": {
       return produce(state, (draft) => {
-        draft.map = new Map<TabIdType, Browser.tabs.Tab>(action.tabs.map((t) => [t.id!, t]));
+        draft.map = new Map<TabIdType, Browser.tabs.Tab>(
+          action.tabs.map((t) => [t.id!, t]),
+        );
       });
     }
     case "addTab": {
@@ -56,7 +58,10 @@ export default function tabsReducer(state: State, action: Action): State {
     }
     case "updateTab": {
       return produce(state, (draft) => {
-        draft.map.set(action.tab.id!, { ...(draft.map.get(action.tab.id!) ?? {}), ...action.tab });
+        draft.map.set(action.tab.id!, {
+          ...(draft.map.get(action.tab.id!) ?? {}),
+          ...action.tab,
+        });
       });
     }
     case "removeTab": {

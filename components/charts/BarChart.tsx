@@ -6,8 +6,19 @@ const axisBottom = { legend: "Open Tabs", legendOffset: 32 };
 const axisLeft = { legend: "Origin", legendOffset: -16 };
 const margin = { top: 32, right: 32, bottom: 64, left: 32 };
 
-const BarTooltip = ({ color, indexValue, formattedValue }: BarTooltipProps<ItemData>) => {
-  return <BasicTooltip id={indexValue} value={formattedValue} enableChip color={color} />;
+const BarTooltip = ({
+  color,
+  indexValue,
+  formattedValue,
+}: BarTooltipProps<ItemData>) => {
+  return (
+    <BasicTooltip
+      id={indexValue}
+      value={formattedValue}
+      enableChip
+      color={color}
+    />
+  );
 };
 export default function BarChart() {
   const data = useBarData();
