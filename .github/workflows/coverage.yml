@@ -14,10 +14,19 @@ jobs:
       pull-requests: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10
+          # @see https://github.com/marketplace/actions/setup-pnpm#use-cache-to-reduce-installation-time
+          run_install: false
+
       - uses: actions/download-artifact@v5
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
+
       - name: "Report Coverage"
         uses: davelosert/vitest-coverage-report-action@v2
