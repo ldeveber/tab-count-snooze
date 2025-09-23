@@ -28,14 +28,6 @@ updates:
           - "@vitest/*"
           - "jsdom"
           - "vitest"
-      prettier:
-        patterns:
-          - "@eslint/*"
-          - "@prettier/*"
-          - "eslint"
-          - "eslint-*"
-          - "prettier"
-          - "prettier-*"
       styles:
         patterns:
           - "@emotion*"

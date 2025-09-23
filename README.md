@@ -7,7 +7,6 @@
 ![MUI Badge](https://img.shields.io/badge/Material_UI-007FFF?style=flat-square&logo=mui&labelColor=grey)
 ![WXT Badge](https://img.shields.io/badge/WXT-67D55E?style=flat-square&logo=wxt&labelColor=grey)
 ![Vite Badge](https://img.shields.io/badge/Vite-646cff?style=flat-square&logo=vite&labelColor=grey)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ldeveber/count-snooze/build?style=flat-square)
 
 This is a browser extension for managing and snoozing tabs in chrome!
