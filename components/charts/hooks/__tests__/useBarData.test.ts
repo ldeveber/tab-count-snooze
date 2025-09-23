@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import { _getBarData, ITabData } from "../useBarData";
+import { _getBarData, type ITabData } from "../useBarData";
 
 describe("useBarData", () => {
   describe("_addChildren", () => {

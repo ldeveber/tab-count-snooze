@@ -1,5 +1,5 @@
-import { TabIdType } from "@/utils/chrome";
-import { FreezedObject, produce } from "structurajs";
+import { type FreezedObject, produce } from "structurajs";
+import type { TabIdType } from "@/utils/chrome";
 
 export type State = FreezedObject<{
   selectedTabIds: TabIdType[];

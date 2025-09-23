@@ -1,6 +1,6 @@
 import {
-  initialState as initialDisplayState,
   type State as DisplayState,
+  initialState as initialDisplayState,
 } from "./reducers/displayReducer";
 import {
   initialState as initialTabGroupsState,

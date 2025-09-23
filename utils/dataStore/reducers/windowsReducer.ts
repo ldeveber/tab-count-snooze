@@ -1,4 +1,4 @@
-import { FreezedObject, produce } from "structurajs";
+import { type FreezedObject, produce } from "structurajs";
 
 type WindowId = Required<Browser.windows.Window>["id"];
 export type State = FreezedObject<{

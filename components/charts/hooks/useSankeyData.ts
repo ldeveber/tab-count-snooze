@@ -1,5 +1,5 @@
-import useParsedTabData, { ITabData } from "./hookDataParser";
-import { DefaultLink, DefaultNode, SankeyDataProps } from "@nivo/sankey";
+import type { DefaultLink, DefaultNode, SankeyDataProps } from "@nivo/sankey";
+import useParsedTabData, { type ITabData } from "./hookDataParser";
 
 export interface ItemLink extends DefaultLink {
   source: string;

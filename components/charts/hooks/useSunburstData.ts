@@ -1,5 +1,5 @@
+import type { SunburstCommonProps } from "@nivo/sunburst";
 import useParsedTabData, { type ITabData } from "./hookDataParser";
-import { SunburstCommonProps } from "@nivo/sunburst";
 
 export interface ItemData {
   id: string;

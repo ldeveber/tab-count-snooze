@@ -1,17 +1,17 @@
-import * as colors from "@mui/material/colors";
-import TabView from "./TabView";
 import {
-  Chip as MuiChip,
   type ChipProps,
   Collapse,
   List,
-  ListItemText as MuiListItemText,
+  Chip as MuiChip,
   ListItem as MuiListItem,
   ListItemButton as MuiListItemButton,
+  ListItemText as MuiListItemText,
 } from "@mui/material";
+import * as colors from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
 import React, { useState } from "react";
 import ExpandMoreIcon from "../ExpandMoreIcon";
+import TabView from "./TabView";
 
 export const ListItem = styled(MuiListItem)(({ theme }) => ({
   "&.MuiListItem-root": {

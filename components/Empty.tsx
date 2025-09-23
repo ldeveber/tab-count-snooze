@@ -1,6 +1,6 @@
 import { Air } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export default function Empty({
   children,

@@ -3,18 +3,18 @@ import {
   Box,
   Card,
   type CardProps,
+  Collapse,
+  List,
+  type ListItemTextProps,
+  type ListProps,
   CardActionArea as MuiCardActionArea,
   type CardActionAreaProps as MuiCardActionAreaProps,
   CardContent as MuiCardContent,
   CardHeader as MuiCardHeader,
   type CardHeaderProps as MuiCardHeaderProps,
-  Collapse,
-  List,
-  type ListProps,
-  type ListItemTextProps,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 interface CardActionAreaProps extends MuiCardActionAreaProps {
   selected?: boolean;

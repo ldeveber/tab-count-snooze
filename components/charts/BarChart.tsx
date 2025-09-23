@@ -1,6 +1,6 @@
-import { ResponsiveBar, BarTooltipProps } from "@nivo/bar";
-import useBarData, { ItemData } from "./hooks/useBarData";
+import { type BarTooltipProps, ResponsiveBar } from "@nivo/bar";
 import { BasicTooltip } from "@nivo/tooltip";
+import useBarData, { type ItemData } from "./hooks/useBarData";
 
 const axisBottom = { legend: "Open Tabs", legendOffset: 32 };
 const axisLeft = { legend: "Origin", legendOffset: -16 };

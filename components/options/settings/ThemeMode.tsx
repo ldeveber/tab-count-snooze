@@ -5,8 +5,8 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { ColorOptions, Mode } from "@/utils/options";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import type { ColorOptions, Mode } from "@/utils/options";
 
 export default function ThemeMode({
   themeMode,

@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
+import type { ITabData } from "../hookDataParser";
 import { _getSankeyData } from "../useSankeyData";
-import { ITabData } from "../hookDataParser";
 
 describe("useSankeyData", () => {
   describe("_addChildren", () => {

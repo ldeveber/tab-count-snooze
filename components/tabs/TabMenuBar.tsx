@@ -3,7 +3,7 @@ import {
   NightsStay as NightsStayIcon,
   WebAsset as WebAssetIcon,
 } from "@mui/icons-material";
-import { TabList as MuiTabList, TabListProps } from "@mui/lab";
+import { TabList as MuiTabList, type TabListProps } from "@mui/lab";
 import { Paper as MuiPaper, Tab as MuiTab, Skeleton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { TabValue } from "./types";

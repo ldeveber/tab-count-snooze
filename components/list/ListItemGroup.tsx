@@ -1,14 +1,14 @@
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
-  Chip as MuiChip,
   type ChipProps,
   Collapse,
   List,
-  type ListProps as MuiListProps,
   ListItemText,
+  Chip as MuiChip,
+  type ListProps as MuiListProps,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React, { PropsWithChildren, useState } from "react";
+import React, { type PropsWithChildren, useState } from "react";
 import ListItem, { type ListItemProps } from "./ListItem";
 
 interface StyledChipProps extends ChipProps {

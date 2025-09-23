@@ -1,8 +1,11 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { PropsWithChildren } from "react";
-import { themeOptions } from "./theme";
-import { StyledEngineProvider } from "@mui/material/styles";
 import GlobalStyles from "@mui/material/GlobalStyles";
+import {
+  createTheme,
+  StyledEngineProvider,
+  ThemeProvider,
+} from "@mui/material/styles";
+import type { PropsWithChildren } from "react";
+import { themeOptions } from "./theme";
 
 const theme = createTheme(themeOptions);
 

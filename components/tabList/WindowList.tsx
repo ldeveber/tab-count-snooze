@@ -1,7 +1,7 @@
+import Empty from "@/components/Empty";
 import WindowView, {
   Loading as WindowLoading,
 } from "@/components/tabList/WindowView";
-import Empty from "@/components/Empty";
 
 export function Loading() {
   return <WindowLoading />;

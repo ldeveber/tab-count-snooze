@@ -1,5 +1,5 @@
+import { type FreezedObject, produce, unfreeze } from "structurajs";
 import { SORT_OPTION } from "@/utils/options";
-import { FreezedObject, produce, unfreeze } from "structurajs";
 
 type FilterState = FreezedObject<{
   dupes: boolean;

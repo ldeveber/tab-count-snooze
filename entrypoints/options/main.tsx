@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
-import { Suspense } from "react";
 import AppWrap from "@/components/AppWrap";
 import Options, { Loading } from "@/components/options/Options.tsx";
 

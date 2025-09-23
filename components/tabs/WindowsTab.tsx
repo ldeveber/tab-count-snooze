@@ -7,15 +7,15 @@ import {
   useWindowCount,
   useWindows,
 } from "@/utils/dataStore";
-import StickyTabSubMenuBar, {
-  Loading as StickyTabSubMenuBarLoading,
-} from "./StickyTabSubMenuBar";
-import WindowsBulkActions from "./WindowsBulkActions";
-import TabCountTagline from "./TabCountTagline";
 import Search from "../layout/Search";
 import WindowList, {
   Loading as WindowListLoading,
 } from "../tabList/WindowList";
+import StickyTabSubMenuBar, {
+  Loading as StickyTabSubMenuBarLoading,
+} from "./StickyTabSubMenuBar";
+import TabCountTagline from "./TabCountTagline";
+import WindowsBulkActions from "./WindowsBulkActions";
 
 export function Loading() {
   return (
@@ -23,7 +23,7 @@ export function Loading() {
       <StickyTabSubMenuBarLoading>
         <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
       </StickyTabSubMenuBarLoading>
-      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
+      <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
         <WindowListLoading />
       </div>
     </div>
@@ -79,7 +79,7 @@ export default function WindowsTab() {
         </div>
       </StickyTabSubMenuBar>
 
-      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
+      <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
         <WindowList windows={open} />
         {minimized.length > 0 && (
           <Divider aria-label="Minimized Windows">Minimized</Divider>

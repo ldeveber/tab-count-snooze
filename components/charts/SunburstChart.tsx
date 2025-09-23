@@ -1,11 +1,11 @@
+import { Button } from "@mui/material";
 import {
-  ComputedDatum,
-  MouseHandler,
+  type ComputedDatum,
+  type MouseHandler,
   ResponsiveSunburst,
 } from "@nivo/sunburst";
-import useSunburstData, { ItemData } from "./hooks/useSunburstData";
 import { BasicTooltip } from "@nivo/tooltip";
-import { Button } from "@mui/material";
+import useSunburstData, { type ItemData } from "./hooks/useSunburstData";
 
 function findNode(
   children: ItemData[],

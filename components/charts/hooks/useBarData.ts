@@ -1,5 +1,5 @@
+import type { BarDatum } from "@nivo/bar";
 import { useAllTabs } from "@/utils/dataStore";
-import { BarDatum } from "@nivo/bar";
 
 export type ITabData = Pick<Browser.tabs.Tab, "url">;
 

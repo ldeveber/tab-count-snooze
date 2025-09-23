@@ -1,7 +1,7 @@
 import { Extension, ExtensionOutlined, TabOutlined } from "@mui/icons-material";
 import {
   Avatar as MuiAvatar,
-  AvatarProps as MuiAvatarProps,
+  type AvatarProps as MuiAvatarProps,
   Skeleton,
   styled,
 } from "@mui/material";

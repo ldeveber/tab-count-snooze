@@ -1,12 +1,15 @@
 import {
   ToggleButton,
-  ToggleButtonProps,
   ToggleButtonGroup,
+  type ToggleButtonProps,
 } from "@mui/material";
 import * as colors from "@mui/material/colors";
-import { Theme, alpha, styled } from "@mui/material/styles";
-import { MouseEvent } from "react";
-import { DEFAULT_SHADE, Hue } from "@/components/layout/theme/themeHelpers";
+import { alpha, styled, type Theme } from "@mui/material/styles";
+import type { MouseEvent } from "react";
+import {
+  DEFAULT_SHADE,
+  type Hue,
+} from "@/components/layout/theme/themeHelpers";
 
 const {
   amber,

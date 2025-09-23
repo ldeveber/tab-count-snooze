@@ -1,5 +1,5 @@
 import { teal } from "@mui/material/colors";
-import { CssVarsThemeOptions } from "@mui/material/styles";
+import type { CssVarsThemeOptions } from "@mui/material/styles";
 
 export const themeOptions: CssVarsThemeOptions = {
   colorSchemes: {

@@ -1,13 +1,14 @@
-import { useMemo } from "react";
 import {
   Card,
+  Collapse,
+  List,
   CardActionArea as MuiCardActionArea,
   CardContent as MuiCardContent,
   CardHeader as MuiCardHeader,
-  Collapse,
-  List,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { useMemo } from "react";
+import ExpandMoreIcon from "@/components/ExpandMoreIcon";
 import {
   useIsFiltered,
   useSearch,
@@ -18,7 +19,6 @@ import {
 import { filterSortTabs } from "@/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
-import ExpandMoreIcon from "@/components/ExpandMoreIcon";
 
 const CardActionArea = styled(MuiCardActionArea)(({ theme }) => ({
   paddingTop: theme.spacing(1),

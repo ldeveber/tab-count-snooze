@@ -1,13 +1,18 @@
-import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
+import {
+  createContext,
+  type Dispatch,
+  type PropsWithChildren,
+  useReducer,
+} from "react";
 import displayReducer, {
-  Action as DisplayAction,
+  type Action as DisplayAction,
 } from "./reducers/displayReducer";
 import tabGroupsReducer, {
-  Action as TabGroupsAction,
+  type Action as TabGroupsAction,
 } from "./reducers/tabGroupsReducer";
-import tabsReducer, { Action as TabsAction } from "./reducers/tabsReducer";
+import tabsReducer, { type Action as TabsAction } from "./reducers/tabsReducer";
 import windowsReducer, {
-  Action as WindowsAction,
+  type Action as WindowsAction,
 } from "./reducers/windowsReducer";
 import { initialState, type State } from "./state";
 

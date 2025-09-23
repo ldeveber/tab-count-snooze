@@ -1,23 +1,23 @@
-import { useState, Suspense } from "react";
+import {
+  AccountTree,
+  BarChart as BarChartIcon,
+  Flare,
+} from "@mui/icons-material";
 import {
   CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
+  type SelectChangeEvent,
   Skeleton,
 } from "@mui/material";
-import {
-  AccountTree,
-  BarChart as BarChartIcon,
-  Flare,
-} from "@mui/icons-material";
+import { Suspense, useState } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import BarChart from "@/components/charts/BarChart";
 import SankeyChart from "@/components/charts/SankeyChart";
 import SunburstChart from "@/components/charts/SunburstChart";
 import ErrorDisplay from "@/components/ErrorDisplay";
-import { ErrorBoundary } from "react-error-boundary";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
 } from "./StickyTabSubMenuBar";
@@ -111,7 +111,7 @@ export default function ChartsTab() {
         </div>
       </StickyTabSubMenuBar>
 
-      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
+      <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
         <Suspense fallback={<div>Loading chart...</div>}>
           <Chart chartType={chartType} />
         </Suspense>

@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, FormGroup, Grow } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { Hue } from "@/components/layout/theme/themeHelpers";
-import { ColorOptions } from "@/utils/options";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import type { Hue } from "@/components/layout/theme/themeHelpers";
+import type { ColorOptions } from "@/utils/options";
 import ColorSwatches from "./ColorSwatches";
 
 export default function CustomColor({

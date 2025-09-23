@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Hue } from "@/components/layout/theme/themeHelpers";
-import { ColorOptions, defaultColor } from "@/utils/options";
+import type { Hue } from "@/components/layout/theme/themeHelpers";
+import { type ColorOptions, defaultColor } from "@/utils/options";
 import ThemeMode from "./ThemeMode";
 
 const setThemeMode = async (themeMode: ColorOptions["themeMode"]) => {

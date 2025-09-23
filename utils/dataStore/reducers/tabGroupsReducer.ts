@@ -1,4 +1,4 @@
-import { FreezedObject, produce } from "structurajs";
+import { type FreezedObject, produce } from "structurajs";
 
 type TabGroupId = Required<Browser.tabGroups.TabGroup>["id"];
 export type State = FreezedObject<{

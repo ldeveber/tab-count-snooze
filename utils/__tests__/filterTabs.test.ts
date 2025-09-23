@@ -1,5 +1,5 @@
-import { mockTab } from "@/test-utils/mockDataHelper";
 import { describe, expect, test } from "vitest";
+import { mockTab } from "@/test-utils/mockDataHelper";
 import { filterSortTabs, filterTabs, sortTabs } from "../filterTabs";
 import { SORT_OPTION } from "../options";
 

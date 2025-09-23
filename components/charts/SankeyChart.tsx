@@ -1,10 +1,13 @@
 import {
   ResponsiveSankey,
-  SankeyLinkDatum,
-  SankeyNodeDatum,
+  type SankeyLinkDatum,
+  type SankeyNodeDatum,
 } from "@nivo/sankey";
-import useSankeyData, { ItemNode, ItemLink } from "./hooks/useSankeyData";
 import { BasicTooltip } from "@nivo/tooltip";
+import useSankeyData, {
+  type ItemLink,
+  type ItemNode,
+} from "./hooks/useSankeyData";
 
 const SankeyLinkTooltip: React.FunctionComponent<{
   link: SankeyLinkDatum<ItemNode, ItemLink>;

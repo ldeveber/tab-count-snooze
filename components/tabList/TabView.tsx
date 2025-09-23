@@ -3,19 +3,19 @@ import {
   ListItemIcon,
   ListItemText,
   ListItem as MuiListItem,
-  ListItemProps as MuiListItemProps,
   ListItemButton as MuiListItemButton,
-  ListItemButtonProps as MuiListItemButtonProps,
+  type ListItemButtonProps as MuiListItemButtonProps,
+  type ListItemProps as MuiListItemProps,
 } from "@mui/material";
-import { ChangeEvent } from "react";
-import TabFavicon, { FAVICON_SIZE } from "./TabFavicon";
+import { styled } from "@mui/material/styles";
+import type { ChangeEvent } from "react";
 import {
   useDataDispatch,
   useIsFiltered,
   useSelectedTabs,
 } from "@/utils/dataStore";
+import TabFavicon, { FAVICON_SIZE } from "./TabFavicon";
 import TabState from "./TabState";
-import { styled } from "@mui/material/styles";
 
 interface ListItemProps extends MuiListItemProps {
   indented: boolean;

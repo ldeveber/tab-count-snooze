@@ -2,10 +2,10 @@ import { Search as SearchIcon } from "@mui/icons-material";
 import {
   InputAdornment,
   TextField as MuiTextField,
-  TextFieldProps,
   styled,
+  type TextFieldProps,
 } from "@mui/material";
-import { ChangeEventHandler } from "react";
+import type { ChangeEventHandler } from "react";
 
 const TextField = styled(MuiTextField)(({ theme }) => ({
   width: "100%",
