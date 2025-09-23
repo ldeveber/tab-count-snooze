@@ -20,10 +20,10 @@ This project uses [WXT](https://wxt.dev/) to run and build.
 For information running, [reference their documentation](https://wxt.dev/guide/introduction.html).
 
 1. `nvm install` or already be using the version listed in `.nvmrc`.
-1. `npm install`
+1. `pnpm install`
 1. To build:
-   * `npm run dev` for a watched development build
-   * `npm run build` for a production build
+   * `pnpm run dev` for a watched development build
+   * `pnpm run build` for a production build
 
 For Chrome:
 

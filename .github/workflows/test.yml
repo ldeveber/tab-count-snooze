@@ -16,11 +16,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm test
+          cache: "pnpm"
+      - run: pnpm ci
+      - run: pnpm run lint
+      - run: pnpm run build
+      - run: pnpm test
       - name: "Upload Coverage"
         uses: actions/upload-artifact@v4
         with:
