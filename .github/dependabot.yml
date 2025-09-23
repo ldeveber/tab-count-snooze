@@ -5,7 +5,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "pnpm"
+  - package-ecosystem: "npm" # for whatever reason, the YAML value for pnpm is npm
     directory: "/"
     schedule:
       interval: "monthly"
