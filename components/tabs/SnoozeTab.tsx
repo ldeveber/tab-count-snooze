@@ -1,5 +1,7 @@
 import { CircularProgress, Skeleton } from "@mui/material";
-import StickyTabSubMenuBar, { Loading as StickyTabSubMenuBarLoading } from "./StickyTabSubMenuBar";
+import StickyTabSubMenuBar, {
+  Loading as StickyTabSubMenuBarLoading,
+} from "./StickyTabSubMenuBar";
 import TabCountTagline from "./TabCountTagline";
 
 export function Loading() {
@@ -28,7 +30,7 @@ export default function SnoozeTab() {
         </div>
       </StickyTabSubMenuBar>
 
-      <div className="flex grow flex-col gap-4 px-4 py-2 @4xl/main:px-8">
+      <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
         Snooze Functionality Coming Soon
       </div>
     </div>

@@ -1,10 +1,13 @@
-import { FreezedObject, produce } from "structurajs";
+/** biome-ignore-all lint/style/noNonNullAssertion: need to deal with browser types better? */
+import { type FreezedObject, produce } from "structurajs";
 
 type WindowId = Required<Browser.windows.Window>["id"];
 export type State = FreezedObject<{
   map: Map<WindowId, Browser.windows.Window>;
 }>;
-export const initialState: State = { map: new Map<WindowId, Browser.windows.Window>() };
+export const initialState: State = {
+  map: new Map<WindowId, Browser.windows.Window>(),
+};
 
 export type Action =
   | {
@@ -28,7 +31,9 @@ export default function windowsReducer(state: State, action: Action): State {
   switch (action.type) {
     case "setWindows": {
       return produce(state, (draft) => {
-        draft.map = new Map<WindowId, Browser.windows.Window>(action.wins.map((w) => [w.id!, w]));
+        draft.map = new Map<WindowId, Browser.windows.Window>(
+          action.wins.map((w) => [w.id!, w]),
+        );
       });
     }
     case "addWindow": {

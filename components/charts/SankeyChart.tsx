@@ -1,8 +1,17 @@
-import { ResponsiveSankey, SankeyLinkDatum, SankeyNodeDatum } from "@nivo/sankey";
-import useSankeyData, { ItemNode, ItemLink } from "./hooks/useSankeyData";
+import {
+  ResponsiveSankey,
+  type SankeyLinkDatum,
+  type SankeyNodeDatum,
+} from "@nivo/sankey";
 import { BasicTooltip } from "@nivo/tooltip";
+import useSankeyData, {
+  type ItemLink,
+  type ItemNode,
+} from "./hooks/useSankeyData";
 
-const SankeyLinkTooltip: React.FunctionComponent<{ link: SankeyLinkDatum<ItemNode, ItemLink> }> = ({
+const SankeyLinkTooltip: React.FunctionComponent<{
+  link: SankeyLinkDatum<ItemNode, ItemLink>;
+}> = ({
   link: {
     color,
     target: { id: targetId },
@@ -12,9 +21,9 @@ const SankeyLinkTooltip: React.FunctionComponent<{ link: SankeyLinkDatum<ItemNod
   return <BasicTooltip id={targetId} value={value} enableChip color={color} />;
 };
 
-const SankeyNodeTooltip: React.FunctionComponent<{ node: SankeyNodeDatum<ItemNode, ItemLink> }> = ({
-  node: { color, label, value },
-}) => {
+const SankeyNodeTooltip: React.FunctionComponent<{
+  node: SankeyNodeDatum<ItemNode, ItemLink>;
+}> = ({ node: { color, label, value } }) => {
   return <BasicTooltip id={label} value={value} enableChip color={color} />;
 };
 

@@ -1,4 +1,10 @@
-import { AppBar, CircularProgress, Container, Toolbar, Typography } from "@mui/material";
+import {
+  AppBar,
+  CircularProgress,
+  Container,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import ResetToDefaults from "./ResetToDefaults";
 import ThemeOptions from "./settings/ThemeOptions";
 

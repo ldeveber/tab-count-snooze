@@ -19,7 +19,12 @@ export default defineConfig({
         "utils/**/*.ts",
         "utils/**/*.tsx",
       ],
-      exclude: ["**/__tests__/*.*", "src/**/*.d.ts", "components/AppWrap.tsx", "utils/dayjs.ts"],
+      exclude: [
+        "**/__tests__/*.*",
+        "src/**/*.d.ts",
+        "components/AppWrap.tsx",
+        "utils/dayjs.ts",
+      ],
       // TODO FIXME: enablewhen other tests are migrated
       // thresholds: {
       //   lines: 70,

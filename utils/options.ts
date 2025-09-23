@@ -1,4 +1,5 @@
 export type Mode = "light" | "dark" | "system";
+
 import { Hue } from "@/components/layout/theme/themeHelpers";
 
 export interface ColorOptions {

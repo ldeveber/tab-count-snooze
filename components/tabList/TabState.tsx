@@ -32,6 +32,8 @@ export default function TabState({ tab }: { readonly tab: Browser.tabs.Tab }) {
   }
 
   return (
-    <div className="flex w-4 flex-col items-end gap-1 self-stretch">{arr.map((icon) => icon)}</div>
+    <div className="flex w-4 flex-col items-end gap-1 self-stretch">
+      {arr.map((icon) => icon)}
+    </div>
   );
 }

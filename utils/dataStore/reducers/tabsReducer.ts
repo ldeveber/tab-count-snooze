@@ -1,5 +1,6 @@
-import { TabIdType } from "@/utils/chrome";
-import { FreezedObject, produce } from "structurajs";
+/** biome-ignore-all lint/style/noNonNullAssertion: need to deal with browser types better? */
+import { type FreezedObject, produce } from "structurajs";
+import type { TabIdType } from "@/utils/chrome";
 
 export type State = FreezedObject<{
   selectedTabIds: TabIdType[];
@@ -46,7 +47,9 @@ export default function tabsReducer(state: State, action: Action): State {
   switch (action.type) {
     case "setTabs": {
       return produce(state, (draft) => {
-        draft.map = new Map<TabIdType, Browser.tabs.Tab>(action.tabs.map((t) => [t.id!, t]));
+        draft.map = new Map<TabIdType, Browser.tabs.Tab>(
+          action.tabs.map((t) => [t.id!, t]),
+        );
       });
     }
     case "addTab": {
@@ -56,7 +59,10 @@ export default function tabsReducer(state: State, action: Action): State {
     }
     case "updateTab": {
       return produce(state, (draft) => {
-        draft.map.set(action.tab.id!, { ...(draft.map.get(action.tab.id!) ?? {}), ...action.tab });
+        draft.map.set(action.tab.id!, {
+          ...(draft.map.get(action.tab.id!) ?? {}),
+          ...action.tab,
+        });
       });
     }
     case "removeTab": {

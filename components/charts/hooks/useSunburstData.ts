@@ -1,5 +1,5 @@
+import type { SunburstCommonProps } from "@nivo/sunburst";
 import useParsedTabData, { type ITabData } from "./hookDataParser";
-import { SunburstCommonProps } from "@nivo/sunburst";
 
 export interface ItemData {
   id: string;
@@ -8,7 +8,11 @@ export interface ItemData {
   children: Array<ItemData>;
 }
 
-export function _addChildren(arr: Array<ItemData>, id: string, segments: ITabData["segments"]) {
+export function _addChildren(
+  arr: Array<ItemData>,
+  id: string,
+  segments: ITabData["segments"],
+) {
   let item = arr.find((d) => d.id === id);
 
   if (!item) {
@@ -20,7 +24,7 @@ export function _addChildren(arr: Array<ItemData>, id: string, segments: ITabDat
 
   if (segments.length > 0 && Array.isArray(item.children)) {
     const [segment, ...rest] = segments;
-    _addChildren(item.children, id + "/" + segment, rest);
+    _addChildren(item.children, `${id}/${segment}`, rest);
   }
 }
 

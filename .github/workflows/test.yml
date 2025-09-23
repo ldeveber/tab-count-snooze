@@ -10,20 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          # @see https://github.com/marketplace/actions/setup-pnpm#use-cache-to-reduce-installation-time
+          run_install: false
+
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version-file: ".nvmrc"
-          cache: "npm"
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm test
-      - name: "Upload Coverage"
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-          retention-days: 3
+          cache: "pnpm"
+
+      - run: pnpm i
+      - run: pnpm run lint
+      - run: pnpm test
+
+      - name: "Report Coverage"
+        uses: davelosert/vitest-coverage-report-action@v2

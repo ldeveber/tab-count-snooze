@@ -1,6 +1,12 @@
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { ColorOptions, Mode } from "@/utils/options";
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import type { ColorOptions, Mode } from "@/utils/options";
 
 export default function ThemeMode({
   themeMode,
@@ -10,7 +16,10 @@ export default function ThemeMode({
   setOptions: Dispatch<SetStateAction<ColorOptions>>;
 }) {
   const handleChange = (_e: ChangeEvent<HTMLInputElement>, value: string) => {
-    setOptions((prev) => ({ ...prev, themeMode: value as ColorOptions["themeMode"] }));
+    setOptions((prev) => ({
+      ...prev,
+      themeMode: value as ColorOptions["themeMode"],
+    }));
   };
 
   return (

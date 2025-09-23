@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: need better way */
 import { useEffect } from "react";
 import { useDataDispatch } from ".";
 
@@ -65,9 +66,9 @@ function TabGroupHandler() {
 
 function WindowHandler() {
   const dispatch = useDataDispatch();
-  const [lastFocus, setLastFocus] = useState<NonNullable<Browser.windows.Window["id"]>>(
-    browser.windows.WINDOW_ID_NONE,
-  );
+  const [lastFocus, setLastFocus] = useState<
+    NonNullable<Browser.windows.Window["id"]>
+  >(browser.windows.WINDOW_ID_NONE);
 
   const onWindowAdd = (win: Browser.windows.Window) => {
     dispatch({ type: "addWindow", win });

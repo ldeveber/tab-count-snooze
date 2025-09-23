@@ -34,16 +34,21 @@ export default function useParsedTabData(): ReadonlyArray<TabData> {
     const { origin, pathname } = urlObj;
     const segments = pathname.split("/").filter((item) => item !== "");
 
-    let path1, path2, path3, segment1, segment2, segment3;
+    let path1: string | undefined,
+      path2: string | undefined,
+      path3: string | undefined,
+      segment1: string | undefined,
+      segment2: string | undefined,
+      segment3: string | undefined;
     if (segments.length > 0) {
       segment1 = segments[0];
-      path1 = urlObj.origin + "/" + segment1;
+      path1 = `${urlObj.origin}/${segment1}`;
       if (segments.length > 1) {
         segment2 = segments[1];
-        path2 = path1 + "/" + segment2;
+        path2 = `${path1}/${segment2}`;
         if (segments.length > 2) {
           segment3 = segments[2];
-          path3 = path2 + "/" + segment3;
+          path3 = `${path2}/${segment3}`;
         }
       }
     }

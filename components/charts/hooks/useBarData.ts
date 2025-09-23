@@ -1,5 +1,5 @@
+import type { BarDatum } from "@nivo/bar";
 import { useAllTabs } from "@/utils/dataStore";
-import { BarDatum } from "@nivo/bar";
 
 export type ITabData = Pick<Browser.tabs.Tab, "url">;
 
@@ -8,7 +8,10 @@ export interface ItemData extends BarDatum {
   value: number;
 }
 
-export function _getBarData(tabs: Array<ITabData>, depth: number = 2): readonly ItemData[] {
+export function _getBarData(
+  tabs: Array<ITabData>,
+  depth: number = 2,
+): readonly ItemData[] {
   const data: Array<ItemData> = [];
 
   tabs.forEach((tab) => {

@@ -1,7 +1,11 @@
-import { ComputedDatum, MouseHandler, ResponsiveSunburst } from "@nivo/sunburst";
-import useSunburstData, { ItemData } from "./hooks/useSunburstData";
-import { BasicTooltip } from "@nivo/tooltip";
 import { Button } from "@mui/material";
+import {
+  type ComputedDatum,
+  type MouseHandler,
+  ResponsiveSunburst,
+} from "@nivo/sunburst";
+import { BasicTooltip } from "@nivo/tooltip";
+import useSunburstData, { type ItemData } from "./hooks/useSunburstData";
 
 function findNode(
   children: ItemData[],
@@ -10,7 +14,10 @@ function findNode(
   for (const c of children) {
     if (c.id === clickedData.id) {
       return c;
-    } else if (typeof clickedData.id === "string" && clickedData.id.startsWith(c.id)) {
+    } else if (
+      typeof clickedData.id === "string" &&
+      clickedData.id.startsWith(c.id)
+    ) {
       return findNode(c.children, clickedData);
     } else if (c.children) {
       const found = findNode(c.children, clickedData);
@@ -28,7 +35,14 @@ const SunburstTooltip = ({
   data: { value },
   formattedValue,
 }: ComputedDatum<ItemData>) => {
-  return <BasicTooltip id={`${id} (${value})`} value={formattedValue} enableChip color={color} />;
+  return (
+    <BasicTooltip
+      id={`${id} (${value})`}
+      value={formattedValue}
+      enableChip
+      color={color}
+    />
+  );
 };
 
 const margin = { top: 2, right: 2, bottom: 2, left: 2 };
@@ -44,7 +58,7 @@ export default function SunburstChart() {
   };
   const onClick: MouseHandler<ItemData> = (clickedData) => {
     const foundObject = findNode(initialData.children, clickedData);
-    if (foundObject && foundObject.children) {
+    if (foundObject?.children) {
       setData(foundObject);
       setCanReset(true);
     }
@@ -53,7 +67,12 @@ export default function SunburstChart() {
   return (
     <>
       <div className="absolute z-1 flex">
-        <Button size="small" className="px-4" onClick={resetChart} disabled={!canReset}>
+        <Button
+          size="small"
+          className="px-4"
+          onClick={resetChart}
+          disabled={!canReset}
+        >
           Reset Chart
         </Button>
       </div>

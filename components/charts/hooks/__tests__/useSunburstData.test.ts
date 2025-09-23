@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import { _addChildren, ItemData } from "../useSunburstData";
-import { ITabData } from "../hookDataParser";
+import type { ITabData } from "../hookDataParser";
+import { _addChildren, type ItemData } from "../useSunburstData";
 
 describe("useSunburstData", () => {
   describe("_addChildren", () => {

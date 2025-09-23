@@ -5,7 +5,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: "npm" # for whatever reason, the YAML value for pnpm is npm
     directory: "/"
     schedule:
       interval: "monthly"
@@ -28,14 +28,6 @@ updates:
           - "@vitest/*"
           - "jsdom"
           - "vitest"
-      prettier:
-        patterns:
-          - "@eslint/*"
-          - "@prettier/*"
-          - "eslint"
-          - "eslint-*"
-          - "prettier"
-          - "prettier-*"
       styles:
         patterns:
           - "@emotion*"

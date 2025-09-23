@@ -1,7 +1,10 @@
-import { FreezedObject, produce } from "structurajs";
+/** biome-ignore-all lint/style/noNonNullAssertion: need to deal with browser types better? */
+import { type FreezedObject, produce } from "structurajs";
 
 type TabGroupId = Required<Browser.tabGroups.TabGroup>["id"];
-export type State = FreezedObject<{ map: Map<TabGroupId, Browser.tabGroups.TabGroup> }>;
+export type State = FreezedObject<{
+  map: Map<TabGroupId, Browser.tabGroups.TabGroup>;
+}>;
 
 export const initialState: State = {
   map: new Map<TabGroupId, Browser.tabGroups.TabGroup>(),

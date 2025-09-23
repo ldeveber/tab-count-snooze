@@ -1,12 +1,15 @@
 import {
-  initialState as initialDisplayState,
   type State as DisplayState,
+  initialState as initialDisplayState,
 } from "./reducers/displayReducer";
 import {
   initialState as initialTabGroupsState,
   type State as TabGroupsState,
 } from "./reducers/tabGroupsReducer";
-import { initialState as initialTabsState, type State as TabsState } from "./reducers/tabsReducer";
+import {
+  initialState as initialTabsState,
+  type State as TabsState,
+} from "./reducers/tabsReducer";
 import {
   initialState as initialWindowsState,
   type State as WindowsState,

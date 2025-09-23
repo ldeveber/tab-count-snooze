@@ -20,7 +20,10 @@ export default function TabCountTagline() {
       >
         {title}
       </Typography>
-      <Tooltip title={title} sx={{ color: "text.secondary", display: { xs: "block", sm: "none" } }}>
+      <Tooltip
+        title={title}
+        sx={{ color: "text.secondary", display: { xs: "block", sm: "none" } }}
+      >
         <Typography
           variant="subtitle1"
           component="div"

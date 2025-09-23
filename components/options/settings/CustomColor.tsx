@@ -1,7 +1,7 @@
 import { Checkbox, FormControlLabel, FormGroup, Grow } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction } from "react";
-import { Hue } from "@/components/layout/theme/themeHelpers";
-import { ColorOptions } from "@/utils/options";
+import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import type { Hue } from "@/components/layout/theme/themeHelpers";
+import type { ColorOptions } from "@/utils/options";
 import ColorSwatches from "./ColorSwatches";
 
 export default function CustomColor({
@@ -11,7 +11,10 @@ export default function CustomColor({
   options: ColorOptions;
   setOptions: Dispatch<SetStateAction<ColorOptions>>;
 }) {
-  const handleCheckboxChange = (_e: ChangeEvent<HTMLInputElement>, value: boolean) => {
+  const handleCheckboxChange = (
+    _e: ChangeEvent<HTMLInputElement>,
+    value: boolean,
+  ) => {
     setOptions((prev) => ({ ...prev, isCustomTheme: value }));
   };
 
@@ -22,7 +25,12 @@ export default function CustomColor({
   return (
     <FormGroup>
       <FormControlLabel
-        control={<Checkbox checked={options.isCustomTheme} onChange={handleCheckboxChange} />}
+        control={
+          <Checkbox
+            checked={options.isCustomTheme}
+            onChange={handleCheckboxChange}
+          />
+        }
         label="Enable custom primary color"
       />
 

@@ -1,7 +1,7 @@
 import { Extension, ExtensionOutlined, TabOutlined } from "@mui/icons-material";
 import {
   Avatar as MuiAvatar,
-  AvatarProps as MuiAvatarProps,
+  type AvatarProps as MuiAvatarProps,
   Skeleton,
   styled,
 } from "@mui/material";
@@ -41,9 +41,14 @@ function FallbackIcon({ url }: { url: Browser.tabs.Tab["url"] }) {
   return <TabOutlined />;
 }
 
-export default function TabFavicon({ tab }: { readonly tab: Browser.tabs.Tab }) {
+export default function TabFavicon({
+  tab,
+}: {
+  readonly tab: Browser.tabs.Tab;
+}) {
   const faded = tab.discarded || tab.status === "unloaded";
-  const favIconUrl = tab.favIconUrl && tab.favIconUrl.length > 0 ? tab.favIconUrl : undefined;
+  const favIconUrl =
+    tab.favIconUrl && tab.favIconUrl.length > 0 ? tab.favIconUrl : undefined;
   return (
     <Avatar src={favIconUrl} variant="square" faded={faded} role="none">
       <FallbackIcon url={tab.url ?? tab.pendingUrl} />

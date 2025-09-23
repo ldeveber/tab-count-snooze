@@ -1,18 +1,24 @@
-import { useMemo } from "react";
 import {
   Card,
+  Collapse,
+  List,
   CardActionArea as MuiCardActionArea,
   CardContent as MuiCardContent,
   CardHeader as MuiCardHeader,
-  Collapse,
-  List,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useIsFiltered, useSearch, useSort, useTabGroups, useTabs } from "@/utils/dataStore";
+import { useMemo } from "react";
+import ExpandMoreIcon from "@/components/ExpandMoreIcon";
+import {
+  useIsFiltered,
+  useSearch,
+  useSort,
+  useTabGroups,
+  useTabs,
+} from "@/utils/dataStore";
 import { filterSortTabs } from "@/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
-import ExpandMoreIcon from "@/components/ExpandMoreIcon";
 
 const CardActionArea = styled(MuiCardActionArea)(({ theme }) => ({
   paddingTop: theme.spacing(1),
@@ -70,7 +76,9 @@ export default function WindowView({
   const sort = useSort();
   const search = useSearch();
   const [focused, setFocused] = useState(win.focused);
-  const [lastViewed, setLastViewed] = useState<Date | null>(focused ? new Date() : null);
+  const [lastViewed, setLastViewed] = useState<Date | null>(
+    focused ? new Date() : null,
+  );
   const [expanded, setExpanded] = useState(true);
 
   const onFocusChanged = (id: number) => {
@@ -127,7 +135,12 @@ export default function WindowView({
     return null;
   }
   return (
-    <Card id={`window-${id}`} raised={focused} className="h-auto w-full" data-win={id}>
+    <Card
+      id={`window-${id}`}
+      raised={focused}
+      className="h-auto w-full"
+      data-win={id}
+    >
       <CardActionArea onClick={handleExpandClick} aria-expanded={expanded}>
         <CardHeader
           title={`${visibleTabs.length} Tabs`}
@@ -150,7 +163,13 @@ export default function WindowView({
           >
             {tabList.map(({ id, tab, group }) => {
               if (group) {
-                return <TabGroupView key={id} group={group.tabGroup} tabs={group.tabs} />;
+                return (
+                  <TabGroupView
+                    key={id}
+                    group={group.tabGroup}
+                    tabs={group.tabs}
+                  />
+                );
               }
               if (tab) {
                 return <TabView key={id} tab={tab} />;
