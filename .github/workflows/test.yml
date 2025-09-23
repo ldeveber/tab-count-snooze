@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
     steps:
       - uses: actions/checkout@v5
 
@@ -24,13 +26,10 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
+
       - run: pnpm i
       - run: pnpm run lint
-      - run: pnpm run build
       - run: pnpm test
-      - name: "Upload Coverage"
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage
-          path: coverage
-          retention-days: 3
+
+      - name: "Report Coverage"
+        uses: davelosert/vitest-coverage-report-action@v2
