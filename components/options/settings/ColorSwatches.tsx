@@ -31,7 +31,7 @@ const {
 } = colors;
 
 const getBorder = (theme: Theme, color: string): string => {
-  return theme.spacing(0.25) + " solid " + color;
+  return `${theme.spacing(0.25)} solid ${color}`;
 };
 const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => {
   const border = getBorder(theme, theme.palette.background.paper);

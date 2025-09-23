@@ -58,7 +58,7 @@ export default function SunburstChart() {
   };
   const onClick: MouseHandler<ItemData> = (clickedData) => {
     const foundObject = findNode(initialData.children, clickedData);
-    if (foundObject && foundObject.children) {
+    if (foundObject?.children) {
       setData(foundObject);
       setCanReset(true);
     }

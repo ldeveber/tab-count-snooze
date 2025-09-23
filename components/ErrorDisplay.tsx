@@ -17,7 +17,10 @@ export default function ErrorDisplay({
           <div className="flex flex-row justify-between">
             <h1 className="font-semibold text-2xl/6">Uh Oh</h1>
             {typeof resetErrorBoundary === "function" && (
-              <button className="whitespace-nowrap rounded-sm px-2 py-1 text-neutral-400 text-sm hover:bg-red-800">
+              <button
+                type="button"
+                className="whitespace-nowrap rounded-sm px-2 py-1 text-neutral-400 text-sm hover:bg-red-800"
+              >
                 Try Again?
               </button>
             )}

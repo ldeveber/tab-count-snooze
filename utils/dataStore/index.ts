@@ -82,7 +82,9 @@ export function useTabGroup(tabGroupId: number) {
 
 export function useAllTabs() {
   const arr: Array<Browser.tabs.Tab> = [];
-  useTabsContext().map.forEach((t) => arr.push(t));
+  useTabsContext().map.forEach((t) => {
+    arr.push(t);
+  });
   return arr;
 }
 export function useTabs(windowId?: number) {

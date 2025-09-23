@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import * as colors from "@mui/material/colors";
 import { styled } from "@mui/material/styles";
-import React, { useState } from "react";
+import { useState } from "react";
 import ExpandMoreIcon from "../ExpandMoreIcon";
 import TabView from "./TabView";
 
@@ -72,47 +72,46 @@ export default function TabGroupView({
   }
 
   const title = group.title ?? `Tab Group (${tabs.length})`;
+  // biome-ignore lint/performance/noDynamicNamespaceImportAccess: to be removed soon
   const groupColor = colors[group.color][500];
 
   const buttonAriaLabel = `Show/hide tabs in group: ${title}`;
 
   return (
-    <React.Fragment>
-      <ListItem
-        id={`group-${group.id}`}
+    <ListItem
+      id={`group-${group.id}`}
+      onClick={handleClick}
+      button-aria-label={buttonAriaLabel}
+      data-group={group.id}
+    >
+      <ListItemButton
+        className="w-full"
         onClick={handleClick}
-        button-aria-label={buttonAriaLabel}
-        data-group={group.id}
+        aria-label={buttonAriaLabel}
       >
-        <ListItemButton
+        <ListItemText
+          primary={<Chip label={title} backgroundColor={groupColor} />}
+          secondary={`${tabs.length} tabs`}
+          sx={{ m: 0 }}
+        />
+        {<ExpandMoreIcon expanded={open} />}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit className="w-full">
+        <List
+          disablePadding
+          dense
           className="w-full"
-          onClick={handleClick}
-          aria-label={buttonAriaLabel}
+          sx={{
+            borderLeft: groupColor ? `4px solid ${groupColor}` : undefined,
+            marginBottom: -0.5,
+          }}
+          aria-label={`Tab group: ${title}`}
         >
-          <ListItemText
-            primary={<Chip label={title} backgroundColor={groupColor} />}
-            secondary={`${tabs.length} tabs`}
-            sx={{ m: 0 }}
-          />
-          {<ExpandMoreIcon expanded={open} />}
-        </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit className="w-full">
-          <List
-            disablePadding
-            dense
-            className="w-full"
-            sx={{
-              borderLeft: groupColor ? `4px solid ${groupColor}` : undefined,
-              marginBottom: -0.5,
-            }}
-            aria-label={`Tab group: ${title}`}
-          >
-            {tabs.map((tab) => (
-              <TabView key={tab.id} indented tab={tab} />
-            ))}
-          </List>
-        </Collapse>
-      </ListItem>
-    </React.Fragment>
+          {tabs.map((tab) => (
+            <TabView key={tab.id} indented tab={tab} />
+          ))}
+        </List>
+      </Collapse>
+    </ListItem>
   );
 }

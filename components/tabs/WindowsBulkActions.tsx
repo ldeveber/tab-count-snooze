@@ -45,6 +45,7 @@ export default function WindowsBulkActions() {
     return filterTabs(allTabs, search).length;
   }, [allTabs, search]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: need to move to data store
   const disabled = useMemo(() => {
     return getSelectedTabIds().length === 0;
   }, []);

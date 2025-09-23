@@ -24,7 +24,7 @@ export function _addChildren(
 
   if (segments.length > 0 && Array.isArray(item.children)) {
     const [segment, ...rest] = segments;
-    _addChildren(item.children, id + "/" + segment, rest);
+    _addChildren(item.children, `${id}/${segment}`, rest);
   }
 }
 

@@ -14,8 +14,8 @@ export function filterTabs(
   }
   return tabs.filter(
     ({ title, url }) =>
-      (title && title.toLowerCase().includes(search.toLowerCase())) ||
-      (url && url.toLowerCase().includes(search.toLowerCase())),
+      title?.toLowerCase().includes(search.toLowerCase()) ||
+      url?.toLowerCase().includes(search.toLowerCase()),
   );
 }
 

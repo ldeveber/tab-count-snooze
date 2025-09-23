@@ -56,7 +56,7 @@ function _addLinkData(
 
   if (segments.length > 0) {
     const segment = segments.shift();
-    const newTarget = target + "/" + segment;
+    const newTarget = `${target}/${segment}`;
     _addLinkData(links, nodes, ++depth, target, newTarget, segments);
   }
 }

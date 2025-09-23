@@ -20,6 +20,7 @@ export default function WindowList({
         className={`peer @container/windows columns-1 gap-4 space-y-4 lg:columns-2`}
       >
         {windows.map((w) => (
+          // biome-ignore lint/style/noNonNullAssertion: stupid undefined :(
           <WindowView key={w.id} win={w} id={w.id!} />
         ))}
       </div>

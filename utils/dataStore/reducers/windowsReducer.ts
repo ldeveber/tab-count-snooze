@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: need to deal with browser types better? */
 import { type FreezedObject, produce } from "structurajs";
 
 type WindowId = Required<Browser.windows.Window>["id"];

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/useExhaustiveDependencies: need better way */
 import { useEffect } from "react";
 import { useDataDispatch } from ".";
 
