@@ -1,6 +1,9 @@
 import { type BarTooltipProps, ResponsiveBar } from "@nivo/bar";
 import { BasicTooltip } from "@nivo/tooltip";
-import useBarData, { type ItemData } from "./hooks/useBarData";
+import { useMemo } from "react";
+import { Spinner } from "@/components/ui/spinner";
+import { useAllTabs } from "@/utils/dataStore";
+import { getBarData, type ItemData } from "./data/getBarData";
 
 const axisBottom = { legend: "Open Tabs", legendOffset: 32 };
 const axisLeft = { legend: "Origin", legendOffset: -16 };
@@ -20,8 +23,18 @@ const BarTooltip = ({
     />
   );
 };
-export default function BarChart() {
-  const data = useBarData();
+
+export function Loading() {
+  return (
+    <div className="flex items-center justify-center">
+      <Spinner variant="bars" />
+    </div>
+  );
+}
+
+export function BarChart() {
+  const tabs = useAllTabs();
+  const data = useMemo(() => getBarData(tabs), [tabs]);
 
   return (
     <ResponsiveBar<ItemData>

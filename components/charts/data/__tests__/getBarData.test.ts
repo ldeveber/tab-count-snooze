@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import { _getBarData, type ITabData } from "../useBarData";
+import { _getBarData, type ITabData } from "../getBarData";
 
-describe("useBarData", () => {
+describe("getBarData", () => {
   describe("_addChildren", () => {
     test("should map child data for chart", () => {
       const tabs: Array<ITabData> = [];

@@ -1,39 +1,35 @@
 import {
-  AcUnit,
-  DeleteOutline,
-  DriveFileRenameOutline,
-  PushPin,
-  VolumeOff,
-  VolumeUp,
-} from "@mui/icons-material";
+  HighlighterIcon,
+  PinIcon,
+  SnowflakeIcon,
+  TrashIcon,
+  Volume2Icon,
+  VolumeOffIcon,
+} from "lucide-react";
 
 export default function TabState({ tab }: { readonly tab: Browser.tabs.Tab }) {
   const arr = [];
   if (tab.pinned) {
-    arr.push(<PushPin key="pinned" fontSize="inherit" />);
+    arr.push(<PinIcon key="pinned" className="size-3" />);
   }
 
   if (tab.mutedInfo?.muted) {
-    arr.push(<VolumeOff key="muted" fontSize="inherit" />);
+    arr.push(<VolumeOffIcon key="muted" className="size-3" />);
   } else if (tab.audible) {
-    arr.push(<VolumeUp key="audible" fontSize="inherit" />);
+    arr.push(<Volume2Icon key="audible" className="size-3" />);
   }
 
   if (tab.discarded || tab.status === "unloaded") {
-    arr.push(<DeleteOutline key="discarded" fontSize="inherit" />);
+    arr.push(<TrashIcon key="discarded" className="size-3" />);
   }
 
   if (tab.frozen) {
-    arr.push(<AcUnit key="frozen" fontSize="inherit" />);
+    arr.push(<SnowflakeIcon key="frozen" className="size-3" />);
   }
 
   if (!tab.active && tab.highlighted) {
-    arr.push(<DriveFileRenameOutline key="hightlighted" fontSize="inherit" />);
+    arr.push(<HighlighterIcon key="hightlighted" className="size-3" />);
   }
 
-  return (
-    <div className="flex w-4 flex-col items-end gap-1 self-stretch">
-      {arr.map((icon) => icon)}
-    </div>
-  );
+  return <span className="flex flex-row gap-1">{arr.map((icon) => icon)}</span>;
 }

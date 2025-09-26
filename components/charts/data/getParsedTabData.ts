@@ -1,5 +1,3 @@
-import { useAllTabs } from "@/utils/dataStore";
-
 export interface ITabData {
   readonly origin: string;
   segments: ReadonlyArray<string>;
@@ -21,9 +19,9 @@ export interface TabData extends ITabData {
   readonly segment3: string | undefined;
 }
 
-export default function useParsedTabData(): ReadonlyArray<TabData> {
-  const tabs = useAllTabs();
-
+export function getParsedTabData(
+  tabs: globalThis.Browser.tabs.Tab[],
+): ReadonlyArray<TabData> {
   const tData: Array<TabData> = [];
   tabs.forEach((tab) => {
     const { url, title } = tab;

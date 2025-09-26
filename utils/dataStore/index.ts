@@ -106,3 +106,22 @@ export function useTab(tabId: number) {
 export function useSelectedTabs() {
   return useTabsContext().selectedTabIds;
 }
+
+export function useMostRecentTabFromWindow(windowId?: number) {
+  const arr: Array<Browser.tabs.Tab> = [];
+  useTabsContext().map.forEach((t) => {
+    if (windowId === t.windowId) {
+      arr.push(t);
+    }
+  });
+  arr.sort((a, b) => {
+    if (a.lastAccessed !== undefined && b.lastAccessed !== undefined) {
+      return b.lastAccessed - a.lastAccessed;
+    }
+    if (a.lastAccessed !== undefined) {
+      return 1;
+    }
+    return -1;
+  });
+  return arr[0];
+}

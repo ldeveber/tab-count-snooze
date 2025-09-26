@@ -1,5 +1,4 @@
-import type { SunburstCommonProps } from "@nivo/sunburst";
-import useParsedTabData, { type ITabData } from "./hookDataParser";
+import { getParsedTabData, type ITabData } from "./getParsedTabData";
 
 export interface ItemData {
   id: string;
@@ -28,13 +27,15 @@ export function _addChildren(
   }
 }
 
-export default function useSunburstData(): SunburstCommonProps<ItemData>["data"] {
-  const tabData = useParsedTabData();
+export function getSunburstData(tabs: globalThis.Browser.tabs.Tab[]): ItemData {
+  performance.mark("ext:tab-count-snooze:getSunburstData_start");
+  const tabData = getParsedTabData(tabs);
   const children: Array<ItemData> = [];
 
   tabData.forEach(({ segments, origin }) => {
     _addChildren(children, origin, segments);
   });
-
-  return { children, id: "root", value: 0, label: "root" };
+  const data = { children, id: "root", value: 0, label: "root" };
+  performance.mark("ext:tab-count-snooze:getSunburstData_end");
+  return data;
 }

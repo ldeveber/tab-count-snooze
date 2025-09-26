@@ -1,11 +1,14 @@
-import { Button } from "@mui/material";
 import {
   type ComputedDatum,
   type MouseHandler,
   ResponsiveSunburst,
 } from "@nivo/sunburst";
 import { BasicTooltip } from "@nivo/tooltip";
-import useSunburstData, { type ItemData } from "./hooks/useSunburstData";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { useAllTabs } from "@/utils/dataStore";
+import { getSunburstData, type ItemData } from "./data/getSunburstData";
 
 function findNode(
   children: ItemData[],
@@ -47,8 +50,17 @@ const SunburstTooltip = ({
 
 const margin = { top: 2, right: 2, bottom: 2, left: 2 };
 
-export default function SunburstChart() {
-  const initialData = useSunburstData();
+export function Loading() {
+  return (
+    <div className="flex items-center justify-center">
+      <Spinner variant="circle-loader" />
+    </div>
+  );
+}
+
+export function SunburstChart() {
+  const tabs = useAllTabs();
+  const initialData = useMemo(() => getSunburstData(tabs), [tabs]);
   const [data, setData] = useState<ItemData>(initialData);
   const [canReset, setCanReset] = useState(false);
 
@@ -68,7 +80,7 @@ export default function SunburstChart() {
     <>
       <div className="absolute z-1 flex">
         <Button
-          size="small"
+          size="sm"
           className="px-4"
           onClick={resetChart}
           disabled={!canReset}

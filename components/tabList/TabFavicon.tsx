@@ -1,44 +1,23 @@
-import { Extension, ExtensionOutlined, TabOutlined } from "@mui/icons-material";
-import {
-  Avatar as MuiAvatar,
-  type AvatarProps as MuiAvatarProps,
-  Skeleton,
-  styled,
-} from "@mui/material";
+import { FileQuestionMarkIcon, PuzzleIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 export const FAVICON_SIZE = 24;
 
-interface AvatarProps extends MuiAvatarProps {
-  readonly faded?: boolean;
-}
-const Avatar = styled(MuiAvatar, {
-  shouldForwardProp: (prop) => prop !== "faded",
-})<AvatarProps>(({ faded, theme }) => ({
-  opacity: faded ? 0.25 : undefined,
-  backgroundColor: "transparent",
-  color: theme.palette.divider,
-  height: FAVICON_SIZE,
-  width: FAVICON_SIZE,
-}));
-
 export function Loading() {
-  return (
-    <Skeleton variant="rectangular">
-      <Avatar variant="square" role="none" />
-    </Skeleton>
-  );
+  return <Skeleton className="size-6 rounded-sm" />;
 }
 
 function FallbackIcon({ url }: { url: Browser.tabs.Tab["url"] }) {
   if (url) {
     if (url.startsWith("chrome-extension://")) {
-      return <ExtensionOutlined />;
+      return <PuzzleIcon className="size-6" />;
     }
     if (url.startsWith("chrome://extensions")) {
-      return <Extension />;
+      return <PuzzleIcon className="size-6" />;
     }
   }
-  return <TabOutlined />;
+  return <FileQuestionMarkIcon className="size-6" />;
 }
 
 export default function TabFavicon({
@@ -50,8 +29,24 @@ export default function TabFavicon({
   const favIconUrl =
     tab.favIconUrl && tab.favIconUrl.length > 0 ? tab.favIconUrl : undefined;
   return (
-    <Avatar src={favIconUrl} variant="square" faded={faded} role="none">
-      <FallbackIcon url={tab.url ?? tab.pendingUrl} />
-    </Avatar>
+    <span
+      role="none"
+      className={cn(
+        "flex size-6 items-center justify-center overflow-hidden bg-muted/60",
+        faded && "opacity-30",
+      )}
+    >
+      {favIconUrl ? (
+        <img
+          src={favIconUrl}
+          alt=""
+          className="size-full object-cover"
+          referrerPolicy="no-referrer"
+          loading="lazy"
+        />
+      ) : (
+        <FallbackIcon url={tab.url ?? tab.pendingUrl} />
+      )}
+    </span>
   );
 }

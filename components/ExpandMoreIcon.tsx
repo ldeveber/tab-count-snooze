@@ -1,17 +1,5 @@
-import { ExpandMore } from "@mui/icons-material";
-import { Box, styled } from "@mui/material";
-
-const BoxWrap = styled(Box)(({ theme }) => ({
-  display: "flex",
-  ".MuiSvgIcon-root": {
-    transition: theme.transitions.create(["transform"], {
-      duration: theme.transitions.duration.standard,
-    }),
-    "&.Mui-expanded": {
-      transform: "rotate(180deg)",
-    },
-  },
-}));
+import { ChevronDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function ExpandMoreIcon({
   expanded,
@@ -19,8 +7,14 @@ export default function ExpandMoreIcon({
   readonly expanded: boolean;
 }) {
   return (
-    <BoxWrap>
-      <ExpandMore className={expanded ? "Mui-expanded" : ""} />
-    </BoxWrap>
+    <span
+      aria-hidden="true"
+      className={cn(
+        "inline-flex transition-transform duration-200",
+        expanded && "rotate-180",
+      )}
+    >
+      <ChevronDown className="size-4" />
+    </span>
   );
 }

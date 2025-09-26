@@ -1,5 +1,5 @@
 import type { DefaultLink, DefaultNode, SankeyDataProps } from "@nivo/sankey";
-import useParsedTabData, { type ITabData } from "./hookDataParser";
+import { getParsedTabData, type ITabData } from "./getParsedTabData";
 
 export interface ItemLink extends DefaultLink {
   source: string;
@@ -99,10 +99,13 @@ export function _getSankeyData(
   return { nodes, links };
 }
 
-export default function useSankeyData(): SankeyDataProps<
-  ItemNode,
-  ItemLink
->["data"] {
-  const tabData = useParsedTabData();
-  return _getSankeyData(tabData);
+export function getSankeyData(tabs: globalThis.Browser.tabs.Tab[]): {
+  nodes: readonly ItemNode[];
+  links: readonly ItemLink[];
+} {
+  performance.mark("ext:tab-count-snooze:getSankeyData_start");
+  const tabData = getParsedTabData(tabs);
+  const data = _getSankeyData(tabData);
+  performance.mark("ext:tab-count-snooze:getSankeyData_end");
+  return data;
 }

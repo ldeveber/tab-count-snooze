@@ -4,10 +4,13 @@ import {
   type SankeyNodeDatum,
 } from "@nivo/sankey";
 import { BasicTooltip } from "@nivo/tooltip";
-import useSankeyData, {
+import { Spinner } from "@/components/ui/spinner";
+import { useAllTabs } from "@/utils/dataStore";
+import {
+  getSankeyData,
   type ItemLink,
   type ItemNode,
-} from "./hooks/useSankeyData";
+} from "./data/getSankeyData";
 
 const SankeyLinkTooltip: React.FunctionComponent<{
   link: SankeyLinkDatum<ItemNode, ItemLink>;
@@ -27,8 +30,17 @@ const SankeyNodeTooltip: React.FunctionComponent<{
   return <BasicTooltip id={label} value={value} enableChip color={color} />;
 };
 
-export default function SankeyChart() {
-  const data = useSankeyData();
+export function Loading() {
+  return (
+    <div className="flex items-center justify-center">
+      <Spinner variant="ellipsis" />
+    </div>
+  );
+}
+
+export function SankeyChart() {
+  const tabs = useAllTabs();
+  const data = useMemo(() => getSankeyData(tabs), [tabs]);
 
   return (
     <ResponsiveSankey<ItemNode, ItemLink>

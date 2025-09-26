@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import type { ITabData } from "../hookDataParser";
-import { _getSankeyData } from "../useSankeyData";
+import type { ITabData } from "../getParsedTabData";
+import { _getSankeyData } from "../getSankeyData";
 
-describe("useSankeyData", () => {
+describe("getSankeyData", () => {
   describe("_addChildren", () => {
     test("should map child data for chart", () => {
       const tabs: Array<ITabData> = [];

@@ -1,16 +1,13 @@
+import { ChevronUpIcon } from "lucide-react";
+import { useMemo, useState } from "react";
 import {
-  Card,
-  Collapse,
-  List,
-  CardActionArea as MuiCardActionArea,
-  CardContent as MuiCardContent,
-  CardHeader as MuiCardHeader,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import { useMemo } from "react";
-import ExpandMoreIcon from "@/components/ExpandMoreIcon";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   useIsFiltered,
+  useMostRecentTabFromWindow,
   useSearch,
   useSort,
   useTabGroups,
@@ -19,35 +16,6 @@ import {
 import { filterSortTabs } from "@/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
-
-const CardActionArea = styled(MuiCardActionArea)(({ theme }) => ({
-  paddingTop: theme.spacing(1),
-  paddingBottom: theme.spacing(1),
-  paddingLeft: theme.spacing(2.5),
-  paddingRight: theme.spacing(2.5),
-  ".MuiCardHeader-action": {
-    alignSelf: "auto",
-    margin: 0,
-  },
-}));
-
-const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
-  paddingLeft: "0 !important",
-  paddingRight: "0 !important",
-  ".MuiCardHeader-content": {
-    padding: 0,
-    display: "flex",
-    alignItems: "baseline",
-    gap: theme.spacing(2),
-  },
-}));
-
-const CardContent = styled(MuiCardContent)(() => ({
-  padding: 0,
-  "&:last-child": {
-    padding: 0,
-  },
-}));
 
 type GroupType = {
   readonly tabGroup: Browser.tabGroups.TabGroup;
@@ -75,23 +43,22 @@ export default function WindowView({
   const isFiltered = useIsFiltered();
   const sort = useSort();
   const search = useSearch();
-  const [focused, setFocused] = useState(win.focused);
+  const mostRecentTab = useMostRecentTabFromWindow(win.id);
   const [lastViewed, setLastViewed] = useState<Date | null>(
-    focused ? new Date() : null,
+    mostRecentTab?.lastAccessed ? new Date(mostRecentTab.lastAccessed) : null,
   );
   const [expanded, setExpanded] = useState(true);
 
-  const onFocusChanged = (id: number) => {
-    setFocused(id === win.id);
-    if (id === win.id) {
+  const onActivated = (info: Browser.tabs.OnActivatedInfo) => {
+    if (info.windowId === win.id) {
       setLastViewed(new Date());
     }
   };
 
   useEffect(() => {
-    browser.windows.onFocusChanged.addListener(onFocusChanged);
+    browser.tabs.onActivated.addListener(onActivated);
     return () => {
-      browser.windows.onFocusChanged.removeListener(onFocusChanged);
+      browser.tabs.onActivated.removeListener(onActivated);
     };
   }, []);
 
@@ -127,58 +94,55 @@ export default function WindowView({
     return list;
   }, [visibleTabs, groups]);
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+  const handleExpandClick = (open: boolean) => {
+    setExpanded(open);
   };
 
   if (!win?.id || visibleTabs.length === 0) {
     return null;
   }
   return (
-    <Card
+    <Collapsible
       id={`window-${id}`}
-      raised={focused}
-      className="h-auto w-full"
-      data-win={id}
+      open={expanded}
+      onOpenChange={handleExpandClick}
+      className="@container/window overflow-hidden rounded-2xl bg-card"
     >
-      <CardActionArea onClick={handleExpandClick} aria-expanded={expanded}>
-        <CardHeader
-          title={`${visibleTabs.length} Tabs`}
-          subheader={lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}
-          sx={{ py: 0, px: 1.5 }}
-          action={<ExpandMoreIcon expanded={expanded} />}
-          slotProps={{
-            content: { sx: { py: 1, px: 1 } },
-            title: { variant: "subtitle1" },
-            subheader: { variant: "caption" },
-          }}
-        />
-      </CardActionArea>
-      <CardContent sx={{ p: 0 }}>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <List
-            dense
-            sx={{ pt: 0 }}
-            aria-label={`${win.state} window with ${isFiltered ? `${visibleTabs.length} tabs, filtered` : `${visibleTabs.length} tabs`}`}
-          >
-            {tabList.map(({ id, tab, group }) => {
-              if (group) {
-                return (
-                  <TabGroupView
-                    key={id}
-                    group={group.tabGroup}
-                    tabs={group.tabs}
-                  />
-                );
-              }
-              if (tab) {
-                return <TabView key={id} tab={tab} />;
-              }
-              return null;
-            })}
-          </List>
-        </Collapse>
-      </CardContent>
-    </Card>
+      <CollapsibleTrigger
+        className="group/trigger flex w-full items-center justify-between gap-2 rounded-full px-5 py-2 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary-800 active:bg-primary-200"
+        aria-label={`${win.state} window with ${
+          isFiltered
+            ? `${visibleTabs.length} tabs, filtered`
+            : `${visibleTabs.length} tabs`
+        }`}
+      >
+        <span className="flex flex-row items-baseline gap-2">
+          <span className="text-lg">{visibleTabs.length} Tabs</span>
+          <span className="text-muted-foreground">
+            {lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}
+          </span>
+        </span>
+        <ChevronUpIcon className="size-3 stroke-3 transition-all duration-450 ease-in-out group-aria-[expanded=false]/trigger:rotate-180" />
+      </CollapsibleTrigger>
+      <CollapsibleContent>
+        <ul className="flex flex-col divide-y divide-border/60">
+          {tabList.map(({ id: key, tab, group }) => {
+            if (group) {
+              return (
+                <TabGroupView
+                  key={key}
+                  group={group.tabGroup}
+                  tabs={group.tabs}
+                />
+              );
+            }
+            if (tab) {
+              return <TabView key={key} tab={tab} />;
+            }
+            return null;
+          })}
+        </ul>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }

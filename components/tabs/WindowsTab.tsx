@@ -1,16 +1,15 @@
-import { Divider, Skeleton } from "@mui/material";
 import { useMemo } from "react";
+import SearchTabs from "@/components/SearchTabs";
+import WindowList, {
+  Loading as WindowListLoading,
+} from "@/components/tabList/WindowList";
+import { Divider } from "@/components/ui/divider";
 import {
-  useDataDispatch,
   useIsFiltered,
   useTabCount,
   useWindowCount,
   useWindows,
 } from "@/utils/dataStore";
-import Search from "../layout/Search";
-import WindowList, {
-  Loading as WindowListLoading,
-} from "../tabList/WindowList";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
 } from "./StickyTabSubMenuBar";
@@ -21,7 +20,7 @@ export function Loading() {
   return (
     <div className="flex flex-col">
       <StickyTabSubMenuBarLoading>
-        <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
+        <div className="bg- h-8 w-sm" />
       </StickyTabSubMenuBarLoading>
       <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
         <WindowListLoading />
@@ -34,18 +33,7 @@ export default function WindowsTab() {
   const windows = useWindows();
   const windowCount = useWindowCount();
   const tabCount = useTabCount();
-  const [search, setSearch] = useState("");
-  const dispatch = useDataDispatch();
-
   const isFiltered = useIsFiltered();
-
-  const onSearchChange = (value: string) => {
-    setSearch(value);
-    dispatch({ type: "search", search: value });
-    if (value === "") {
-      dispatch({ type: "clearSelection" });
-    }
-  };
 
   const {
     minimized,
@@ -64,15 +52,10 @@ export default function WindowsTab() {
   }
 
   return (
-    <div className="flex size-full grow flex-col">
+    <div className="flex size-full grow flex-col gap-2">
       <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4">
-          <Search
-            autoFocus
-            label="Search Tabs"
-            value={search}
-            onChange={onSearchChange}
-          />
+          <SearchTabs />
         </div>
         <div className="flex shrink items-center gap-4">
           {isFiltered ? <WindowsBulkActions /> : <TabCountTagline />}

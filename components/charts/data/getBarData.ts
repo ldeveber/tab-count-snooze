@@ -1,5 +1,4 @@
 import type { BarDatum } from "@nivo/bar";
-import { useAllTabs } from "@/utils/dataStore";
 
 export type ITabData = Pick<Browser.tabs.Tab, "url">;
 
@@ -31,7 +30,11 @@ export function _getBarData(
   return data.filter((d) => d.value > depth).sort((a, b) => a.value - b.value);
 }
 
-export default function useBarData(): readonly ItemData[] {
-  const tabs = useAllTabs();
-  return _getBarData(tabs);
+export function getBarData(
+  tabs: globalThis.Browser.tabs.Tab[],
+): readonly ItemData[] {
+  performance.mark("ext:tab-count-snooze:getBarData_start");
+  const data = _getBarData(tabs);
+  performance.mark("ext:tab-count-snooze:getBarData_end");
+  return data;
 }

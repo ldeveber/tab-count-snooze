@@ -31,8 +31,5 @@ export default defineConfig({
   },
   vite: () => ({
     plugins: [tailwindcss()],
-    resolve: {
-      dedupe: ["@emotion/react"],
-    },
   }),
 });

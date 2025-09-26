@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import type { ITabData } from "../hookDataParser";
-import { _addChildren, type ItemData } from "../useSunburstData";
+import type { ITabData } from "../getParsedTabData";
+import { _addChildren, type ItemData } from "../getSunburstData";
 
-describe("useSunburstData", () => {
+describe("getSunburstData", () => {
   describe("_addChildren", () => {
     test("should map child data for chart", () => {
       const tabs: Array<ITabData> = [];
