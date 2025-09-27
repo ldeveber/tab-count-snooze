@@ -81,19 +81,18 @@ export function useTabGroup(tabGroupId: number) {
 // -- Tabs ----------------------------------------------------------------- //
 
 export function useAllTabs() {
-  const arr: Array<Browser.tabs.Tab> = [];
-  useTabsContext().map.forEach((t) => {
-    arr.push(t);
-  });
+  const { map } = useTabsContext();
+  const arr = useMemo(() => Array.from(map.values()), [map]);
   return arr;
 }
+
 export function useTabs(windowId?: number) {
-  const arr: Array<Browser.tabs.Tab> = [];
-  useTabsContext().map.forEach((t) => {
-    if (windowId === t.windowId) {
-      arr.push(t);
-    }
-  });
+  const { map } = useTabsContext();
+  const arr = useMemo(
+    () => Array.from(map.values()).filter((t) => t.windowId === windowId),
+    [map],
+  );
+
   return arr;
 }
 export function useTabCount() {
@@ -108,20 +107,17 @@ export function useSelectedTabs() {
 }
 
 export function useMostRecentTabFromWindow(windowId?: number) {
-  const arr: Array<Browser.tabs.Tab> = [];
-  useTabsContext().map.forEach((t) => {
-    if (windowId === t.windowId) {
-      arr.push(t);
-    }
-  });
-  arr.sort((a, b) => {
-    if (a.lastAccessed !== undefined && b.lastAccessed !== undefined) {
-      return b.lastAccessed - a.lastAccessed;
-    }
-    if (a.lastAccessed !== undefined) {
-      return 1;
-    }
-    return -1;
-  });
-  return arr[0];
+  const arr = useTabs(windowId);
+  const mostRecentTab = useMemo(() => {
+    return arr.sort((a, b) => {
+      if (a.lastAccessed !== undefined && b.lastAccessed !== undefined) {
+        return b.lastAccessed - a.lastAccessed;
+      }
+      if (a.lastAccessed !== undefined) {
+        return 1;
+      }
+      return -1;
+    })[0];
+  }, [arr]);
+  return mostRecentTab;
 }
