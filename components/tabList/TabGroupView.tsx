@@ -79,7 +79,7 @@ export default function TabGroupView({
         className="flex flex-col justify-center"
       >
         <CollapsibleTrigger
-          className="group/trigger m-1 flex items-center justify-between gap-2 rounded-sm px-3 py-1 font-medium text-sm hover:bg-accent/40 focus-visible:outline focus-visible:outline-primary-800 active:bg-primary-200"
+          className="group/trigger m-1 flex items-center justify-between gap-2 rounded-sm px-3 py-1 font-medium text-sm hover:bg-accent/40 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
           aria-controls={panelId}
           aria-label={`Show or hide tabs in group: ${title}`}
         >

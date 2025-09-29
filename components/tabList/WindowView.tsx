@@ -109,7 +109,7 @@ export default function WindowView({
       className="@container/window overflow-hidden rounded-2xl bg-card"
     >
       <CollapsibleTrigger
-        className="group/trigger flex w-full items-center justify-between gap-2 rounded-full px-5 py-2 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary-800 active:bg-primary-200"
+        className="group/trigger flex w-full items-center justify-between gap-2 rounded-full px-5 py-2 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
         aria-label={`${win.state} window with ${
           isFiltered
             ? `${visibleTabs.length} tabs, filtered`

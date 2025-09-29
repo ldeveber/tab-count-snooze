@@ -11,7 +11,13 @@ export function _addChildren(
   arr: Array<ItemData>,
   id: string,
   segments: ITabData["segments"],
+  depth: number,
+  maxDepth?: number,
 ) {
+  if (maxDepth === depth) {
+    return;
+  }
+
   let item = arr.find((d) => d.id === id);
 
   if (!item) {
@@ -23,19 +29,34 @@ export function _addChildren(
 
   if (segments.length > 0 && Array.isArray(item.children)) {
     const [segment, ...rest] = segments;
-    _addChildren(item.children, `${id}/${segment}`, rest);
+    _addChildren(item.children, `${id}/${segment}`, rest, depth + 1, maxDepth);
   }
 }
 
-export function getSunburstData(tabs: globalThis.Browser.tabs.Tab[]): ItemData {
+export function getSunburstData(
+  tabs: globalThis.Browser.tabs.Tab[],
+  maxDepth: number,
+  minValue: number,
+  limit: number,
+): ItemData {
   performance.mark("ext:tab-count-snooze:getSunburstData_start");
   const tabData = getParsedTabData(tabs);
-  const children: Array<ItemData> = [];
+  const arr: Array<ItemData> = [];
 
   tabData.forEach(({ segments, origin }) => {
-    _addChildren(children, origin, segments);
+    _addChildren(arr, origin, segments, 0, maxDepth);
   });
-  const data = { children, id: "root", value: 0, label: "root" };
+
+  const children = arr
+    .filter((c) => c.value >= minValue)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, limit);
+  const data = {
+    children,
+    id: "root",
+    value: 0,
+    label: "root",
+  };
   performance.mark("ext:tab-count-snooze:getSunburstData_end");
   return data;
 }

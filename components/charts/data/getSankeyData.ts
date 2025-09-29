@@ -47,17 +47,21 @@ function _addLinkData(
   links: Array<ItemLink>,
   nodes: Array<ItemNode>,
   depth: number,
+  maxDepth: number,
   source: string,
   target: string,
   segments: Array<string>,
 ) {
+  if (depth > maxDepth) {
+    return;
+  }
   _updateNode(nodes, depth, target);
   _updateLink(links, source, target);
 
   if (segments.length > 0) {
     const segment = segments.shift();
     const newTarget = `${target}/${segment}`;
-    _addLinkData(links, nodes, ++depth, target, newTarget, segments);
+    _addLinkData(links, nodes, ++depth, maxDepth, target, newTarget, segments);
   }
 }
 
@@ -65,6 +69,8 @@ const ALL_TABS_LABEL = "All Tabs";
 
 export function _getSankeyData(
   tabData: ReadonlyArray<ITabData>,
+  topOrigins: ReadonlyArray<string>,
+  maxDepth: number = 3,
   minValue: number = 2,
 ): SankeyDataProps<ItemNode, ItemLink>["data"] {
   const allNodes: Array<ItemNode> = [];
@@ -78,17 +84,20 @@ export function _getSankeyData(
 
   tabData.forEach((tab) => {
     const { origin, segments } = tab;
-    _addLinkData(
-      allLinks,
-      allNodes,
-      1,
-      ALL_TABS_LABEL,
-      origin,
-      segments.slice(0, 2),
-    );
+    if (topOrigins.includes(origin)) {
+      _addLinkData(
+        allLinks,
+        allNodes,
+        1,
+        maxDepth,
+        ALL_TABS_LABEL,
+        origin,
+        segments.slice(0, maxDepth),
+      );
+    }
   });
   const nodes = allNodes
-    .filter((n) => n.value > minValue)
+    .filter((n) => n.value >= minValue)
     .sort((a, b) => b.value - a.value);
   const links = allLinks.filter(
     (l) =>
@@ -99,13 +108,45 @@ export function _getSankeyData(
   return { nodes, links };
 }
 
-export function getSankeyData(tabs: globalThis.Browser.tabs.Tab[]): {
+function getTopOrigins(
+  tabs: globalThis.Browser.tabs.Tab[],
+  minValue: number,
+  limit: number,
+) {
+  const counts: Array<{ origin: string; count: number }> = [];
+  tabs.forEach((tab) => {
+    if (!tab.url) {
+      return;
+    }
+    const url = new URL(tab.url);
+    let c = counts.find((d) => d.origin === url.origin);
+    if (!c) {
+      c = { origin: url.origin, count: 0 };
+      counts.push(c);
+    }
+    c.count++;
+  });
+
+  return counts
+    .filter((c) => c.count >= minValue)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, limit)
+    .map((c) => c.origin);
+}
+
+export function getSankeyData(
+  tabs: globalThis.Browser.tabs.Tab[],
+  maxDepth: number,
+  minValue: number,
+  limit: number,
+): {
   nodes: readonly ItemNode[];
   links: readonly ItemLink[];
 } {
   performance.mark("ext:tab-count-snooze:getSankeyData_start");
   const tabData = getParsedTabData(tabs);
-  const data = _getSankeyData(tabData);
+  const topOrigins = getTopOrigins(tabs, minValue, limit);
+  const data = _getSankeyData(tabData, topOrigins, maxDepth, minValue);
   performance.mark("ext:tab-count-snooze:getSankeyData_end");
   return data;
 }

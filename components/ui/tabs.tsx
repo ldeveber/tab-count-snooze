@@ -21,7 +21,7 @@ function Tabs({
 const tabsListVariants = cva("inline-flex items-center justify-center w-fit", {
   variants: {
     variant: {
-      default: "rounded-lg bg-muted p-2 text-muted-foreground",
+      default: "rounded-lg bg-muted p-1 text-muted-foreground",
       nav: "rounded-full bg-muted p-1 dark:bg-dark",
     },
     size: {
