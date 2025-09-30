@@ -54,12 +54,10 @@ export default function WindowsTab() {
   return (
     <div className="flex size-full grow flex-col gap-2">
       <StickyTabSubMenuBar>
-        <div className="flex grow items-center gap-4">
+        <div className="flex items-center gap-4">
           <SearchTabs />
         </div>
-        <div className="flex shrink items-center gap-4">
-          {isFiltered ? <WindowsBulkActions /> : <TabCountTagline />}
-        </div>
+        {isFiltered ? <WindowsBulkActions /> : <TabCountTagline />}
       </StickyTabSubMenuBar>
 
       <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">

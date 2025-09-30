@@ -86,9 +86,7 @@ export default function ChartsTab() {
             Sankey - Top Open Tabs
           </TabsTrigger>
         </TabsList>
-        <div className="flex shrink items-center gap-4">
-          <TabCountTagline />
-        </div>
+        <TabCountTagline />
       </StickyTabSubMenuBar>
       <TabsContent value="bar">
         <ErrorBoundary FallbackComponent={ErrorDisplay}>

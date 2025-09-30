@@ -61,7 +61,7 @@ export default function WindowsBulkActions() {
   };
 
   return (
-    <div className="flex flex-grow flex-row items-center gap-2">
+    <div className="flex flex-grow flex-row items-center justify-end gap-2">
       <div>
         {filtleredCount} tab {filtleredCount === 1 ? "match" : "matches"}
       </div>

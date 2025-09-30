@@ -25,10 +25,8 @@ export default function SnoozeTab() {
   return (
     <div className="flex size-full grow flex-col gap-2">
       <StickyTabSubMenuBar>
-        <div className="flex grow items-center gap-4"></div>
-        <div className="flex shrink items-center gap-4">
-          <TabCountTagline />
-        </div>
+        <div className="flex items-center gap-4"></div>
+        <TabCountTagline />
       </StickyTabSubMenuBar>
 
       <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
