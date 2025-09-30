@@ -10,7 +10,7 @@ export function Loading({ children }: PropsWithChildren) {
 
 export default function StickyTabSubMenuBar({ children }: PropsWithChildren) {
   return (
-    <div className="sticky top-14 z-1 flex min-h-11 items-center justify-between gap-4 bg-header/50 @4xl/main:px-8 px-4 pb-2 backdrop-blur-xs">
+    <div className="sticky top-14 z-1 flex min-h-11 items-center justify-between gap-4 bg-background/50 @4xl/main:px-8 px-4 pb-2 backdrop-blur-xs">
       {children}
     </div>
   );

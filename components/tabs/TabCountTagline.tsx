@@ -9,5 +9,5 @@ export default function TabCountTagline() {
     title += ` across ${windowCount} Windows`;
   }
 
-  return <div className="text-header-foreground">{title}</div>;
+  return <p>{title}</p>;
 }

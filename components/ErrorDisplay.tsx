@@ -22,7 +22,7 @@ export default function ErrorDisplay({
                 variant="ghost"
                 size="sm"
                 onClick={resetErrorBoundary}
-                className="text-destructive-100 hover:bg-destructive-800 hover:text-destructive-50"
+                className="text-destructive-foreground hover:bg-destructive"
               >
                 Try Again?
               </Button>

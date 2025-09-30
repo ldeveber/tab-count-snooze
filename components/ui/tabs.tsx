@@ -57,7 +57,7 @@ const tabsTriggerVariants = cva(
       variant: {
         default:
           "h-[calc(100%-1px)] flex-1 gap-1.5 rounded-md border border-transparent font-medium text-foreground text-sm transition-[color,box-shadow] focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:shadow-sm dark:text-muted-foreground dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 dark:data-[state=active]:text-foreground [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-        nav: "min-w-[100px] gap-1.5 rounded-full border border-transparent text-center font-medium text-dark text-foreground transition-[color,box-shadow] hover:border-border focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:shadow-sm",
+        nav: "min-w-[100px] gap-1.5 rounded-full border border-transparent text-center font-medium text-dark text-foreground transition-[color,box-shadow] hover:border-border focus-visible:border-ring focus-visible:outline-1 focus-visible:outline-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-sm",
       },
       size: {
         default: "px-2 py-1 has-[>svg]:px-1.5",

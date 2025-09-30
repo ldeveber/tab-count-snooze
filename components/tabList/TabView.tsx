@@ -76,8 +76,9 @@ export default function TabView({
         type="button"
         onClick={goToTab}
         aria-label={`Jump to tab: ${tab.title}`}
-        className="flex w-full items-center gap-3 overflow-hidden rounded-sm px-3 py-2 text-left transition-colors hover:bg-primary focus-visible:outline focus-visible:outline-ring focus-visible:outline-offset-2 data-[selected]:bg-primary/10"
-        data-active={active ? "true" : undefined}
+        className="flex w-full items-center gap-3 overflow-hidden rounded-sm px-3 py-2 text-left transition-colors hover:bg-primary/10 focus-visible:outline focus-visible:outline-ring focus-visible:outline-offset-2 data-[active-tab]:bg-secondary/10 hover:data-[active-tab]:bg-primary/10"
+        data-active-tab={active ? "true" : undefined}
+        data-selected={checked ? "true" : undefined}
       >
         <span className="flex w-6 flex-none justify-center" role="none">
           <TabFavicon tab={tab} />
