@@ -1,6 +1,8 @@
 import { ChartPieIcon, CloudMoonIcon, PanelTopIcon } from "lucide-react";
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useAppConfig } from "#imports";
+import { ModeToggle } from "@/components/layout/theme/ThemeToggle";
 import ChartsTab, {
   Loading as ChartsTabLoading,
 } from "@/components/tabs/ChartsTab";
@@ -31,6 +33,7 @@ export function Loading() {
 }
 
 export default function TabCountSnooze() {
+  const { isDev } = useAppConfig();
   const [tab, setTab] = useState("tab");
   const handleChange = (value: string) => {
     setTab(value);
@@ -57,6 +60,7 @@ export default function TabCountSnooze() {
                 <CloudMoonIcon className="size-4" /> Snooze
               </TabsTrigger>
             </TabsList>
+            {isDev && <ModeToggle />}
           </div>
           <TabsContent value="tab">
             <ErrorBoundary FallbackComponent={ErrorDisplay}>
