@@ -2,7 +2,11 @@ import { MergeIcon, Trash2Icon } from "lucide-react";
 import { type MouseEventHandler, useMemo } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TooltipButton } from "@/components/ui/tooltip-button";
-import { closeTabs, groupTabs, type TabIdType } from "@/utils/chrome";
+import {
+  closeTabs,
+  groupTabs,
+  type TabIdType,
+} from "@/utils/browserActionHelper";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
 import { filterTabs } from "@/utils/filterTabs";
 
