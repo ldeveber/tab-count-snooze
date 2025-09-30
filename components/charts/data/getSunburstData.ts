@@ -1,5 +1,3 @@
-import { getParsedTabData, type ITabData } from "./getParsedTabData";
-
 export interface ItemData {
   id: string;
   label: string;
@@ -10,7 +8,7 @@ export interface ItemData {
 export function _addChildren(
   arr: Array<ItemData>,
   id: string,
-  segments: ITabData["segments"],
+  segments: Array<string>,
   depth: number,
   maxDepth?: number,
 ) {
@@ -40,10 +38,17 @@ export function getSunburstData(
   limit: number,
 ): ItemData {
   performance.mark("ext:tab-count-snooze:getSunburstData_start");
-  const tabData = getParsedTabData(tabs);
   const arr: Array<ItemData> = [];
 
-  tabData.forEach(({ segments, origin }) => {
+  tabs.forEach((tab) => {
+    const { url } = tab;
+    if (!url) {
+      return;
+    }
+    const urlObj = new URL(url);
+    const { origin, pathname } = urlObj;
+    const segments = pathname.split("/").filter((item) => item !== "");
+
     _addChildren(arr, origin, segments, 0, maxDepth);
   });
 

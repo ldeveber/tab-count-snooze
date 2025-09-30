@@ -1,5 +1,4 @@
 import type { DefaultLink, DefaultNode, SankeyDataProps } from "@nivo/sankey";
-import { getParsedTabData, type ITabData } from "./getParsedTabData";
 
 export interface ItemLink extends DefaultLink {
   source: string;
@@ -68,7 +67,7 @@ function _addLinkData(
 const ALL_TABS_LABEL = "All Tabs";
 
 export function _getSankeyData(
-  tabData: ReadonlyArray<ITabData>,
+  tabs: globalThis.Browser.tabs.Tab[],
   topOrigins: ReadonlyArray<string>,
   maxDepth: number = 3,
   minValue: number = 2,
@@ -79,11 +78,17 @@ export function _getSankeyData(
   allNodes.push({
     id: ALL_TABS_LABEL,
     depth: 0,
-    value: tabData.length,
+    value: tabs.length,
   });
 
-  tabData.forEach((tab) => {
-    const { origin, segments } = tab;
+  tabs.forEach((tab) => {
+    const { url } = tab;
+    if (!url) {
+      return;
+    }
+    const urlObj = new URL(url);
+    const { origin, pathname } = urlObj;
+    const segments = pathname.split("/").filter((item) => item !== "");
     if (topOrigins.includes(origin)) {
       _addLinkData(
         allLinks,
@@ -144,9 +149,8 @@ export function getSankeyData(
   links: readonly ItemLink[];
 } {
   performance.mark("ext:tab-count-snooze:getSankeyData_start");
-  const tabData = getParsedTabData(tabs);
   const topOrigins = getTopOrigins(tabs, minValue, limit);
-  const data = _getSankeyData(tabData, topOrigins, maxDepth, minValue);
+  const data = _getSankeyData(tabs, topOrigins, maxDepth, minValue);
   performance.mark("ext:tab-count-snooze:getSankeyData_end");
   return data;
 }

@@ -1,7 +1,5 @@
 import type { BarDatum } from "@nivo/bar";
 
-export type ITabData = Pick<Browser.tabs.Tab, "url">;
-
 export interface ItemData extends BarDatum {
   id: string;
   value: number;
@@ -17,7 +15,7 @@ export function _getMatchUrl(url: URL, depth: number): string {
 }
 
 export function _getBarData(
-  tabs: Array<ITabData>,
+  tabs: globalThis.Browser.tabs.Tab[],
   depth: number,
   limit: number,
   minValue: number = 2,
