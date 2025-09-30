@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { goToTabAction } from "@/utils/browserActionHelper";
 import {
   useDataDispatch,
   useIsFiltered,
@@ -30,9 +31,7 @@ export default function TabView({
     if (!tab.id) {
       return;
     }
-    // TODO FIXME Uncaught (in promise) Error: No tab with id: 159340502.
-    await browser.tabs.update(tab.id, { active: true });
-    await browser.windows.update(tab.windowId, { focused: true });
+    await goToTabAction(tab.id, tab.windowId);
   };
 
   const onSelection = (newChecked: boolean) => {

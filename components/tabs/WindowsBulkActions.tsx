@@ -3,8 +3,8 @@ import { type MouseEventHandler, useMemo } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TooltipButton } from "@/components/ui/tooltip-button";
 import {
-  closeTabs,
-  groupTabs,
+  closeTabsAction,
+  groupTabsAction,
   type TabIdType,
 } from "@/utils/browserActionHelper";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
@@ -53,11 +53,11 @@ export default function WindowsBulkActions() {
 
   const onGroup: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
-    void groupTabs(tabIds as [number, ...number[]], search);
+    void groupTabsAction(tabIds as [number, ...number[]], search);
   };
   const onClose: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
-    void closeTabs(tabIds);
+    void closeTabsAction(tabIds);
   };
 
   return (
