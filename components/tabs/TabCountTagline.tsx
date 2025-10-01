@@ -1,4 +1,3 @@
-import { Tooltip, Typography } from "@mui/material";
 import { useTabCount, useWindowCount } from "@/utils/dataStore";
 
 export default function TabCountTagline() {
@@ -6,32 +5,17 @@ export default function TabCountTagline() {
   const tabCount = useTabCount();
 
   let title = `${tabCount} Tab${tabCount === 1 ? "" : "s"}`;
+  const shortTitle = `${tabCount}/${windowCount}`;
   if (windowCount > 1) {
     title += ` across ${windowCount} Windows`;
   }
-  const shortTitle = `${tabCount}/${windowCount}`;
 
   return (
-    <>
-      <Typography
-        variant="subtitle1"
-        component="div"
-        sx={{ color: "text.secondary", display: { xs: "none", sm: "block" } }}
-      >
-        {title}
-      </Typography>
-      <Tooltip
-        title={title}
-        sx={{ color: "text.secondary", display: { xs: "block", sm: "none" } }}
-      >
-        <Typography
-          variant="subtitle1"
-          component="div"
-          sx={{ display: { xs: "block", sm: "none" } }}
-        >
-          {shortTitle}
-        </Typography>
-      </Tooltip>
-    </>
+    <div className="@container/tagline flex flex-grow items-center justify-end gap-4">
+      <p className="block @3xs/tagline:hidden" aria-hidden="true">
+        {shortTitle}
+      </p>
+      <p className="@3xs/tagline:block hidden">{title}</p>
+    </div>
   );
 }

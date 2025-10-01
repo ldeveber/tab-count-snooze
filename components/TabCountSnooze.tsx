@@ -1,11 +1,8 @@
-import {
-  TabPanel as MuiTabPanel,
-  TabContext,
-  type TabPanelProps,
-} from "@mui/lab";
-import { CircularProgress } from "@mui/material";
-import { Suspense, type SyntheticEvent, useState } from "react";
+import { ChartPieIcon, CloudMoonIcon, PanelTopIcon } from "lucide-react";
+import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
+import { useAppConfig } from "#imports";
+import { ModeToggle } from "@/components/layout/theme/ThemeToggle";
 import ChartsTab, {
   Loading as ChartsTabLoading,
 } from "@/components/tabs/ChartsTab";
@@ -15,63 +12,78 @@ import SnoozeTab, {
 import WindowsTab, {
   Loading as WindowsTabLoading,
 } from "@/components/tabs/WindowsTab";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataHandler from "@/utils/dataStore/DataHandler";
 import DataProvider from "@/utils/dataStore/DataProvider";
 import ErrorDisplay from "./ErrorDisplay";
-import TabMenuBar, { Loading as TabMenuBarLoading } from "./tabs/TabMenuBar";
-import { TabValue } from "./tabs/types";
-
-function TabPanel({ children, ...props }: TabPanelProps) {
-  return (
-    <MuiTabPanel
-      {...props}
-      sx={{ p: 0 }}
-      className="flex size-full grow flex-col"
-    >
-      <ErrorBoundary FallbackComponent={ErrorDisplay}>{children}</ErrorBoundary>
-    </MuiTabPanel>
-  );
-}
 
 export function Loading() {
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <TabMenuBarLoading />
+      <div className="flex flex-none items-center justify-center">
+        <Skeleton className="h-12 w-sm rounded-full" />
+      </div>
       <div className="flex size-full grow items-center justify-center">
-        <CircularProgress />
+        <Spinner />
       </div>
     </div>
   );
 }
 
 export default function TabCountSnooze() {
-  const [tab, setTab] = useState<TabValue>(TabValue.Tab);
-  const handleChange = (_e: SyntheticEvent, newValue: TabValue) => {
-    setTab(newValue);
+  const { isDev } = useAppConfig();
+  const [tab, setTab] = useState("tab");
+  const handleChange = (value: string) => {
+    setTab(value);
   };
 
   return (
     <div className="flex min-h-screen w-full flex-col">
       <DataProvider>
         <DataHandler />
-        <TabContext value={tab}>
-          <TabMenuBar onChange={handleChange} />
-          <TabPanel value={TabValue.Tab}>
-            <Suspense fallback={<WindowsTabLoading />}>
-              <WindowsTab />
-            </Suspense>
-          </TabPanel>
-          <TabPanel value={TabValue.Count}>
-            <Suspense fallback={<ChartsTabLoading />}>
-              <ChartsTab />
-            </Suspense>
-          </TabPanel>
-          <TabPanel value={TabValue.Snooze}>
-            <Suspense fallback={<SnoozeTabLoading />}>
-              <SnoozeTab />
-            </Suspense>
-          </TabPanel>
-        </TabContext>
+        <Tabs
+          value={tab}
+          onValueChange={handleChange}
+          className="size-full flex-grow"
+        >
+          <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-background/50 px-4 py-2 backdrop-blur-xs">
+            <TabsList variant="nav">
+              <TabsTrigger value="tab" variant="nav">
+                <PanelTopIcon className="size-4" /> Tab
+              </TabsTrigger>
+              <TabsTrigger value="count" variant="nav">
+                <ChartPieIcon className="size-4" /> Count
+              </TabsTrigger>
+              <TabsTrigger value="snooze" variant="nav">
+                <CloudMoonIcon className="size-4" /> Snooze
+              </TabsTrigger>
+            </TabsList>
+            {isDev && <ModeToggle />}
+          </div>
+          <TabsContent value="tab">
+            <ErrorBoundary FallbackComponent={ErrorDisplay}>
+              <Suspense fallback={<WindowsTabLoading />}>
+                <WindowsTab />
+              </Suspense>
+            </ErrorBoundary>
+          </TabsContent>
+          <TabsContent value="count" className="flex size-full">
+            <ErrorBoundary FallbackComponent={ErrorDisplay}>
+              <Suspense fallback={<ChartsTabLoading />}>
+                <ChartsTab />
+              </Suspense>
+            </ErrorBoundary>
+          </TabsContent>
+          <TabsContent value="snooze">
+            <ErrorBoundary FallbackComponent={ErrorDisplay}>
+              <Suspense fallback={<SnoozeTabLoading />}>
+                <SnoozeTab />
+              </Suspense>
+            </ErrorBoundary>
+          </TabsContent>
+        </Tabs>
       </DataProvider>
     </div>
   );

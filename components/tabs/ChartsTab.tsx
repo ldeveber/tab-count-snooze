@@ -1,121 +1,114 @@
-import {
-  AccountTree,
-  BarChart as BarChartIcon,
-  Flare,
-} from "@mui/icons-material";
-import {
-  CircularProgress,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  type SelectChangeEvent,
-  Skeleton,
-} from "@mui/material";
+import { BarChart3Icon, GitBranchIcon, SunIcon } from "lucide-react";
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import BarChart from "@/components/charts/BarChart";
-import SankeyChart from "@/components/charts/SankeyChart";
-import SunburstChart from "@/components/charts/SunburstChart";
+import {
+  BarChart,
+  Loading as BarChartLoading,
+} from "@/components/charts/BarChart";
+import {
+  SankeyChart,
+  Loading as SankeyChartLoading,
+} from "@/components/charts/SankeyChart";
+import {
+  SunburstChart,
+  Loading as SunburstChartLoading,
+} from "@/components/charts/SunburstChart";
 import ErrorDisplay from "@/components/ErrorDisplay";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Spinner } from "@/components/ui/spinner";
+import {
+  TabsContent as BaseTabsContent,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import { useAllTabs } from "@/utils/dataStore";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
 } from "./StickyTabSubMenuBar";
 import TabCountTagline from "./TabCountTagline";
-
-type ChartViewType = "sunburst" | "bar" | "sankey";
-
-function Chart({ chartType }: { chartType: ChartViewType }) {
-  switch (chartType) {
-    case "bar":
-      return (
-        <ErrorBoundary FallbackComponent={ErrorDisplay}>
-          <BarChart />
-        </ErrorBoundary>
-      );
-    case "sankey":
-      return (
-        <ErrorBoundary FallbackComponent={ErrorDisplay}>
-          <SankeyChart />
-        </ErrorBoundary>
-      );
-    case "sunburst":
-      return (
-        <ErrorBoundary FallbackComponent={ErrorDisplay}>
-          <SunburstChart />
-        </ErrorBoundary>
-      );
-    default:
-      return <div>Unknown Chart Type</div>;
-  }
-}
 
 export function Loading() {
   return (
     <div className="flex flex-col">
       <StickyTabSubMenuBarLoading>
         <div className="flex grow items-center gap-4">
-          <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
+          <Skeleton className="h-8 w-sm" />
         </div>
         <div className="flex shrink items-center gap-4 @4xl/main:px-8">
-          <Skeleton sx={{ height: 32, width: { xs: 50, sm: 210 } }} />
+          <Skeleton className="h-8 w-sm" />
         </div>
       </StickyTabSubMenuBarLoading>
       <div className="flex grow items-center justify-center">
-        <CircularProgress />
+        <Spinner />
       </div>
     </div>
   );
 }
 
-export default function ChartsTab() {
-  const [chartType, setChartType] = useState<ChartViewType>("bar");
+function TabsContent({
+  children,
+  ...props
+}: Omit<React.ComponentProps<typeof BaseTabsContent>, "className">) {
+  return (
+    <BaseTabsContent
+      className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2"
+      {...props}
+    >
+      {children}
+    </BaseTabsContent>
+  );
+}
 
-  const onChange = (e: SelectChangeEvent<ChartViewType>) => {
-    setChartType(e.target.value as ChartViewType);
+export default function ChartsTab() {
+  const [tab, setTab] = useState("bar");
+  const handleChange = (value: string) => {
+    setTab(value);
   };
+  const tabs = useAllTabs();
+
+  if (tabs.length === 0) {
+    return <Loading />;
+  }
 
   return (
-    <div className="flex size-full grow flex-col">
+    <Tabs value={tab} onValueChange={handleChange} className="flex-grow">
       <StickyTabSubMenuBar>
-        <div className="flex grow items-center gap-4">
-          <FormControl size="small">
-            <InputLabel id="chart-type-label">Chart Data & Display</InputLabel>
-            <Select
-              labelId="chart-type-label"
-              id="chart-type"
-              label="Chart Data & Display"
-              value={chartType}
-              onChange={onChange}
-            >
-              <MenuItem value="sunburst">
-                <div className="flex items-center gap-3">
-                  <Flare fontSize="small" /> Sunburst - Top Open Tabs
-                </div>
-              </MenuItem>
-              <MenuItem value="bar">
-                <div className="flex items-center gap-3">
-                  <BarChartIcon fontSize="small" /> Bar - Open Origin Counts
-                </div>
-              </MenuItem>
-              <MenuItem value="sankey">
-                <div className="flex items-center gap-3">
-                  <AccountTree fontSize="small" /> Sankey - Top Open Tabs
-                </div>
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <div className="flex shrink items-center gap-4">
-          <TabCountTagline />
-        </div>
+        <TabsList>
+          <TabsTrigger value="bar">
+            <BarChart3Icon className="size-4" /> Bar - Open Origin Counts
+          </TabsTrigger>
+          <TabsTrigger value="sunburst">
+            <SunIcon className="size-4" /> Sunburst - Top Open Tabs
+          </TabsTrigger>
+          <TabsTrigger value="sankey">
+            <GitBranchIcon className="size-4" />
+            Sankey - Top Open Tabs
+          </TabsTrigger>
+        </TabsList>
+        <TabCountTagline />
       </StickyTabSubMenuBar>
-
-      <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
-        <Suspense fallback={<div>Loading chart...</div>}>
-          <Chart chartType={chartType} />
-        </Suspense>
-      </div>
-    </div>
+      <TabsContent value="bar">
+        <ErrorBoundary FallbackComponent={ErrorDisplay}>
+          <Suspense fallback={<BarChartLoading />}>
+            <BarChart />
+          </Suspense>
+        </ErrorBoundary>
+      </TabsContent>
+      <TabsContent value="sunburst">
+        <ErrorBoundary FallbackComponent={ErrorDisplay}>
+          <Suspense fallback={<SunburstChartLoading />}>
+            <SunburstChart />
+          </Suspense>
+        </ErrorBoundary>
+      </TabsContent>
+      <TabsContent value="sankey">
+        <ErrorBoundary FallbackComponent={ErrorDisplay}>
+          <Suspense fallback={<SankeyChartLoading />}>
+            <SankeyChart />
+          </Suspense>
+        </ErrorBoundary>
+      </TabsContent>
+    </Tabs>
   );
 }

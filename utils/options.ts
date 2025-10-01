@@ -1,18 +1,3 @@
-export type Mode = "light" | "dark" | "system";
-
-import { Hue } from "@/components/layout/theme/themeHelpers";
-
-export interface ColorOptions {
-  themeMode: Mode;
-  isCustomTheme: boolean;
-  hue: Hue;
-}
-export const defaultColor: ColorOptions = {
-  themeMode: "system",
-  isCustomTheme: false,
-  hue: Hue.pink,
-};
-
 // export interface SnoozedTabOptions {}
 // export const defaultSnoozedOptions: SnoozedTabOptions = {};
 

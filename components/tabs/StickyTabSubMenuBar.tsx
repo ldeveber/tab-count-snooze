@@ -1,38 +1,17 @@
-import { Paper as MuiPaper } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import type { PropsWithChildren } from "react";
-import ElevationScroll from "@/components/ElevationScroll";
-
-const Paper = styled(MuiPaper)(({ theme }) => ({
-  padding: theme.spacing(1, 2),
-  [theme.breakpoints.down("sm")]: {
-    padding: theme.spacing(1),
-  },
-}));
 
 export function Loading({ children }: PropsWithChildren) {
   return (
-    <Paper
-      elevation={0}
-      className="flex items-center justify-end"
-      sx={{ zIndex: "appBar", position: "sticky", top: 64 }}
-    >
+    <div className="sticky top-14 flex h-11 items-center justify-between gap-4 @4xl/main:px-8 @max-lg:px-4">
       {children}
-    </Paper>
+    </div>
   );
 }
 
 export default function StickyTabSubMenuBar({ children }: PropsWithChildren) {
   return (
-    <ElevationScroll>
-      <Paper
-        square
-        elevation={0}
-        className="flex h-14 min-h-14 items-center justify-between gap-4 @4xl/main:px-8 @max-lg:px-4"
-        sx={{ zIndex: "appBar", position: "sticky", top: 64 }}
-      >
-        {children}
-      </Paper>
-    </ElevationScroll>
+    <div className="sticky top-14 z-1 flex min-h-11 items-center justify-between gap-4 bg-background/50 @4xl/main:px-8 px-4 pb-2 backdrop-blur-xs">
+      {children}
+    </div>
   );
 }

@@ -6,7 +6,11 @@ function TabHandler() {
   const dispatch = useDataDispatch();
 
   const onTabAdd = (tab: Browser.tabs.Tab) => {
-    dispatch({ type: "addTab", tab });
+    try {
+      dispatch({ type: "addTab", tab });
+    } catch (err) {
+      console.error("Error onTabAdd", err);
+    }
   };
 
   const onTabUpdate = (
@@ -14,11 +18,19 @@ function TabHandler() {
     _changeInfo: Browser.tabs.OnUpdatedInfo,
     tab: Browser.tabs.Tab,
   ) => {
-    dispatch({ type: "updateTab", tab });
+    try {
+      dispatch({ type: "updateTab", tab });
+    } catch (err) {
+      console.error("Error onTabUpdate", err);
+    }
   };
 
   const onTabRemove = (id: number) => {
-    dispatch({ type: "removeTab", id });
+    try {
+      dispatch({ type: "removeTab", id });
+    } catch (err) {
+      console.error("Error onTabRemove", err);
+    }
   };
 
   useEffect(() => {
@@ -39,15 +51,27 @@ function TabGroupHandler() {
   const dispatch = useDataDispatch();
 
   const onTabGroupCreate = (group: Browser.tabGroups.TabGroup) => {
-    dispatch({ type: "addTabGroup", group });
+    try {
+      dispatch({ type: "addTabGroup", group });
+    } catch (err) {
+      console.error("Error onTabGroupCreate", err);
+    }
   };
 
   const onTabGroupUpdate = (group: Browser.tabGroups.TabGroup) => {
-    dispatch({ type: "updateTabGroup", group });
+    try {
+      dispatch({ type: "updateTabGroup", group });
+    } catch (err) {
+      console.error("Error onTabGroupUpdate", err);
+    }
   };
 
   const onTabGroupRemove = (group: Browser.tabGroups.TabGroup) => {
-    dispatch({ type: "removeTabGroup", id: group.id });
+    try {
+      dispatch({ type: "removeTabGroup", id: group.id });
+    } catch (err) {
+      console.error("Error onTabGroupRemove", err);
+    }
   };
 
   useEffect(() => {
@@ -71,25 +95,37 @@ function WindowHandler() {
   >(browser.windows.WINDOW_ID_NONE);
 
   const onWindowAdd = (win: Browser.windows.Window) => {
-    dispatch({ type: "addWindow", win });
+    try {
+      dispatch({ type: "addWindow", win });
+    } catch (err) {
+      console.error("Error onWindowAdd", err);
+    }
   };
 
   const onWindowFocusChanged = (id: number) => {
-    if (lastFocus !== browser.windows.WINDOW_ID_NONE) {
-      browser.windows.get(lastFocus).then((w) => {
-        dispatch({ type: "updateWindow", win: w });
-      });
+    try {
+      if (lastFocus !== browser.windows.WINDOW_ID_NONE) {
+        browser.windows.get(lastFocus).then((w) => {
+          dispatch({ type: "updateWindow", win: w });
+        });
+      }
+      if (id !== browser.windows.WINDOW_ID_NONE) {
+        browser.windows.get(id).then((w) => {
+          dispatch({ type: "updateWindow", win: w });
+        });
+      }
+      setLastFocus(id);
+    } catch (err) {
+      console.error("Error onWindowFocusChanged", err);
     }
-    if (id !== browser.windows.WINDOW_ID_NONE) {
-      browser.windows.get(id).then((w) => {
-        dispatch({ type: "updateWindow", win: w });
-      });
-    }
-    setLastFocus(id);
   };
 
   const onWindowRemove = (id: number) => {
-    dispatch({ type: "removeWindow", id });
+    try {
+      dispatch({ type: "removeWindow", id });
+    } catch (err) {
+      console.error("Error onWindowRemove", err);
+    }
   };
 
   useEffect(() => {
@@ -115,21 +151,36 @@ export default function DataHandler() {
   const dispatch = useDataDispatch();
 
   useEffect(() => {
-    void browser.windows.getAll().then((wins) => {
-      dispatch({ type: "setWindows", wins });
-    });
+    void browser.windows
+      .getAll()
+      .then((wins) => {
+        dispatch({ type: "setWindows", wins });
+      })
+      .catch((err) => {
+        console.error("Error fetching windows", err);
+      });
   }, []);
 
   useEffect(() => {
-    void browser.tabGroups.query({}).then((tabGroups) => {
-      dispatch({ type: "setTabGroups", tabGroups });
-    });
+    void browser.tabGroups
+      .query({})
+      .then((tabGroups) => {
+        dispatch({ type: "setTabGroups", tabGroups });
+      })
+      .catch((err) => {
+        console.error("Error fetching tab groups", err);
+      });
   }, []);
 
   useEffect(() => {
-    void browser.tabs.query({}).then((tabs) => {
-      dispatch({ type: "setTabs", tabs });
-    });
+    void browser.tabs
+      .query({})
+      .then((tabs) => {
+        dispatch({ type: "setTabs", tabs });
+      })
+      .catch((err) => {
+        console.error("Error fetching tabs", err);
+      });
   }, []);
 
   return (

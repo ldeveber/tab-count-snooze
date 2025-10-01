@@ -1,13 +1,11 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import type { ITabData } from "../hookDataParser";
-import { _addChildren, type ItemData } from "../useSunburstData";
+import { mockTab } from "@/test-utils/mockDataHelper";
+import { getSunburstData, type ItemData } from "../getSunburstData";
 
-describe("useSunburstData", () => {
+describe("getSunburstData", () => {
   describe("_addChildren", () => {
     test("should map child data for chart", () => {
-      const tabs: Array<ITabData> = [];
-
       const origin1 = faker.internet.url({ appendSlash: false });
       const origin2 = faker.internet.url({ appendSlash: false });
 
@@ -15,18 +13,25 @@ describe("useSunburstData", () => {
       const segment2 = faker.internet.domainWord();
       const segment3 = faker.internet.domainWord();
 
-      tabs.push({ origin: origin1, segments: [segment1] });
-      tabs.push({ origin: origin1, segments: [segment1, segment2] });
-      tabs.push({ origin: origin1, segments: [segment1, segment3] });
-      tabs.push({ origin: origin1, segments: [segment2] });
-      tabs.push({ origin: origin2, segments: [segment3] });
+      const tab1 = mockTab({ url: `${origin1}/${segment1}` });
+      const tab2 = mockTab({ url: `${origin1}/${segment1}/${segment2}` });
+      const tab3 = mockTab({ url: `${origin1}/${segment1}/${segment3}` });
+      const tab4 = mockTab({ url: `${origin1}/${segment2}` });
+      const tab5 = mockTab({ url: `${origin2}/${segment3}` });
 
-      const res: Array<ItemData> = [];
-      tabs.forEach(({ segments, origin }) => {
-        _addChildren(res, origin, segments);
+      const tabs = [tab1, tab2, tab3, tab4, tab5];
+
+      const res = getSunburstData(tabs, 3, 1, 10);
+
+      expect(res).toEqual({
+        id: "root",
+        value: 0,
+        label: "root",
+        children: expect.any(Array<ItemData>),
       });
 
-      expect(res).toContainEqual({
+      const { children } = res;
+      expect(children).toContainEqual({
         id: origin1,
         label: origin1,
         value: 4,
@@ -58,7 +63,7 @@ describe("useSunburstData", () => {
           },
         ],
       });
-      expect(res).toContainEqual({
+      expect(children).toContainEqual({
         id: origin2,
         label: origin2,
         value: 1,
@@ -71,7 +76,7 @@ describe("useSunburstData", () => {
           },
         ],
       });
-      expect(res.length).toBe(2);
+      expect(children.length).toBe(2);
     });
   });
 });

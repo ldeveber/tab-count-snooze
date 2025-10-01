@@ -1,68 +1,15 @@
-import {
-  Checkbox,
-  ListItemIcon,
-  ListItemText,
-  ListItem as MuiListItem,
-  ListItemButton as MuiListItemButton,
-  type ListItemButtonProps as MuiListItemButtonProps,
-  type ListItemProps as MuiListItemProps,
-} from "@mui/material";
-import { styled } from "@mui/material/styles";
-import type { ChangeEvent } from "react";
+import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { goToTabAction } from "@/utils/browserActionHelper";
 import {
   useDataDispatch,
   useIsFiltered,
   useSelectedTabs,
 } from "@/utils/dataStore";
-import TabFavicon, { FAVICON_SIZE } from "./TabFavicon";
+import TabFavicon from "./TabFavicon";
 import TabState from "./TabState";
 
-interface ListItemProps extends MuiListItemProps {
-  indented: boolean;
-}
-export const ListItem = styled(MuiListItem, {
-  shouldForwardProp: (propName) => propName !== "indented",
-})<ListItemProps>(({ indented, theme }) => ({
-  "&.MuiListItem-root": {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    gap: theme.spacing(2),
-    padding: theme.spacing(0.5),
-    paddingRight: indented ? 0 : theme.spacing(0.5),
-  },
-}));
-
-interface ListItemButtonProps extends MuiListItemButtonProps {
-  indented: boolean;
-}
-const ListItemButton = styled(MuiListItemButton, {
-  shouldForwardProp: (propName) => propName !== "indented",
-})<ListItemButtonProps>(({ indented, theme }) => ({
-  "&.MuiListItemButton-root": {
-    borderRadius: 8,
-    gap: theme.spacing(2),
-    paddingLeft: indented ? theme.spacing(1.25) : theme.spacing(2),
-  },
-}));
-
-function TabUrlView({
-  lastViewed,
-  tab,
-}: {
-  readonly lastViewed: Date | null;
-  readonly tab: Browser.tabs.Tab;
-}) {
-  return (
-    <div className="flex justify-between gap-2">
-      <div className="overflow-hidden text-ellipsis">{tab.url}</div>
-      <div className="hidden lg:block">
-        {lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}
-      </div>
-    </div>
-  );
-}
-
 export default function TabView({
-  indented = false,
   tab,
 }: {
   readonly indented?: boolean;
@@ -71,37 +18,35 @@ export default function TabView({
   const showMultiSelect = useIsFiltered();
   const selected = useSelectedTabs();
   const dispatch = useDataDispatch();
-  const [active, setActive] = useState(tab.active);
   // assume the tab was viewed when it was last accessed?
   const [lastViewed, setLastViewed] = useState(
     tab.lastAccessed ? new Date(tab.lastAccessed) : null,
+  );
+  const [checked, setChecked] = useState(
+    tab.id ? selected.includes(tab.id) : false,
   );
 
   const goToTab = async () => {
     if (!tab.id) {
       return;
     }
-    // TODO FIXME Uncaught (in promise) Error: No tab with id: 159340502.
-    await browser.tabs.update(tab.id, { active: true });
-    await browser.windows.update(tab.windowId, { focused: true });
+    await goToTabAction(tab.id, tab.windowId);
   };
 
-  const onSelection = (_e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+  const onSelection = (newChecked: boolean) => {
+    setChecked(newChecked);
     if (!tab.id) {
       return;
     }
     dispatch({
       id: tab.id,
-      type: checked ? "select" : "unselect",
+      type: newChecked ? "select" : "unselect",
     });
   };
 
   const onActivated = (info: Browser.tabs.OnActivatedInfo) => {
     if (info.windowId === tab.windowId && info.tabId === tab.id) {
-      setActive(true);
       setLastViewed(new Date());
-    } else {
-      setActive(false);
     }
   };
 
@@ -117,42 +62,54 @@ export default function TabView({
   }
 
   return (
-    <ListItem
+    <li
       id={`tab-${tab.id}`}
-      indented={indented}
-      secondaryAction={
-        showMultiSelect ? (
-          <Checkbox
-            edge="end"
-            onChange={onSelection}
-            checked={selected.includes(tab.id)}
-            aria-label={`Select tab: ${tab.title}`}
-          />
-        ) : null
-      }
-      aria-label={`Tab: ${tab.title}`}
       data-tab={tab.id}
+      className="flex flex-row items-center gap-2 p-1"
+      aria-label={`Tab: ${tab.title}`}
     >
-      <ListItemButton
-        indented={indented}
-        selected={active}
+      <button
+        type="button"
         onClick={goToTab}
         aria-label={`Jump to tab: ${tab.title}`}
+        className="flex w-full items-center gap-3 overflow-hidden rounded-sm px-3 py-2 text-left transition-colors hover:bg-primary/10 focus-visible:outline focus-visible:outline-ring focus-visible:outline-offset-2 data-[active-tab]:bg-secondary/10 hover:data-[active-tab]:bg-primary/10"
+        data-selected={checked ? "true" : undefined}
       >
-        <ListItemIcon sx={{ minWidth: FAVICON_SIZE }} role="none">
+        <span className="flex w-6 flex-none justify-center" role="none">
           <TabFavicon tab={tab} />
-        </ListItemIcon>
-        <ListItemText
-          primary={tab.title}
-          secondary={<TabUrlView tab={tab} lastViewed={lastViewed} />}
-          slotProps={{
-            primary: { noWrap: true },
-            secondary: { component: "div", noWrap: true, fontSize: "0.75rem" },
-          }}
-          sx={{ m: 0 }}
+        </span>
+        <span className="flex flex-grow flex-col gap-1 overflow-hidden font-medium text-sm">
+          <span className="flex flex-row justify-between gap-1">
+            <span
+              className="overflow-hidden text-ellipsis text-nowrap"
+              title={tab.title ?? undefined}
+            >
+              {tab.title}
+            </span>
+            <TabState tab={tab} />
+          </span>
+          <span className="flex flex-col gap-1 text-muted-foreground text-xs lg:flex-row lg:items-center lg:justify-between">
+            <span
+              className="overflow-hidden text-ellipsis text-nowrap"
+              title={tab.url ?? undefined}
+            >
+              {tab.url}
+            </span>
+            <span className="hidden whitespace-nowrap lg:inline">
+              {lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}
+            </span>
+          </span>
+        </span>
+      </button>
+      {showMultiSelect ? (
+        <Checkbox
+          id={`select-tab-${tab.id}`}
+          className="mr-2 flex-none"
+          onCheckedChange={onSelection}
+          checked={checked}
+          aria-label={`Select tab: ${tab.title}`}
         />
-        <TabState tab={tab} />
-      </ListItemButton>
-    </ListItem>
+      ) : null}
+    </li>
   );
 }

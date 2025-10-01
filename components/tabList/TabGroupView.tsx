@@ -1,57 +1,50 @@
-import {
-  type ChipProps,
-  Collapse,
-  List,
-  Chip as MuiChip,
-  ListItem as MuiListItem,
-  ListItemButton as MuiListItemButton,
-  ListItemText as MuiListItemText,
-} from "@mui/material";
-import * as colors from "@mui/material/colors";
-import { styled } from "@mui/material/styles";
+import { cva } from "class-variance-authority";
+import { ChevronUpIcon } from "lucide-react";
 import { useState } from "react";
-import ExpandMoreIcon from "../ExpandMoreIcon";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { cn } from "@/lib/utils";
 import TabView from "./TabView";
 
-export const ListItem = styled(MuiListItem)(({ theme }) => ({
-  "&.MuiListItem-root": {
-    borderTop: `1px solid ${theme.palette.divider}`,
-    flexDirection: "column",
-    gap: theme.spacing(0.5),
-    padding: theme.spacing(0.5),
-    paddingLeft: 0,
+const listVariants = cva("border-l-4", {
+  variants: {
+    color: {
+      grey: "border-l-gray-500",
+      blue: "border-l-blue-500",
+      red: "border-l-red-500",
+      yellow: "border-l-yellow-500",
+      green: "border-l-green-500",
+      pink: "border-l-pink-500",
+      purple: "border-l-purple-500",
+      cyan: "border-l-cyan-500",
+      orange: "border-l-orange-500",
+    },
   },
-}));
-
-const ListItemButton = styled(MuiListItemButton)(({ theme }) => ({
-  "&.MuiListItemButton-root": {
-    borderRadius: 8,
-    gap: theme.spacing(2),
-    marginLeft: theme.spacing(0.5),
+  defaultVariants: {
+    color: "grey",
   },
-}));
+});
 
-const ListItemText = styled(MuiListItemText)(({ theme }) => ({
-  "&.MuiListItemText-root": {
-    display: "flex",
-    alignItems: "center",
-    gap: theme.spacing(1.5),
+const pillVariants = cva("rounded-full px-3 py-1 font-medium text-xs", {
+  variants: {
+    color: {
+      grey: "bg-gray-500 text-white",
+      blue: "bg-blue-500 text-white",
+      red: "bg-red-500 text-white",
+      yellow: "bg-yellow-500 text-white",
+      green: "bg-green-500 text-white",
+      pink: "bg-pink-500 text-white",
+      purple: "bg-purple-500 text-white",
+      cyan: "bg-cyan-500 text-white",
+      orange: "bg-orange-500 text-white",
+    },
   },
-}));
-
-interface StyledChipProps extends ChipProps {
-  backgroundColor?: string;
-}
-const Chip = styled(MuiChip, {
-  shouldForwardProp: (prop) => prop !== "backgroundColor",
-})<StyledChipProps>(({ theme, backgroundColor }) => {
-  const bg = backgroundColor || theme.palette.primary.main;
-  return {
-    color: theme.palette.getContrastText(bg),
-    backgroundColor: bg,
-    height: 24,
-    minWidth: 24,
-  };
+  defaultVariants: {
+    color: "grey",
+  },
 });
 
 export default function TabGroupView({
@@ -63,55 +56,54 @@ export default function TabGroupView({
 }) {
   const [open, setOpen] = useState(true);
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleClick = (o: boolean) => {
+    setOpen(o);
   };
+
+  const title = group.title ?? `Tab Group (${tabs.length})`;
+  const panelId = `group-panel-${group.id}`;
 
   if (tabs.length === 0) {
     return null;
   }
 
-  const title = group.title ?? `Tab Group (${tabs.length})`;
-  // biome-ignore lint/performance/noDynamicNamespaceImportAccess: to be removed soon
-  const groupColor = colors[group.color][500];
-
-  const buttonAriaLabel = `Show/hide tabs in group: ${title}`;
-
   return (
-    <ListItem
+    <li
       id={`group-${group.id}`}
-      onClick={handleClick}
-      button-aria-label={buttonAriaLabel}
       data-group={group.id}
+      className={cn(listVariants({ color: group.color }))}
     >
-      <ListItemButton
-        className="w-full"
-        onClick={handleClick}
-        aria-label={buttonAriaLabel}
+      <Collapsible
+        open={open}
+        onOpenChange={handleClick}
+        className="flex flex-col justify-center"
       >
-        <ListItemText
-          primary={<Chip label={title} backgroundColor={groupColor} />}
-          secondary={`${tabs.length} tabs`}
-          sx={{ m: 0 }}
-        />
-        {<ExpandMoreIcon expanded={open} />}
-      </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit className="w-full">
-        <List
-          disablePadding
-          dense
-          className="w-full"
-          sx={{
-            borderLeft: groupColor ? `4px solid ${groupColor}` : undefined,
-            marginBottom: -0.5,
-          }}
-          aria-label={`Tab group: ${title}`}
+        <CollapsibleTrigger
+          className="group/trigger m-1 flex items-center justify-between gap-2 rounded-sm px-3 py-1 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
+          aria-controls={panelId}
+          aria-label={`Show or hide tabs in group: ${title}`}
         >
-          {tabs.map((tab) => (
-            <TabView key={tab.id} indented tab={tab} />
-          ))}
-        </List>
-      </Collapse>
-    </ListItem>
+          <span className="flex items-center gap-2">
+            <span className={cn(pillVariants({ color: group.color }))}>
+              {title}
+            </span>
+            <span className="text-muted-foreground text-xs">
+              {tabs.length} tabs
+            </span>
+          </span>
+          <ChevronUpIcon className="size-3 stroke-2 transition-all duration-450 ease-in-out group-aria-[expanded=false]/trigger:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <ul
+            className="flex flex-col divide-y divide-border/60 pb-1"
+            aria-label={`Tab group: ${title}`}
+          >
+            {tabs.map((tab) => (
+              <TabView key={tab.id} indented tab={tab} />
+            ))}
+          </ul>
+        </CollapsibleContent>
+      </Collapsible>
+    </li>
   );
 }

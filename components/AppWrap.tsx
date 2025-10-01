@@ -1,16 +1,24 @@
 import { type PropsWithChildren, Suspense } from "react";
 import ErrorBoundary from "@/components/layout/ErrorBoundary";
-import Loading from "@/components/layout/Loading";
-import ThemeWrap from "@/components/layout/theme/ThemeWrap";
+import { ThemeProvider } from "@/components/layout/theme/ThemeProvider";
+import { Spinner } from "@/components/ui/spinner";
+
+function Loading() {
+  return (
+    <div className="flex grow items-center justify-center">
+      <Spinner />
+    </div>
+  );
+}
 
 export default function AppWrap({ children }: PropsWithChildren) {
   return (
     <div className="text-base">
-      <ThemeWrap>
+      <ThemeProvider>
         <ErrorBoundary>
           <Suspense fallback={<Loading />}>{children}</Suspense>
         </ErrorBoundary>
-      </ThemeWrap>
+      </ThemeProvider>
     </div>
   );
 }

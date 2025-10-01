@@ -30,8 +30,7 @@ updates:
           - "vitest"
       styles:
         patterns:
-          - "@emotion*"
-          - "@mui*/*"
+          - "@radix-ui/*"
           - "tailwind"
           - "@tailwindcss/*"
       charts:

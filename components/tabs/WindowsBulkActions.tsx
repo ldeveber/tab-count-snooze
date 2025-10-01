@@ -1,11 +1,12 @@
-import {
-  Delete as DeleteIcon,
-  MergeType as MergeTypeIcon,
-} from "@mui/icons-material";
-import { Stack, Typography } from "@mui/material";
+import { MergeIcon, Trash2Icon } from "lucide-react";
 import { type MouseEventHandler, useMemo } from "react";
-import TooltipButton from "@/components/TooltipButton";
-import { closeTabs, groupTabs, type TabIdType } from "@/utils/chrome";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { TooltipButton } from "@/components/ui/tooltip-button";
+import {
+  closeTabsAction,
+  groupTabsAction,
+  type TabIdType,
+} from "@/utils/browserActionHelper";
 import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
 import { filterTabs } from "@/utils/filterTabs";
 
@@ -52,24 +53,38 @@ export default function WindowsBulkActions() {
 
   const onGroup: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
-    void groupTabs(tabIds as [number, ...number[]], search);
+    void groupTabsAction(tabIds as [number, ...number[]], search);
   };
   const onClose: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
-    void closeTabs(tabIds);
+    void closeTabsAction(tabIds);
   };
 
   return (
-    <Stack direction="row" spacing={2} alignItems="center" sx={{ flexGrow: 1 }}>
-      <Typography>
+    <div className="flex flex-grow flex-row items-center justify-end gap-2">
+      <div>
         {filtleredCount} tab {filtleredCount === 1 ? "match" : "matches"}
-      </Typography>
-      <TooltipButton tooltip="Group Tabs" disabled={disabled} onClick={onGroup}>
-        <MergeTypeIcon titleAccess={disabled ? "Group Tabs" : undefined} />
-      </TooltipButton>
-      <TooltipButton tooltip="Close Tabs" disabled={disabled} onClick={onClose}>
-        <DeleteIcon titleAccess={disabled ? "Close Tabs" : undefined} />
-      </TooltipButton>
-    </Stack>
+      </div>
+      <TooltipProvider>
+        <TooltipButton
+          tooltip="Group Tabs"
+          variant="ghost"
+          size="icon"
+          disabled={disabled}
+          onClick={onGroup}
+        >
+          <MergeIcon />
+        </TooltipButton>
+        <TooltipButton
+          tooltip="Close Tabs"
+          variant="ghost"
+          size="icon"
+          disabled={disabled}
+          onClick={onClose}
+        >
+          <Trash2Icon />
+        </TooltipButton>
+      </TooltipProvider>
+    </div>
   );
 }
