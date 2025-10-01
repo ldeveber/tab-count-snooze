@@ -12,7 +12,7 @@ export default function ErrorDisplay({
 }: ErrorDisplayProps) {
   return (
     <div className="flex size-full flex-col gap-4 p-4">
-      <div className="flex flex-row gap-4 rounded-2xl bg-destructive px-4 py-2 text-destructive-50">
+      <div className="flex flex-row gap-4 rounded-2xl bg-destructive px-4 py-2 text-destructive-foreground">
         <AlertCircleIcon />
         <div className="flex grow flex-col gap-2">
           <div className="flex flex-row justify-between">
