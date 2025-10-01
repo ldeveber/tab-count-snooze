@@ -12,14 +12,8 @@ export default defineConfig({
       description:
         "Count your open tabs/windows, and then snooze them for later.",
       // @see https://wxt.dev/guide/essentials/config/manifest.html#permissions
-      permissions: [
-        "tabs",
-        "tabGroups",
-        "activeTab",
-        "sidePanel",
-        "storage",
-        "favicon",
-      ],
+      permissions: ["tabs", "tabGroups", "activeTab", "sidePanel", "favicon"],
+      // optional_permissions: [],
     };
     if (mode === "development" && command === "serve") {
       return {

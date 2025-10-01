@@ -18,7 +18,6 @@ export default function TabView({
   const showMultiSelect = useIsFiltered();
   const selected = useSelectedTabs();
   const dispatch = useDataDispatch();
-  const [active, setActive] = useState(tab.active);
   // assume the tab was viewed when it was last accessed?
   const [lastViewed, setLastViewed] = useState(
     tab.lastAccessed ? new Date(tab.lastAccessed) : null,
@@ -47,10 +46,7 @@ export default function TabView({
 
   const onActivated = (info: Browser.tabs.OnActivatedInfo) => {
     if (info.windowId === tab.windowId && info.tabId === tab.id) {
-      setActive(true);
       setLastViewed(new Date());
-    } else {
-      setActive(false);
     }
   };
 
@@ -77,7 +73,6 @@ export default function TabView({
         onClick={goToTab}
         aria-label={`Jump to tab: ${tab.title}`}
         className="flex w-full items-center gap-3 overflow-hidden rounded-sm px-3 py-2 text-left transition-colors hover:bg-primary/10 focus-visible:outline focus-visible:outline-ring focus-visible:outline-offset-2 data-[active-tab]:bg-secondary/10 hover:data-[active-tab]:bg-primary/10"
-        data-active-tab={active ? "true" : undefined}
         data-selected={checked ? "true" : undefined}
       >
         <span className="flex w-6 flex-none justify-center" role="none">
