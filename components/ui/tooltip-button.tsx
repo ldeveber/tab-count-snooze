@@ -33,6 +33,7 @@ export function TooltipButton({
     <Tooltip>
       <TooltipTrigger
         className={cn(buttonVariants({ variant, size, className }))}
+        {...props}
       >
         {children}
       </TooltipTrigger>
