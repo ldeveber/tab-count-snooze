@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useMemo } from "react";
 import { DataContext, DataDispatchContext } from "./DataProvider";
 
 export function useDataDispatch() {
@@ -49,7 +49,6 @@ export function useSort() {
 export function useWindows() {
   const arr: Array<Browser.windows.Window> = [];
   useWindowsContext().map.forEach((w) => {
-    // TODO FIXME - Argument of type 'FreezedObject<Window>' is not assignable to parameter of type 'Window'.
     arr.push({ ...w, tabs: w.tabs ? [...w.tabs] : undefined });
   });
   return arr;
@@ -90,7 +89,7 @@ export function useTabs(windowId?: number) {
   const { map } = useTabsContext();
   const arr = useMemo(
     () => Array.from(map.values()).filter((t) => t.windowId === windowId),
-    [map],
+    [map, windowId],
   );
 
   return arr;

@@ -2,9 +2,7 @@
 
 import { renderHook } from "@testing-library/react";
 import type { PropsWithChildren } from "react";
-import { unfreeze } from "structurajs";
 import { describe, expect, it } from "vitest";
-import { mockTab, mockWindow } from "@/tests/utils/mockDataHelper";
 import {
   useAllTabs,
   useIsFiltered,
@@ -12,14 +10,11 @@ import {
   useSelectedTabs,
   useTabs,
   useWindows,
-} from "@/utils/dataStore";
-import DataProvider from "@/utils/dataStore/DataProvider";
-import { initialState, type State } from "@/utils/dataStore/state";
-import { SORT_OPTION } from "@/utils/options";
-
-function createInitialState() {
-  return unfreeze({ ...initialState });
-}
+} from "@/lib/dataStore";
+import DataProvider from "@/lib/dataStore/DataProvider";
+import { createInitialState, type State } from "@/lib/dataStore/state";
+import { mockTab, mockWindow } from "@/tests/utils/mockDataHelper";
+import { SORT_BY, SORT_OPTION } from "@/utils/options";
 
 function withProvider(state: State) {
   return ({ children }: PropsWithChildren) => (
@@ -55,15 +50,13 @@ describe("data store selectors", () => {
     const { result: allTabs } = renderHook(() => useAllTabs(), {
       wrapper: withProvider(state),
     });
-    // TODO FIXME uncomment expect(allTabs.current).toHaveLength(2);
-    expect(allTabs.current).not.toBeUndefined();
+    expect(allTabs.current).toHaveLength(2);
 
     const { result: windowTabs } = renderHook(() => useTabs(1), {
       wrapper: withProvider(state),
     });
-    // TODO FIXME uncomment  expect(windowTabs.current).toHaveLength(1);
-    // TODO FIXME uncomment expect(windowTabs.current[0].id).toBe(1);
-    expect(windowTabs.current[0].id).not.toBeUndefined();
+    expect(windowTabs.current).toHaveLength(1);
+    expect(windowTabs.current[0].id).toBe(1);
 
     const { result: selected } = renderHook(() => useSelectedTabs(), {
       wrapper: withProvider(state),
@@ -86,8 +79,7 @@ describe("data store selectors", () => {
       wrapper: withProvider(state),
     });
 
-    // TODO FIXME uncomment expect(result.current?.id).toBe(2);
-    expect(result.current?.id).not.toBeUndefined();
+    expect(result.current?.id).toBe(2);
   });
 
   it("identifies filtered state", () => {
@@ -96,7 +88,7 @@ describe("data store selectors", () => {
     state.display.filters.dupes = false;
     state.display.sort = {
       key: SORT_OPTION.LastAccessed,
-      direction: "desc",
+      direction: SORT_BY.Descending,
     };
 
     const { result: isFiltered } = renderHook(() => useIsFiltered(), {

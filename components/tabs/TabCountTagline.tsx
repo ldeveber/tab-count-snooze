@@ -1,4 +1,4 @@
-import { useTabCount, useWindowCount } from "@/utils/dataStore";
+import { useTabCount, useWindowCount } from "@/lib/dataStore";
 
 export default function TabCountTagline() {
   const windowCount = useWindowCount();

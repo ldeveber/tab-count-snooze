@@ -1,41 +1,22 @@
-// @vitest-environment happy-dom
-
-import { unfreeze } from "structurajs";
 import { describe, expect, it } from "vitest";
+import displayReducer, {
+  createInitialState as createDisplayState,
+} from "@/lib/dataStore/reducers/displayReducer";
+import tabGroupsReducer, {
+  createInitialState as createTabGroupsState,
+} from "@/lib/dataStore/reducers/tabGroupsReducer";
+import tabsReducer, {
+  createInitialState as createTabsState,
+} from "@/lib/dataStore/reducers/tabsReducer";
+import windowsReducer, {
+  createInitialState as createWindowsState,
+} from "@/lib/dataStore/reducers/windowsReducer";
 import {
   mockTab,
   mockTabGroup,
   mockWindow,
 } from "@/tests/utils/mockDataHelper";
-import displayReducer, {
-  initialState as displayState,
-} from "@/utils/dataStore/reducers/displayReducer";
-import tabGroupsReducer, {
-  initialState as tabGroupsState,
-} from "@/utils/dataStore/reducers/tabGroupsReducer";
-import tabsReducer, {
-  initialState as tabsState,
-} from "@/utils/dataStore/reducers/tabsReducer";
-import windowsReducer, {
-  initialState as windowsState,
-} from "@/utils/dataStore/reducers/windowsReducer";
-import { SORT_OPTION } from "@/utils/options";
-
-function createDisplayState() {
-  return unfreeze({ ...displayState });
-}
-
-function createTabGroupsState() {
-  return unfreeze({ ...tabGroupsState });
-}
-
-function createTabsState() {
-  return unfreeze({ ...tabsState });
-}
-
-function createWindowsState() {
-  return unfreeze({ ...windowsState });
-}
+import { SORT_BY, SORT_OPTION } from "@/utils/options";
 
 describe("tabsReducer", () => {
   it("sets tabs and prunes selected ids", () => {
@@ -49,8 +30,8 @@ describe("tabsReducer", () => {
 
     expect(next.map.size).toBe(2);
     expect(next.map.get(1)).toEqual(tabA);
-    // TODO FIXME uncomment expect(next.map.get(1)).not.toBe(tabA);
-    // TODO FIXME uncomment expect(next.selectedTabIds).toEqual([1]);
+    expect(next.map.get(1)).not.toBe(tabA);
+    expect(next.selectedTabIds).toEqual([1]);
   });
 
   it("selects and unselects tabs", () => {
@@ -67,12 +48,10 @@ describe("tabsReducer", () => {
       type: "selectTabs",
       ids: [1, 2, 2],
     });
-    // TODO FIXME uncomment expect(multi.selectedTabIds).toEqual([1, 2]);
-    expect(multi.selectedTabIds).toEqual([1]);
+    expect(multi.selectedTabIds).toEqual([1, 2]);
 
     const unselected = tabsReducer(multi, { type: "unselect", id: 1 });
-    // TODO FIXME uncomment expect(unselected.selectedTabIds).toEqual([2]);
-    expect(unselected.selectedTabIds).toEqual([1]);
+    expect(unselected.selectedTabIds).toEqual([2]);
 
     const cleared = tabsReducer(unselected, { type: "clearSelection" });
     expect(cleared.selectedTabIds).toEqual([]);
@@ -88,7 +67,7 @@ describe("tabsReducer", () => {
     const next = tabsReducer(selected, { type: "removeTab", id: 5 });
 
     expect(next.map.has(5)).toBe(false);
-    // TODO FIXME uncomment expect(next.selectedTabIds).toEqual([]);
+    expect(next.selectedTabIds).toEqual([]);
   });
 });
 
@@ -104,8 +83,8 @@ describe("windowsReducer", () => {
     const stored = next.map.get(1);
 
     expect(stored).toBeDefined();
-    expect(stored).toEqual(sourceWindow);
-    // TODO FIXME uncomment expect(stored).not.toBe(sourceWindow)
+    expect(stored).not.toBe(sourceWindow);
+    expect(stored?.tabs).not.toBe(sourceWindow.tabs);
   });
 
   it("updates window entries immutably", () => {
@@ -140,7 +119,7 @@ describe("tabGroupsReducer", () => {
 
     const updated = tabGroupsReducer(added, {
       type: "updateTabGroup",
-      group: { ...mockTabGroup({ id: 2 }), title: "Updated" },
+      group: mockTabGroup({ id: 2, title: "Updated" }),
     });
     expect(updated.map.get(2)?.title).toBe("Updated");
 
@@ -168,11 +147,11 @@ describe("displayReducer", () => {
     const base = displayReducer(createDisplayState(), {
       type: "sort",
       sort: SORT_OPTION.LastAccessed,
-      direction: "desc",
+      direction: SORT_BY.Descending,
     });
     expect(base.sort).toEqual({
       key: SORT_OPTION.LastAccessed,
-      direction: "desc",
+      direction: SORT_BY.Descending,
     });
 
     const cleared = displayReducer(base, { type: "clear" });

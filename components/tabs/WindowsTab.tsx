@@ -9,7 +9,7 @@ import {
   useTabCount,
   useWindowCount,
   useWindows,
-} from "@/utils/dataStore";
+} from "@/lib/dataStore";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
 } from "./StickyTabSubMenuBar";

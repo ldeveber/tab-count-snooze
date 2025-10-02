@@ -1,17 +1,17 @@
 import {
+  createInitialState as createDisplayState,
   type State as DisplayState,
-  initialState as initialDisplayState,
 } from "./reducers/displayReducer";
 import {
-  initialState as initialTabGroupsState,
+  createInitialState as createTabGroupsState,
   type State as TabGroupsState,
 } from "./reducers/tabGroupsReducer";
 import {
-  initialState as initialTabsState,
+  createInitialState as createTabsState,
   type State as TabsState,
 } from "./reducers/tabsReducer";
 import {
-  initialState as initialWindowsState,
+  createInitialState as createWindowsState,
   type State as WindowsState,
 } from "./reducers/windowsReducer";
 
@@ -22,9 +22,9 @@ export type State = {
   display: DisplayState;
 };
 
-export const initialState: State = {
-  windows: initialWindowsState,
-  tabGroups: initialTabGroupsState,
-  tabs: initialTabsState,
-  display: initialDisplayState,
-};
+export const createInitialState = (): State => ({
+  windows: createWindowsState(),
+  tabGroups: createTabGroupsState(),
+  tabs: createTabsState(),
+  display: createDisplayState(),
+});

@@ -15,8 +15,8 @@ import WindowsTab, {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DataHandler from "@/utils/dataStore/DataHandler";
-import DataProvider from "@/utils/dataStore/DataProvider";
+import DataHandler from "@/lib/dataStore/DataHandler";
+import DataProvider from "@/lib/dataStore/DataProvider";
 import ErrorDisplay from "./ErrorDisplay";
 
 export function Loading() {

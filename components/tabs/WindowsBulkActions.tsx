@@ -2,12 +2,9 @@ import { MergeIcon, Trash2Icon } from "lucide-react";
 import { type MouseEventHandler, useMemo } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { TooltipButton } from "@/components/ui/tooltip-button";
-import {
-  closeTabsAction,
-  groupTabsAction,
-  type TabIdType,
-} from "@/utils/browserActionHelper";
-import { useAllTabs, useSearch, useSelectedTabs } from "@/utils/dataStore";
+import type { TabIdType } from "@/lib/browser/actions";
+import { closeTabsAction, groupTabsAction } from "@/lib/browser/actions";
+import { useAllTabs, useSearch, useSelectedTabs } from "@/lib/dataStore";
 import { filterTabs } from "@/utils/filterTabs";
 
 export default function WindowsBulkActions() {
@@ -72,6 +69,7 @@ export default function WindowsBulkActions() {
           size="icon"
           disabled={disabled}
           onClick={onGroup}
+          aria-label="Group selected tabs"
         >
           <MergeIcon />
         </TooltipButton>
@@ -81,6 +79,7 @@ export default function WindowsBulkActions() {
           size="icon"
           disabled={disabled}
           onClick={onClose}
+          aria-label="Close selected tabs"
         >
           <Trash2Icon />
         </TooltipButton>

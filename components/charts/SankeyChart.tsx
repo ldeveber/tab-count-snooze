@@ -5,7 +5,7 @@ import {
 } from "@nivo/sankey";
 import { BasicTooltip } from "@nivo/tooltip";
 import { Spinner } from "@/components/ui/spinner";
-import { useAllTabs } from "@/utils/dataStore";
+import { useAllTabs } from "@/lib/dataStore";
 import { ChartSlider } from "./ChartSlider";
 import {
   getSankeyData,

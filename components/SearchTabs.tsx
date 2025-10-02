@@ -1,6 +1,6 @@
 import { SearchIcon } from "lucide-react";
 import { type ChangeEventHandler, useState } from "react";
-import { useDataDispatch } from "@/utils/dataStore";
+import { useDataDispatch } from "@/lib/dataStore";
 
 export default function SearchTabs() {
   const dispatch = useDataDispatch();

@@ -35,15 +35,15 @@ export default defineConfig({
         "src/**/*.d.ts",
         "components/App.tsx",
         "components/AppWrap.tsx",
+        "entrypoints/**/main.tsx",
         "utils/dayjs.ts",
       ],
-      // TODO FIXME: enablewhen other tests are migrated
-      // thresholds: {
-      //   lines: 70,
-      //   statements: 70,
-      //   functions: 70,
-      //   branches: 80,
-      // },
+      thresholds: {
+        lines: 40,
+        statements: 40,
+        functions: 65,
+        branches: 70,
+      },
     },
   },
   plugins: [WxtVitest()],

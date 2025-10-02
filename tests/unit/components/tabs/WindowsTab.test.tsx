@@ -3,18 +3,15 @@
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import WindowsTab from "@/components/tabs/WindowsTab";
-import {
-  renderWithContext,
-  waitFor,
-} from "@/tests/unit/react-testing-library-utils";
+import { closeTabsAction, groupTabsAction } from "@/lib/browser/actions";
+import { renderWithContext } from "@/tests/unit/react-testing-library-utils";
 import {
   mockTab,
   mockTabGroup,
   mockWindow,
 } from "@/tests/utils/mockDataHelper";
-import { closeTabsAction, groupTabsAction } from "@/utils/browserActionHelper";
 
-vi.mock("@/utils/browserActionHelper");
+vi.mock("@/lib/browser/actions");
 
 describe("Windows Tab", () => {
   test("should render initial tab content", async () => {
@@ -52,6 +49,7 @@ describe("Windows Tab", () => {
     });
 
     expect(getByRole("searchbox", { name: "Search Tabs" })).toHaveValue("");
+    // TODO FIXME: not visible in tests...?
     // expect(
     //   getByRole("paragraph", { name: "6 tabs across 3 windows" }),
     // ).toBeVisible();
@@ -134,10 +132,10 @@ describe("Windows Tab", () => {
 
     expect(getByRole("searchbox", { name: "Search Tabs" })).toHaveValue("");
     expect(
-      queryByRole("button", { name: "Group Tabs" }),
+      queryByRole("button", { name: "Group selected tabs" }),
     ).not.toBeInTheDocument();
     expect(
-      queryByRole("button", { name: "Close Tabs" }),
+      queryByRole("button", { name: "Close selected tabs" }),
     ).not.toBeInTheDocument();
     expect(getByText("6 Tabs across 3 Windows")).toBeVisible();
 
@@ -172,8 +170,8 @@ describe("Windows Tab", () => {
     await findByText("3 tab matches");
 
     expect(getByRole("searchbox", { name: "Search Tabs" })).toHaveValue("meow");
-    // TODO FIXME uncomment expect(getByRole("button", { name: "Group Tabs" })).toBeEnabled();
-    // TODO FIXME uncomment expect(getByRole("button", { name: "Close Tabs" })).toBeEnabled();
+    // TODO FIXME uncomment expect(getByRole("button", { name: "Group selected tabs" })).toBeEnabled();
+    // TODO FIXME uncomment expect(getByRole("button", { name: "Close selected tabs" })).toBeEnabled();
 
     expect(
       getByRole("list", { name: "normal window with 2 tabs, filtered" }),
@@ -190,7 +188,7 @@ describe("Windows Tab", () => {
     expect(getByRole("listitem", { name: `Tab: ${tab6.title}` })).toBeVisible();
   });
 
-  describe.skip("bulk actions", () => {
+  describe("bulk actions", () => {
     test("should enable if there are tabs selected", async () => {
       const user = userEvent.setup();
 
@@ -209,21 +207,22 @@ describe("Windows Tab", () => {
       tabMap.set(tab3.id, tab3);
       tabMap.set(tab4.id, tab4);
 
-      const { getByLabelText, getByRole } = renderWithContext(<WindowsTab />, {
+      const { getByRole } = renderWithContext(<WindowsTab />, {
         windows: { map: winMap },
         tabs: { map: tabMap, selectedTabIds: [] },
-      });
-      await waitFor(() => {
-        expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
       });
 
       await user.type(getByRole("searchbox", { name: "Search Tabs" }), "meow");
 
-      expect(getByRole("button", { name: "Group Tabs" })).toBeEnabled();
-      expect(getByRole("button", { name: "Close Tabs" })).toBeEnabled();
+      expect(
+        getByRole("button", { name: "Group selected tabs" }),
+      ).toBeEnabled();
+      expect(
+        getByRole("button", { name: "Close selected tabs" }),
+      ).toBeEnabled();
     });
 
-    test("should handle group tabs", async () => {
+    test("should handle Group selected tabs", async () => {
       const user = userEvent.setup();
 
       const windowId = 1;
@@ -241,21 +240,18 @@ describe("Windows Tab", () => {
       tabMap.set(tab3.id, tab3);
       tabMap.set(tab4.id, tab4);
 
-      const { getByLabelText, getByRole } = renderWithContext(<WindowsTab />, {
+      const { getByRole } = renderWithContext(<WindowsTab />, {
         windows: { map: winMap },
         tabs: { map: tabMap, selectedTabIds: [] },
       });
-      await waitFor(() => {
-        expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
-      });
 
       await user.type(getByRole("searchbox", { name: "Search Tabs" }), "meow");
-      await user.click(getByRole("button", { name: "Group Tabs" }));
+      await user.click(getByRole("button", { name: "Group selected tabs" }));
 
       expect(groupTabsAction).toHaveBeenCalledWith([tab1.id, tab2.id], "meow");
     });
 
-    test("should handle close tabs", async () => {
+    test("should handle Close selected tabs", async () => {
       const user = userEvent.setup();
 
       const windowId = 1;
@@ -273,16 +269,13 @@ describe("Windows Tab", () => {
       tabMap.set(tab3.id, tab3);
       tabMap.set(tab4.id, tab4);
 
-      const { getByLabelText, getByRole } = renderWithContext(<WindowsTab />, {
+      const { getByRole } = renderWithContext(<WindowsTab />, {
         windows: { map: winMap },
         tabs: { map: tabMap, selectedTabIds: [] },
       });
-      await waitFor(() => {
-        expect(getByLabelText("4 Tabs across 2 Windows")).toBeVisible();
-      });
 
       await user.type(getByRole("searchbox", { name: "Search Tabs" }), "meow");
-      await user.click(getByRole("button", { name: "Close Tabs" }));
+      await user.click(getByRole("button", { name: "Close selected tabs" }));
 
       expect(closeTabsAction).toHaveBeenCalledWith([tab1.id, tab2.id]);
     });

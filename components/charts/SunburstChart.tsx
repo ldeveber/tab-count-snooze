@@ -7,7 +7,7 @@ import { BasicTooltip } from "@nivo/tooltip";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { useAllTabs } from "@/utils/dataStore";
+import { useAllTabs } from "@/lib/dataStore";
 import { ChartSlider } from "./ChartSlider";
 import { getSunburstData, type ItemData } from "./data/getSunburstData";
 

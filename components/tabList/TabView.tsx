@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { goToTabAction } from "@/utils/browserActionHelper";
+import { goToTabAction } from "@/lib/browser/actions";
 import {
   useDataDispatch,
   useIsFiltered,
   useSelectedTabs,
-} from "@/utils/dataStore";
+} from "@/lib/dataStore";
 import TabFavicon from "./TabFavicon";
 import TabState from "./TabState";
 
