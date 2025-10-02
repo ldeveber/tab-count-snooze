@@ -6,6 +6,7 @@ import {
   useIsFiltered,
   useSelectedTabs,
 } from "@/utils/dataStore";
+import { DuplicateBadge } from "./DuplicateBadge";
 import TabFavicon from "./TabFavicon";
 import TabState from "./TabState";
 
@@ -79,14 +80,17 @@ export default function TabView({
           <TabFavicon tab={tab} />
         </span>
         <span className="flex flex-grow flex-col gap-1 overflow-hidden font-medium text-sm">
-          <span className="flex flex-row justify-between gap-1">
+          <span className="flex flex-row justify-between gap-2">
             <span
               className="overflow-hidden text-ellipsis text-nowrap"
               title={tab.title ?? undefined}
             >
               {tab.title}
             </span>
-            <TabState tab={tab} />
+            <span className="flex flex-row gap-2">
+              <DuplicateBadge tab={tab} />
+              <TabState tab={tab} />
+            </span>
           </span>
           <span className="flex flex-col gap-1 text-muted-foreground text-xs lg:flex-row lg:items-center lg:justify-between">
             <span
