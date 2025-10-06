@@ -26,8 +26,8 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-
-      - run: pnpm i --frozen-lockfile
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
 
       - name: Setup Biome
         uses: biomejs/setup-biome@v2
@@ -36,7 +36,8 @@ jobs:
       - name: Run Biome
         run: biome ci .
 
-      - run: pnpm test
+      - name: "Run unit tests"
+        run: pnpm test
 
       - name: "Report Coverage"
         uses: davelosert/vitest-coverage-report-action@v2
