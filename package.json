@@ -12,7 +12,7 @@
     "zip:firefox": "wxt zip -b firefox",
     "test": "vitest run",
     "test:watch": "vitest watch --coverage.skipFull",
-    "lint": "tsc --noEmit && biome check",
+    "lint": "tsc --noEmit && biome check --reporter=summary",
     "lint:fix": "biome check --write",
     "format": "biome format --write",
     "compile": "tsc --noEmit",
@@ -48,7 +48,7 @@
     "use-debounce": "^10.0.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.2.5",
     "@faker-js/faker": "^10.0.0",
     "@tailwindcss/vite": "^4.1.13",
     "@testing-library/jest-dom": "^6.9.1",

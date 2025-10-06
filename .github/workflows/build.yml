@@ -22,7 +22,15 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
-      - run: pnpm i
-      - run: pnpm run lint
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Setup Biome
+        uses: biomejs/setup-biome@v2
+        with:
+          version: latest
+      - name: Run Biome
+        run: biome ci .
+
       - run: pnpm run build
       - run: pnpm test
