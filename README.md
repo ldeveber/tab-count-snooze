@@ -4,8 +4,8 @@
 ![GitHub License](https://img.shields.io/github/license/ldeveber/count-snooze?style=flat-square)
 ![React Badge](https://img.shields.io/badge/React-149eca?style=flat-square&logo=react&labelColor=grey)
 ![Typescript Badge](https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=typescript&labelColor=grey)
+[![Checked with Biome](https://img.shields.io/badge/Checked_with-Biome-60a5fa?style=flat&logo=biome)](https://biomejs.dev)
 ![WXT Badge](https://img.shields.io/badge/WXT-67D55E?style=flat-square&logo=wxt&labelColor=grey)
-![Vite Badge](https://img.shields.io/badge/Vite-646cff?style=flat-square&logo=vite&labelColor=grey)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ldeveber/count-snooze/build?style=flat-square)
 
 This is a browser extension for managing and snoozing tabs in chrome!
