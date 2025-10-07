@@ -40,8 +40,9 @@ jobs:
       - name: "Upload Coverage"
         uses: actions/upload-artifact@v4
         with:
-          name: coverage
-          path: tests/unit/coverage
+          name: coverage-${{github.ref_name}}
+          path: tests/unit/coverage/coverage-*.json
+          if-no-files-found: error
 
   # @see https://github.com/davelosert/vitest-coverage-report-action/tree/v2/?tab=readme-ov-file#coverage-trend-indicator
   report-coverage:
@@ -52,11 +53,18 @@ jobs:
       # Required to put a comment into the pull-request
       pull-requests: write
     steps:
+      - name: "Download Coverage Artifacts for PR"
+        uses: actions/download-artifact@v5
+        with:
+          name: coverage-${{github.ref_name}}
+          path: coverage
+
       - uses: actions/checkout@v5
         with:
           ref: main
           ## Set repository to correctly checkout from forks
           repository: ${{ github.event.pull_request.head.repo.full_name }}
+
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
@@ -69,11 +77,12 @@ jobs:
           cache: "pnpm"
       - name: Install Dependencies
         run: pnpm i --frozen-lockfile
+
       - name: "Collect coverage from main"
         run: npx vitest --coverage.reportsDirectory ./coverage-main
 
       - name: "Download Coverage Artifacts for PR"
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: coverage
           path: coverage
@@ -82,5 +91,4 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
-          # file-coverage-root-path: "${{ github.workspace }}/tests/unit/coverage"
           json-summary-compare-path: coverage-main/coverage-summary.json

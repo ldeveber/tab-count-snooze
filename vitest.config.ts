@@ -1,6 +1,10 @@
 import { defineConfig } from "vitest/config";
 import { WxtVitest } from "wxt/testing";
 
+const reporter = process.env.CI
+  ? ["text", "json", "json-summary"]
+  : ["text-summary", "json", "json-summary", "html"];
+
 /**
  * @see https://wxt.dev/guide/essentials/unit-testing.html
  */
@@ -13,7 +17,7 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: "v8",
-      reporter: ["text", "json", "json-summary", "html"],
+      reporter,
       reportsDirectory: "./tests/unit/coverage",
       reportOnFailure: true,
       include: [
