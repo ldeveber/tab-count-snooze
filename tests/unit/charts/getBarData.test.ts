@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import { mockTab } from "@/test-utils/mockDataHelper";
-import { _getBarData } from "../getBarData";
+import { _getBarData } from "@/components/charts/data/getBarData";
+import { mockTab } from "@/tests/utils/mockDataHelper";
 
 describe("getBarData", () => {
   describe("_addChildren", () => {

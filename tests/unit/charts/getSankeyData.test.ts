@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import { mockTab } from "@/test-utils/mockDataHelper";
-import { getSankeyData } from "../getSankeyData";
+import { getSankeyData } from "@/components/charts/data/getSankeyData";
+import { mockTab } from "@/tests/utils/mockDataHelper";
 
 describe("getSankeyData", () => {
   describe("_addChildren", () => {

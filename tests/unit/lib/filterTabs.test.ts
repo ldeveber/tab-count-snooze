@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { mockTab } from "@/test-utils/mockDataHelper";
-import { filterSortTabs, filterTabs, sortTabs } from "../filterTabs";
-import { SORT_OPTION } from "../options";
+import { mockTab } from "@/tests/utils/mockDataHelper";
+import { filterSortTabs, filterTabs, sortTabs } from "@/utils/filterTabs";
+import { SORT_OPTION } from "@/utils/options";
 
 const tabMock = (props?: Partial<Browser.tabs.Tab>) => {
   const initProps: Partial<Browser.tabs.Tab> = {

@@ -1,11 +1,15 @@
 import { defineConfig } from "vitest/config";
 import { WxtVitest } from "wxt/testing";
 
+/**
+ * @see https://wxt.dev/guide/essentials/unit-testing.html
+ */
 export default defineConfig({
   test: {
     mockReset: true,
     restoreMocks: true,
-    setupFiles: "./test-utils/vitest.setup.ts",
+    setupFiles: "./tests/unit/vitest.setup.ts",
+    include: ["./tests/unit/**/*.{test,spec}.?(c|m)[jt]s?(x)"],
     coverage: {
       enabled: true,
       provider: "v8",
@@ -17,12 +21,15 @@ export default defineConfig({
         "components/**/*.tsx",
         "entrypoints/**/*.ts",
         "entrypoints/**/*.tsx",
+        "lib/**/*.ts",
+        "lib/**/*.tsx",
         "utils/**/*.ts",
         "utils/**/*.tsx",
       ],
       exclude: [
         "**/__tests__/*.*",
         "src/**/*.d.ts",
+        "components/App.tsx",
         "components/AppWrap.tsx",
         "utils/dayjs.ts",
       ],
