@@ -110,11 +110,7 @@ export default function WindowView({
     >
       <CollapsibleTrigger
         className="group/trigger flex w-full items-center justify-between gap-2 rounded-full px-4 py-2 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
-        aria-label={`${win.state} window with ${
-          isFiltered
-            ? `${visibleTabs.length} tabs, filtered`
-            : `${visibleTabs.length} tabs`
-        }`}
+        aria-label={`Show or hide ${visibleTabs.length} tabs in ${win.state} window`}
       >
         <span className="flex flex-row items-baseline gap-2">
           <span className="text-lg">{visibleTabs.length} Tabs</span>
@@ -125,7 +121,14 @@ export default function WindowView({
         <ChevronUpIcon className="size-3 stroke-3 transition-all duration-450 ease-in-out group-aria-[expanded=false]/trigger:rotate-180" />
       </CollapsibleTrigger>
       <CollapsibleContent>
-        <ul className="flex flex-col divide-y divide-border/60">
+        <ul
+          className="flex flex-col divide-y divide-border/60"
+          aria-label={`${win.state} window with ${
+            isFiltered
+              ? `${visibleTabs.length} tabs, filtered`
+              : `${visibleTabs.length} tabs`
+          }`}
+        >
           {tabList.map(({ id: key, tab, group }) => {
             if (group) {
               return (
