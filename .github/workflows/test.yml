@@ -88,5 +88,4 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
-          file-coverage-mode: all
           json-summary-compare-path: coverage-main/coverage-summary.json
