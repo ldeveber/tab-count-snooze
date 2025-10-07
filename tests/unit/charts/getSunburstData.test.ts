@@ -1,7 +1,10 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
-import { mockTab } from "@/test-utils/mockDataHelper";
-import { getSunburstData, type ItemData } from "../getSunburstData";
+import {
+  getSunburstData,
+  type ItemData,
+} from "@/components/charts/data/getSunburstData";
+import { mockTab } from "@/tests/utils/mockDataHelper";
 
 describe("getSunburstData", () => {
   describe("_addChildren", () => {

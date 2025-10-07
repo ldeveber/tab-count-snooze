@@ -1,6 +1,8 @@
 name: Test
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -10,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      # Required to put a comment into the pull-request
-      pull-requests: write
     steps:
       - uses: actions/checkout@v5
 
@@ -39,5 +39,53 @@ jobs:
       - name: "Run unit tests"
         run: pnpm test
 
+      - name: "Upload Coverage"
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: tests/unit/coverage/coverage-*.json
+          if-no-files-found: error
+
+  # @see https://github.com/davelosert/vitest-coverage-report-action/tree/v2/?tab=readme-ov-file#coverage-trend-indicator
+  report-coverage:
+    if: ${{ github.event_name == 'pull_request' }}
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Required to put a comment into the pull-request
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main
+          ## Set repository to correctly checkout from forks
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          # @see https://github.com/marketplace/actions/setup-pnpm#use-cache-to-reduce-installation-time
+          run_install: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+      - name: Install Dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: "Collect coverage from main"
+        run: npx vitest --coverage.reportsDirectory ./coverage-main
+
+      - name: "Download Coverage Artifacts for PR"
+        uses: actions/download-artifact@v5
+        with:
+          name: coverage
+          path: coverage
+
       - name: "Report Coverage"
+        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-compare-path: coverage-main/coverage-summary.json
