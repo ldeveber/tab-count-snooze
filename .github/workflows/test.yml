@@ -1,6 +1,8 @@
 name: Test
 
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
@@ -40,12 +42,13 @@ jobs:
       - name: "Upload Coverage"
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-${{github.ref_name}}
+          name: coverage
           path: tests/unit/coverage/coverage-*.json
           if-no-files-found: error
 
   # @see https://github.com/davelosert/vitest-coverage-report-action/tree/v2/?tab=readme-ov-file#coverage-trend-indicator
   report-coverage:
+    if: ${{ github.event_name == 'pull_request' }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -53,12 +56,6 @@ jobs:
       # Required to put a comment into the pull-request
       pull-requests: write
     steps:
-      - name: "Download Coverage Artifacts for PR"
-        uses: actions/download-artifact@v5
-        with:
-          name: coverage-${{github.ref_name}}
-          path: coverage
-
       - uses: actions/checkout@v5
         with:
           ref: main
