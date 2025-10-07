@@ -10,6 +10,7 @@ export default defineConfig({
       enabled: true,
       provider: "v8",
       reporter: ["text", "json", "json-summary", "html"],
+      reportsDirectory: "./tests/unit/coverage",
       reportOnFailure: true,
       include: [
         "components/**/*.ts",
