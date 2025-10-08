@@ -2,7 +2,7 @@ import { type BarTooltipProps, ResponsiveBar } from "@nivo/bar";
 import { BasicTooltip } from "@nivo/tooltip";
 import { useMemo } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { useAllTabs } from "@/utils/dataStore";
+import { useAllTabs } from "@/lib/dataStore";
 import { ChartSlider } from "./ChartSlider";
 import { getBarData, type ItemData } from "./data/getBarData";
 

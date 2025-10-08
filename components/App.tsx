@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import DataHandler from "@/utils/dataStore/DataHandler";
-import DataProvider from "@/utils/dataStore/DataProvider";
+import DataHandler from "@/lib/dataStore/DataHandler";
+import DataProvider from "@/lib/dataStore/DataProvider";
 import TabCountSnooze, {
   Loading as TabCountSnoozeLoading,
 } from "./TabCountSnooze";

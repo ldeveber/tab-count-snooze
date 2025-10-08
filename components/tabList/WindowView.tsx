@@ -12,7 +12,7 @@ import {
   useSort,
   useTabGroups,
   useTabs,
-} from "@/utils/dataStore";
+} from "@/lib/dataStore";
 import { filterSortTabs } from "@/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";

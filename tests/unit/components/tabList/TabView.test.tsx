@@ -5,14 +5,14 @@ import { faker } from "@faker-js/faker";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import TabView from "@/components/tabList/TabView";
+import { goToTabAction } from "@/lib/browser/actions";
 import {
   renderWithContext,
   waitFor,
 } from "@/tests/unit/react-testing-library-utils";
 import { mockTab } from "@/tests/utils/mockDataHelper";
-import { goToTabAction } from "@/utils/browserActionHelper";
 
-vi.mock("@/utils/browserActionHelper");
+vi.mock("@/lib/browser/actions");
 
 function tabMock(props?: Partial<Browser.tabs.Tab>) {
   const initProps: Partial<Browser.tabs.Tab> = {

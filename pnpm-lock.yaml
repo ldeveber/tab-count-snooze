@@ -77,9 +77,6 @@ importers:
       react-error-boundary:
         specifier: ^6.0.0
         version: 6.0.0(react@19.1.1)
-      structurajs:
-        specifier: ^0.12.6
-        version: 0.12.6
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -3142,9 +3139,6 @@ packages:
 
   strip-literal@3.0.0:
     resolution: {integrity: sha512-TcccoMhJOM3OebGhSBEmp3UZ2SfDMZUEBdRA/9ynfLi8yYajyWX3JiXArcJt4Umh4vISpspkQIY8ZZoCqjbviA==}
-
-  structurajs@0.12.6:
-    resolution: {integrity: sha512-V3UTJ2XMJSoIfeH2S6eJwT6HrsgN5uZ0htj2xLLyOtopjKtiix0BcRJv+U53njccwLsVzV3DXukx6X1Dphiu+Q==}
 
   stubborn-fs@1.2.5:
     resolution: {integrity: sha512-H2N9c26eXjzL/S/K+i/RHHcFanE74dptvvjM8iwzwbVcWY/zjBbgRqF3K0DY4+OD+uTTASTBvDoxPDaPN02D7g==}
@@ -6482,8 +6476,6 @@ snapshots:
   strip-literal@3.0.0:
     dependencies:
       js-tokens: 9.0.1
-
-  structurajs@0.12.6: {}
 
   stubborn-fs@1.2.5: {}
 

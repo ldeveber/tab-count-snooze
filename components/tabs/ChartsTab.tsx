@@ -22,7 +22,7 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs";
-import { useAllTabs } from "@/utils/dataStore";
+import { useAllTabs } from "@/lib/dataStore";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
 } from "./StickyTabSubMenuBar";
