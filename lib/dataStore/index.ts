@@ -121,3 +121,34 @@ export function useMostRecentTabFromWindow(windowId?: number) {
   }, [arr]);
   return mostRecentTab;
 }
+
+export function useAllOtherTabs(tabId?: number) {
+  const tabs = useAllTabs();
+  return useMemo(() => tabs.filter((t) => t.id !== tabId), [tabs, tabId]);
+}
+
+function isFuzzyMatch(a: string = "", b: string = "") {
+  return a.split("?")[0] === b.split("?")[0];
+}
+
+export function useTabHasDupe(
+  tab: Browser.tabs.Tab,
+  settings = { isFuzzyEnabled: false },
+) {
+  const tabs = useAllOtherTabs(tab.id);
+  const isFuzzyEnabled = tab.url?.includes("?") && settings.isFuzzyEnabled;
+  return useMemo(() => {
+    let hasDupe = false;
+    let hasFuzzyDupe = false;
+    for (const t of tabs) {
+      if (!hasDupe) {
+        hasDupe = t.url === tab.url;
+      }
+      if (isFuzzyEnabled && !hasFuzzyDupe) {
+        hasFuzzyDupe = isFuzzyMatch(t.url, tab.url);
+      }
+      if (hasDupe && hasFuzzyDupe) break;
+    }
+    return { hasDupe, hasFuzzyDupe };
+  }, [tabs]);
+}
