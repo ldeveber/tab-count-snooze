@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import AppWrap from "@/components/AppWrap";
-import Options, { Loading } from "@/components/options/Options.tsx";
+import Options, { Loading } from "@/components/options/Options";
 
 // biome-ignore lint/style/noNonNullAssertion: it exists
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import type { Browser } from "#imports";
 
 /**
  * Makes a tab with random data.

@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import type { Browser } from "#imports";
 import SearchTabs from "@/components/SearchTabs";
 import WindowList, {
   Loading as WindowListLoading,

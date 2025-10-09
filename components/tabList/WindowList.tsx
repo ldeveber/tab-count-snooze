@@ -1,3 +1,4 @@
+import type { Browser } from "#imports";
 import Empty from "@/components/Empty";
 import WindowView, {
   Loading as WindowLoading,

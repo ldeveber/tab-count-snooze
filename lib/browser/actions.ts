@@ -1,3 +1,5 @@
+import { type Browser, browser } from "#imports";
+
 export type TabIdType = Required<Browser.tabs.Tab>["id"];
 
 export async function closeTabsAction(tabIds: ReadonlyArray<TabIdType>) {

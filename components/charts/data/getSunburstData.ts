@@ -1,3 +1,5 @@
+import type { Browser } from "#imports";
+
 export interface ItemData {
   id: string;
   label: string;
@@ -32,7 +34,7 @@ export function _addChildren(
 }
 
 export function getSunburstData(
-  tabs: globalThis.Browser.tabs.Tab[],
+  tabs: Browser.tabs.Tab[],
   maxDepth: number,
   minValue: number,
   limit: number,

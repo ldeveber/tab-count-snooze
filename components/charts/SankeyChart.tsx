@@ -4,6 +4,7 @@ import {
   type SankeyNodeDatum,
 } from "@nivo/sankey";
 import { BasicTooltip } from "@nivo/tooltip";
+import { useMemo, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { useAllTabs } from "@/lib/dataStore";
 import { ChartSlider } from "./ChartSlider";

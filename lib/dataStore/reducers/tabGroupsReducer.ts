@@ -1,3 +1,5 @@
+import type { Browser } from "#imports";
+
 type TabGroupId = Required<Browser.tabGroups.TabGroup>["id"];
 
 export type State = {

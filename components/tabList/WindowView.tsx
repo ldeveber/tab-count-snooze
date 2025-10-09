@@ -1,5 +1,6 @@
 import { ChevronUpIcon } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { type Browser, browser } from "#imports";
 import {
   Collapsible,
   CollapsibleContent,
@@ -49,18 +50,21 @@ export default function WindowView({
   );
   const [expanded, setExpanded] = useState(true);
 
-  const onActivated = (info: Browser.tabs.OnActivatedInfo) => {
-    if (info.windowId === win.id) {
-      setLastViewed(new Date());
-    }
-  };
+  const onActivated = useCallback(
+    (info: Browser.tabs.OnActivatedInfo) => {
+      if (info.windowId === win.id) {
+        setLastViewed(new Date());
+      }
+    },
+    [win.id],
+  );
 
   useEffect(() => {
     browser.tabs.onActivated.addListener(onActivated);
     return () => {
       browser.tabs.onActivated.removeListener(onActivated);
     };
-  }, []);
+  }, [onActivated]);
 
   const visibleTabs = useMemo(
     () => filterSortTabs(windowTabs, search, sort),

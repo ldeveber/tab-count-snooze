@@ -1,4 +1,5 @@
 import { useContext, useMemo } from "react";
+import type { Browser } from "#imports";
 import { DataContext, DataDispatchContext } from "./DataProvider";
 
 export function useDataDispatch() {

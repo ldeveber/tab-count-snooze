@@ -1,4 +1,5 @@
 import { describe, expect, test } from "vitest";
+import type { Browser } from "#imports";
 import { mockTab } from "@/tests/utils/mockDataHelper";
 import { filterSortTabs, filterTabs, sortTabs } from "@/utils/filterTabs";
 import { SORT_OPTION } from "@/utils/options";

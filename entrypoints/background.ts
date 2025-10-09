@@ -1,3 +1,4 @@
+import { browser, defineBackground } from "#imports";
 import { handleRuntimeConnect, initializeStore } from "@/lib/background/store";
 
 export default defineBackground(() => {
