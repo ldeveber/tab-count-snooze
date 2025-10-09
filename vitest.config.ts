@@ -7,8 +7,8 @@ import { WxtVitest } from "wxt/testing";
 export default defineConfig({
   test: {
     reporters: process.env.GITHUB_ACTIONS
-      ? ["github-actions", "verbose", "json"]
-      : ["default", "html", "hanging-process"],
+      ? ["github-actions", "verbose"]
+      : ["default", "hanging-process"],
     mockReset: true,
     restoreMocks: true,
     setupFiles: "./tests/unit/vitest.setup.ts",
