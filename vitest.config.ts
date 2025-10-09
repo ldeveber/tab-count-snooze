@@ -1,18 +1,14 @@
 import { defineConfig } from "vitest/config";
 import { WxtVitest } from "wxt/testing";
 
-const reporter = process.env.CI
-  ? ["text", "json", "json-summary"]
-  : ["text-summary", "json", "json-summary", "html"];
-if (process.env.GITHUB_ACTIONS) {
-  reporter.push("default");
-}
-
 /**
  * @see https://wxt.dev/guide/essentials/unit-testing.html
  */
 export default defineConfig({
   test: {
+    reporters: process.env.GITHUB_ACTIONS
+      ? ["github-actions", "verbose", "json"]
+      : ["default", "html", "hanging-process"],
     mockReset: true,
     restoreMocks: true,
     setupFiles: "./tests/unit/vitest.setup.ts",
@@ -20,7 +16,9 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: "v8",
-      reporter,
+      reporter: process.env.GITHUB_ACTIONS
+        ? ["text", "json", "json-summary"]
+        : ["text-summary", "json", "json-summary", "html"],
       reportsDirectory: "./tests/unit/coverage",
       reportOnFailure: true,
       include: [
