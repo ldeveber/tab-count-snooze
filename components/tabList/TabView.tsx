@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { type Browser, browser } from "#imports";
 import { Checkbox } from "@/components/ui/checkbox";
 import { goToTabAction } from "@/lib/browser/actions";
 import {
@@ -44,18 +45,21 @@ export default function TabView({
     });
   };
 
-  const onActivated = (info: Browser.tabs.OnActivatedInfo) => {
-    if (info.windowId === tab.windowId && info.tabId === tab.id) {
-      setLastViewed(new Date());
-    }
-  };
+  const onActivated = useCallback(
+    (info: Browser.tabs.OnActivatedInfo) => {
+      if (info.windowId === tab.windowId && info.tabId === tab.id) {
+        setLastViewed(new Date());
+      }
+    },
+    [tab.id, tab.windowId],
+  );
 
   useEffect(() => {
     browser.tabs.onActivated.addListener(onActivated);
     return () => {
       browser.tabs.onActivated.removeListener(onActivated);
     };
-  }, []);
+  }, [onActivated]);
 
   if (!tab.id) {
     return null;

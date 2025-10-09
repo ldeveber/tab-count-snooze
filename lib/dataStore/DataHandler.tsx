@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { browser } from "wxt/browser";
+import { browser } from "#imports";
 import { useDataDispatch } from ".";
 import type { DataOutboundMessage } from "./messages";
 

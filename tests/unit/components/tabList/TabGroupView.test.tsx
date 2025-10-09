@@ -2,6 +2,7 @@
 
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, test } from "vitest";
+import type { Browser } from "#imports";
 import TabGroupView from "@/components/tabList/TabGroupView";
 import {
   renderWithContext,

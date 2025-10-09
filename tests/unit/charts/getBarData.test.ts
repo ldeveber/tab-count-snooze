@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
+import type { Browser } from "#imports";
 import { _getBarData } from "@/components/charts/data/getBarData";
 import { mockTab } from "@/tests/utils/mockDataHelper";
 

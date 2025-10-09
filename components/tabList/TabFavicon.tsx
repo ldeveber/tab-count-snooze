@@ -1,5 +1,6 @@
 import { FileQuestionMarkIcon, PuzzleIcon } from "lucide-react";
-import { useAppConfig } from "wxt/utils/app-config";
+import { useMemo } from "react";
+import { type Browser, useAppConfig } from "#imports";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 
@@ -38,7 +39,7 @@ export default function TabFavicon({
     } else if (tab.favIconUrl && tab.favIconUrl.length > 0) {
       return tab.favIconUrl;
     }
-  }, [isChrome, tab.url]);
+  }, [isChrome, tab.url, tab.favIconUrl, tab.pendingUrl]);
 
   return (
     <span

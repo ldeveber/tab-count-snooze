@@ -1,3 +1,4 @@
+import type { Browser } from "#imports";
 import { cloneWindow } from "@/lib/clone";
 
 type WindowId = Required<Browser.windows.Window>["id"];

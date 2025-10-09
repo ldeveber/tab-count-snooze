@@ -1,6 +1,7 @@
 import { cva } from "class-variance-authority";
 import { ChevronUpIcon } from "lucide-react";
 import { useState } from "react";
+import type { Browser } from "#imports";
 import {
   Collapsible,
   CollapsibleContent,

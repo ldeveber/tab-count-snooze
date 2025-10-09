@@ -4,7 +4,7 @@ import {
   ResponsiveSunburst,
 } from "@nivo/sunburst";
 import { BasicTooltip } from "@nivo/tooltip";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { useAllTabs } from "@/lib/dataStore";

@@ -1,4 +1,5 @@
 import type { DefaultLink, DefaultNode, SankeyDataProps } from "@nivo/sankey";
+import type { Browser } from "#imports";
 
 export interface ItemLink extends DefaultLink {
   source: string;
@@ -67,7 +68,7 @@ function _addLinkData(
 const ALL_TABS_LABEL = "All Tabs";
 
 export function _getSankeyData(
-  tabs: globalThis.Browser.tabs.Tab[],
+  tabs: Browser.tabs.Tab[],
   topOrigins: ReadonlyArray<string>,
   maxDepth: number = 3,
   minValue: number = 2,
@@ -114,7 +115,7 @@ export function _getSankeyData(
 }
 
 function getTopOrigins(
-  tabs: globalThis.Browser.tabs.Tab[],
+  tabs: Browser.tabs.Tab[],
   minValue: number,
   limit: number,
 ) {
@@ -140,7 +141,7 @@ function getTopOrigins(
 }
 
 export function getSankeyData(
-  tabs: globalThis.Browser.tabs.Tab[],
+  tabs: Browser.tabs.Tab[],
   maxDepth: number,
   minValue: number,
   limit: number,

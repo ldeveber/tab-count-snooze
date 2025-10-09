@@ -1,3 +1,4 @@
+import type { Browser } from "#imports";
 import { SORT_OPTION } from "./options";
 
 export type DedupeConfig = {

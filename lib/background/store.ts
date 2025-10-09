@@ -1,5 +1,5 @@
-import type { Browser } from "wxt/browser";
-import { browser } from "wxt/browser";
+import type { Browser } from "#imports";
+import { browser } from "#imports";
 import type {
   DataInboundMessage,
   DataOutboundMessage,

@@ -1,3 +1,4 @@
+import type { Browser } from "#imports";
 import type { TabIdType } from "@/lib/browser/actions";
 import { cloneTab } from "@/lib/clone";
 

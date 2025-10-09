@@ -1,3 +1,4 @@
+import type { Browser } from "#imports";
 import type { BackgroundAction } from "./reducer";
 
 export type DataInitMessage = {

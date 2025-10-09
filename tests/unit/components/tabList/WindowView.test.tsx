@@ -3,6 +3,7 @@
 import "@testing-library/jest-dom/vitest";
 import { faker } from "@faker-js/faker";
 import { describe, expect, test } from "vitest";
+import { browser } from "#imports";
 import WindowView from "@/components/tabList/WindowView";
 import {
   renderWithContext,

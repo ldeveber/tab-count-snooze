@@ -6,6 +6,7 @@ import {
   Volume2Icon,
   VolumeOffIcon,
 } from "lucide-react";
+import type { Browser } from "#imports";
 
 export default function TabState({ tab }: { readonly tab: Browser.tabs.Tab }) {
   const arr = [];

@@ -1,3 +1,5 @@
+import type { Browser } from "#imports";
+
 export function cloneTab(tab: Browser.tabs.Tab): Browser.tabs.Tab {
   return { ...tab };
 }
