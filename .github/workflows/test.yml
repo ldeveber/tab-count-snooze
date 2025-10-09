@@ -49,7 +49,7 @@ jobs:
 
   # @see https://github.com/davelosert/vitest-coverage-report-action/tree/v2/?tab=readme-ov-file#coverage-trend-indicator
   report-coverage:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ github.event_name == 'pull_request' }} && always()
     needs: test
     runs-on: ubuntu-latest
     permissions:
