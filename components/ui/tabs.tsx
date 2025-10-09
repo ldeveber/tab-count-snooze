@@ -16,7 +16,7 @@ function Tabs({
   );
 }
 
-const tabsListVariants = cva("inline-flex items-center justify-center w-fit", {
+const tabsListVariants = cva("inline-flex w-fit items-center justify-center", {
   variants: {
     variant: {
       default: "rounded-lg bg-muted p-1 text-muted-foreground",
@@ -24,7 +24,7 @@ const tabsListVariants = cva("inline-flex items-center justify-center w-fit", {
     },
     size: {
       default: "",
-      sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+      sm: "h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
       lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
       icon: "size-9",
     },
@@ -51,7 +51,7 @@ function TabsList({
 }
 
 const tabsTriggerVariants = cva(
-  "inline-flex items-center justify-center cursor-pointer whitespace-nowrap",
+  "inline-flex cursor-pointer items-center justify-center whitespace-nowrap",
   {
     variants: {
       variant: {
@@ -61,7 +61,7 @@ const tabsTriggerVariants = cva(
       },
       size: {
         default: "px-2 py-1 has-[>svg]:px-1.5",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
+        sm: "h-8 gap-1.5 rounded-md px-3 has-[>svg]:px-2.5",
         lg: "px-4 py-2 has-[>svg]:px-3.5",
         icon: "size-9",
       },
