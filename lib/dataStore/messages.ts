@@ -20,3 +20,5 @@ export type DataOutboundMessage = DataInitMessage | DataActionMessage;
 export type DataInboundMessage = {
   type: "requestInit";
 };
+
+export type DataMessage = DataOutboundMessage | DataInboundMessage;
