@@ -23,7 +23,7 @@ function AppWrap({ children }: PropsWithChildren) {
 
 export default function App() {
   return (
-    <div className="@container/main flex min-h-screen w-full flex-col text-base">
+    <div className="@container/main flex min-h-screen w-full flex-col">
       <DataProvider>
         <DataHandler />
         <AppWrap>

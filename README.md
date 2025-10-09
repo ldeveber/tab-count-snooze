@@ -45,4 +45,5 @@ This project was inspired by:
 
 * [Tab Manager Plus](https://github.com/stefanXO/Tab-Manager-Plus)
   * [Tab Manager Plus for Chrome (Chrome Store)](https://chromewebstore.google.com/detail/tab-manager-plus-for-chro/cnkdjjdmfiffagllbiiilooaoofcoeff)
-* [Tab Snooze - Works as of Nov 7 2021 (Chrome Store)](https://chromewebstore.google.com/detail/tab-snooze-works-as-of-no/kgnigbfnfjgpfaiaafcbgdkpalapiinb)
+* [Tab Snooze (Chrome Store)](https://chromewebstore.google.com/detail/tab-snooze-manifest-v3/kgnigbfnfjgpfaiaafcbgdkpalapiinb)
+  * [Tab Snooze Continued](https://github.com/csandapp/tab-snooze-extension-continued)

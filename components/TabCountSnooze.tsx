@@ -1,7 +1,6 @@
 import { ChartPieIcon, CloudMoonIcon, PanelTopIcon } from "lucide-react";
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { useAppConfig } from "#imports";
 import ChartsTab, {
   Loading as ChartsTabLoading,
 } from "@/components/tabs/ChartsTab";
@@ -11,13 +10,13 @@ import SnoozeTab, {
 import WindowsTab, {
   Loading as WindowsTabLoading,
 } from "@/components/tabs/WindowsTab";
-import { ModeToggle } from "@/components/theme/ThemeToggle";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DataHandler from "@/lib/dataStore/DataHandler";
 import DataProvider from "@/lib/dataStore/DataProvider";
 import ErrorDisplay from "./ErrorDisplay";
+import { Settings } from "./settings/Settings";
 
 export function Loading() {
   return (
@@ -33,7 +32,6 @@ export function Loading() {
 }
 
 export default function TabCountSnooze() {
-  const { isDev } = useAppConfig();
   const [tab, setTab] = useState("tab");
   const handleChange = (value: string) => {
     setTab(value);
@@ -60,7 +58,7 @@ export default function TabCountSnooze() {
                 <CloudMoonIcon className="size-4" /> Snooze
               </TabsTrigger>
             </TabsList>
-            {isDev && <ModeToggle />}
+            <Settings />
           </div>
           <TabsContent value="tab">
             <ErrorBoundary FallbackComponent={ErrorDisplay}>
