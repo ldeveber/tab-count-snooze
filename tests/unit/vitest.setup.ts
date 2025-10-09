@@ -18,4 +18,3 @@ afterEach(() => {
   cleanup();
   resetConnectMock();
 });
-
