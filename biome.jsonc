@@ -18,10 +18,11 @@
     "rules": {
       "recommended": true,
       "nursery": {
+        // @see https://biomejs.dev/linter/rules/use-sorted-classes/
         "useSortedClasses": {
           "level": "error",
           "fix": "safe",
-          "options": {}
+          "options": { "functions": ["cva", "cn"] }
         }
       },
       "suspicious": {
