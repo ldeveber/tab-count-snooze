@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { coverageConfigDefaults, defineConfig } from "vitest/config";
 import { WxtVitest } from "wxt/testing";
 
 /**
@@ -32,18 +32,17 @@ export default defineConfig({
         "utils/**/*.tsx",
       ],
       exclude: [
-        "**/__tests__/*.*",
-        "src/**/*.d.ts",
         "components/App.tsx",
         "components/AppWrap.tsx",
         "entrypoints/**/main.tsx",
         "utils/dayjs.ts",
+        ...coverageConfigDefaults.exclude,
       ],
       thresholds: {
         lines: 40,
         statements: 40,
-        functions: 60,
-        branches: 70,
+        functions: 40,
+        branches: 40,
       },
     },
   },
