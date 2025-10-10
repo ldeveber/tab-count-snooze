@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import type { Browser } from "#imports";
-import TabView from "@/components/tabList/TabView";
+import TabView from "@/components/tab/TabView";
 import { goToTabAction } from "@/lib/browser/actions";
 import {
   renderWithContext,

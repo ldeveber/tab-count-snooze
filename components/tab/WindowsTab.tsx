@@ -1,9 +1,13 @@
 import { useMemo } from "react";
 import type { Browser } from "#imports";
 import SearchTabs from "@/components/SearchTabs";
+import StickyTabSubMenuBar, {
+  Loading as StickyTabSubMenuBarLoading,
+} from "@/components/StickyTabSubMenuBar";
+import TabCountTagline from "@/components/TabCountTagline";
 import WindowList, {
   Loading as WindowListLoading,
-} from "@/components/tabList/WindowList";
+} from "@/components/tab/WindowList";
 import { Divider } from "@/components/ui/divider";
 import {
   useIsFiltered,
@@ -11,10 +15,6 @@ import {
   useWindowCount,
   useWindows,
 } from "@/lib/dataStore";
-import StickyTabSubMenuBar, {
-  Loading as StickyTabSubMenuBarLoading,
-} from "./StickyTabSubMenuBar";
-import TabCountTagline from "./TabCountTagline";
 import WindowsBulkActions from "./WindowsBulkActions";
 
 export function Loading() {

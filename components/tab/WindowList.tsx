@@ -2,7 +2,7 @@ import type { Browser } from "#imports";
 import Empty from "@/components/Empty";
 import WindowView, {
   Loading as WindowLoading,
-} from "@/components/tabList/WindowView";
+} from "@/components/tab/WindowView";
 
 export function Loading() {
   return <WindowLoading />;
