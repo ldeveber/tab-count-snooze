@@ -3,7 +3,7 @@
 import "@testing-library/jest-dom/vitest";
 import { describe, expect, test } from "vitest";
 import type { Browser } from "#imports";
-import TabState from "@/components/tabList/TabState";
+import TabState from "@/components/tab/TabState";
 import { render } from "@/tests/unit/react-testing-library-utils";
 import { mockTab } from "@/tests/utils/mockDataHelper";
 

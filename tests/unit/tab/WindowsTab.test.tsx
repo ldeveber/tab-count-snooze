@@ -2,7 +2,7 @@
 
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
-import WindowsTab from "@/components/tabs/WindowsTab";
+import WindowsTab from "@/components/tab/WindowsTab";
 import { closeTabsAction, groupTabsAction } from "@/lib/browser/actions";
 import { renderWithContext } from "@/tests/unit/react-testing-library-utils";
 import {

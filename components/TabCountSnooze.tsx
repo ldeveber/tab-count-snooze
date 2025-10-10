@@ -3,13 +3,13 @@ import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import ChartsTab, {
   Loading as ChartsTabLoading,
-} from "@/components/tabs/ChartsTab";
+} from "@/components/charts/ChartsTab";
 import SnoozeTab, {
   Loading as SnoozeTabLoading,
-} from "@/components/tabs/SnoozeTab";
+} from "@/components/snooze/SnoozeTab";
 import WindowsTab, {
   Loading as WindowsTabLoading,
-} from "@/components/tabs/WindowsTab";
+} from "@/components/tab/WindowsTab";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";

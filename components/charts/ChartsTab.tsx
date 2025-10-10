@@ -25,8 +25,8 @@ import {
 import { useAllTabs } from "@/lib/dataStore";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
-} from "./StickyTabSubMenuBar";
-import TabCountTagline from "./TabCountTagline";
+} from "../StickyTabSubMenuBar";
+import TabCountTagline from "../TabCountTagline";
 
 export function Loading() {
   return (

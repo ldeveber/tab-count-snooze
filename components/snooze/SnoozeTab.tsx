@@ -2,8 +2,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import StickyTabSubMenuBar, {
   Loading as StickyTabSubMenuBarLoading,
-} from "./StickyTabSubMenuBar";
-import TabCountTagline from "./TabCountTagline";
+} from "../StickyTabSubMenuBar";
+import TabCountTagline from "../TabCountTagline";
 
 export function Loading() {
   return (
