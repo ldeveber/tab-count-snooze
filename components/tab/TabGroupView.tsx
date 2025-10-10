@@ -13,15 +13,15 @@ import TabView from "./TabView";
 const listVariants = cva("border-l-4", {
   variants: {
     color: {
-      grey: "border-l-gray-500",
-      blue: "border-l-blue-500",
-      red: "border-l-red-500",
-      yellow: "border-l-yellow-500",
-      green: "border-l-green-500",
-      pink: "border-l-pink-500",
-      purple: "border-l-purple-500",
-      cyan: "border-l-cyan-500",
-      orange: "border-l-orange-500",
+      grey: "border-l-gray-300 dark:border-l-gray-800",
+      blue: "border-l-blue-300 dark:border-l-blue-800",
+      red: "border-l-red-300 dark:border-l-red-800",
+      yellow: "border-l-yellow-300 dark:border-l-yellow-800",
+      green: "border-l-green-300 dark:border-l-green-800",
+      pink: "border-l-pink-300 dark:border-l-pink-800",
+      purple: "border-l-purple-300 dark:border-l-purple-800",
+      cyan: "border-l-cyan-300 dark:border-l-cyan-800",
+      orange: "border-l-orange-300 dark:border-l-orange-800",
     },
   },
   defaultVariants: {
@@ -29,24 +29,27 @@ const listVariants = cva("border-l-4", {
   },
 });
 
-const pillVariants = cva("rounded-full px-3 py-1 font-medium text-xs", {
-  variants: {
-    color: {
-      grey: "bg-gray-500 text-white",
-      blue: "bg-blue-500 text-white",
-      red: "bg-red-500 text-white",
-      yellow: "bg-yellow-500 text-white",
-      green: "bg-green-500 text-white",
-      pink: "bg-pink-500 text-white",
-      purple: "bg-purple-500 text-white",
-      cyan: "bg-cyan-500 text-white",
-      orange: "bg-orange-500 text-white",
+const pillVariants = cva(
+  "flex-shrink overflow-hidden text-ellipsis text-nowrap rounded-full px-3 py-1 font-medium text-sm",
+  {
+    variants: {
+      color: {
+        grey: "bg-gray-300 dark:bg-gray-800",
+        blue: "bg-blue-300 dark:bg-blue-800",
+        red: "bg-red-300 dark:bg-red-800",
+        yellow: "bg-yellow-300 dark:bg-yellow-800",
+        green: "bg-green-300 dark:bg-green-800",
+        pink: "bg-pink-300 dark:bg-pink-800",
+        purple: "bg-purple-300 dark:bg-purple-800",
+        cyan: "bg-cyan-300 dark:bg-cyan-800",
+        orange: "bg-orange-300 dark:bg-orange-800",
+      },
+    },
+    defaultVariants: {
+      color: "grey",
     },
   },
-  defaultVariants: {
-    color: "grey",
-  },
-});
+);
 
 export default function TabGroupView({
   group,
@@ -62,7 +65,6 @@ export default function TabGroupView({
   };
 
   const title = group.title ?? `Tab Group (${tabs.length})`;
-  const panelId = `group-panel-${group.id}`;
 
   if (tabs.length === 0) {
     return null;
@@ -81,14 +83,13 @@ export default function TabGroupView({
       >
         <CollapsibleTrigger
           className="group/trigger m-1 flex items-center justify-between gap-2 rounded-sm px-3 py-1 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
-          aria-controls={panelId}
           aria-label={`Show or hide tabs in group: ${title}`}
         >
-          <span className="flex items-center gap-2">
+          <span className="flex w-full items-center gap-2">
             <span className={cn(pillVariants({ color: group.color }))}>
               {title}
             </span>
-            <span className="text-muted-foreground text-xs">
+            <span className="flex-none text-muted-foreground text-xs">
               {tabs.length} tabs
             </span>
           </span>

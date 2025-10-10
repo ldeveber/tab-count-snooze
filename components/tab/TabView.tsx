@@ -82,7 +82,7 @@ export default function TabView({
         <span className="flex w-6 flex-none justify-center" role="none">
           <TabFavicon tab={tab} />
         </span>
-        <span className="flex flex-grow flex-col gap-1 overflow-hidden font-medium text-sm">
+        <span className="flex flex-grow flex-col gap-1 overflow-hidden text-sm">
           <span className="flex flex-row justify-between gap-1">
             <span
               className="overflow-hidden text-ellipsis text-nowrap"

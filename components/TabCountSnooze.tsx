@@ -46,7 +46,7 @@ export default function TabCountSnooze() {
           onValueChange={handleChange}
           className="size-full flex-grow"
         >
-          <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-background/50 px-4 py-2 backdrop-blur-xs">
+          <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-card/50 px-4 py-2 backdrop-blur-xs">
             <TabsList variant="nav">
               <TabsTrigger value="tab" variant="nav">
                 <PanelTopIcon className="size-4" /> Tab
