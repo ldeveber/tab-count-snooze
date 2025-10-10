@@ -19,7 +19,10 @@ import pkg from "@/package.json";
 export function Settings() {
   return (
     <Sheet>
-      <SheetTrigger className="absolute top-3 right-3 inline-flex size-7 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-input/50 font-medium text-sm shadow-xs outline-none transition-all hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-accent/50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0">
+      <SheetTrigger
+        className="absolute top-3 right-3 inline-flex size-7 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-input/50 font-medium text-sm shadow-xs outline-none transition-all hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-accent/50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+        aria-label="Open settings"
+      >
         <Settings2Icon className="size-4" />
       </SheetTrigger>
       <SheetContent side="top">

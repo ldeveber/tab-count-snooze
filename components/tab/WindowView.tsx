@@ -15,6 +15,7 @@ import {
   useTabs,
 } from "@/lib/dataStore";
 import { filterSortTabs } from "@/utils/filterTabs";
+import { Card } from "../ui/card";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
 
@@ -106,50 +107,52 @@ export default function WindowView({
     return null;
   }
   return (
-    <Collapsible
-      id={`window-${id}`}
-      open={expanded}
-      onOpenChange={handleExpandClick}
-      className="@container/window overflow-hidden rounded-2xl bg-card"
-    >
-      <CollapsibleTrigger
-        className="group/trigger flex w-full items-center justify-between gap-2 rounded-full px-4 py-2 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
-        aria-label={`Show or hide ${visibleTabs.length} tabs in ${win.state} window`}
+    <Card className="overflow-hidden rounded-3xl">
+      <Collapsible
+        id={`window-${id}`}
+        open={expanded}
+        onOpenChange={handleExpandClick}
+        className="overflow-hidden"
       >
-        <span className="flex flex-row items-baseline gap-2">
-          <span className="text-lg">{visibleTabs.length} Tabs</span>
-          <span className="text-muted-foreground">
-            {lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}
-          </span>
-        </span>
-        <ChevronUpIcon className="size-3 stroke-3 transition-all duration-450 ease-in-out group-aria-[expanded=false]/trigger:rotate-180" />
-      </CollapsibleTrigger>
-      <CollapsibleContent>
-        <ul
-          className="flex flex-col divide-y divide-border/60"
-          aria-label={`${win.state} window with ${
-            isFiltered
-              ? `${visibleTabs.length} tabs, filtered`
-              : `${visibleTabs.length} tabs`
-          }`}
+        <CollapsibleTrigger
+          className="group/trigger flex w-full items-center justify-between gap-2 rounded-full px-4 py-2 font-medium text-sm hover:bg-primary/10 focus-visible:outline focus-visible:outline-primary/80 active:bg-primary/20"
+          aria-label={`Show or hide ${visibleTabs.length} tabs in ${win.state} window`}
         >
-          {tabList.map(({ id: key, tab, group }) => {
-            if (group) {
-              return (
-                <TabGroupView
-                  key={key}
-                  group={group.tabGroup}
-                  tabs={group.tabs}
-                />
-              );
-            }
-            if (tab) {
-              return <TabView key={key} tab={tab} />;
-            }
-            return null;
-          })}
-        </ul>
-      </CollapsibleContent>
-    </Collapsible>
+          <span className="flex flex-row items-baseline gap-2">
+            <span className="text-lg">{visibleTabs.length} Tabs</span>
+            <span className="text-muted-foreground">
+              {lastViewed ? new Date(lastViewed).toLocaleString() : "N/A"}
+            </span>
+          </span>
+          <ChevronUpIcon className="size-3 stroke-3 transition-all duration-450 ease-in-out group-aria-[expanded=false]/trigger:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <ul
+            className="flex flex-col divide-y divide-border/60"
+            aria-label={`${win.state} window with ${
+              isFiltered
+                ? `${visibleTabs.length} tabs, filtered`
+                : `${visibleTabs.length} tabs`
+            }`}
+          >
+            {tabList.map(({ id: key, tab, group }) => {
+              if (group) {
+                return (
+                  <TabGroupView
+                    key={key}
+                    group={group.tabGroup}
+                    tabs={group.tabs}
+                  />
+                );
+              }
+              if (tab) {
+                return <TabView key={key} tab={tab} />;
+              }
+              return null;
+            })}
+          </ul>
+        </CollapsibleContent>
+      </Collapsible>
+    </Card>
   );
 }
