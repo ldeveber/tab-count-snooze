@@ -51,7 +51,11 @@ export default function TabCountSnooze() {
               <TabsTrigger value="tab" variant="nav">
                 <PanelTopIcon className="size-4" /> Tab
               </TabsTrigger>
-              <TabsTrigger value="count" variant="nav">
+              <TabsTrigger
+                value="count"
+                variant="nav"
+                className="hidden md:flex"
+              >
                 <ChartPieIcon className="size-4" /> Count
               </TabsTrigger>
               <TabsTrigger value="snooze" variant="nav">

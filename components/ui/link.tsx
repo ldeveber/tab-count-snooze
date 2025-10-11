@@ -9,17 +9,15 @@ const linkVariants = cva(
     variants: {
       variant: {
         default:
-          "text-primary/80 hover:text-accent focus-visible:outline-ring/50",
-        primary:
-          "text-primary/80 hover:text-primary focus-visible:outline-primary/50",
+          "text-primary hover:text-primary/80 focus-visible:outline-ring/50",
         destructive:
-          "text-destructive/80 hover:text-destructive focus-visible:outline-destructive/50",
+          "text-destructive hover:text-destructive/80 focus-visible:outline-destructive/50",
         accent:
-          "text-accent/80 hover:text-accent focus-visible:outline-accent/50",
+          "text-accent hover:text-accent/80 focus-visible:outline-accent/50",
         secondary:
-          "text-secondary/80 hover:text-secondary focus-visible:outline-secondary/50",
+          "text-secondary hover:text-secondary/80 focus-visible:outline-secondary/50",
         muted:
-          "text-muted-foreground/80 hover:text-muted-foreground focus-visible:outline-muted-foreground/50",
+          "text-muted-foreground hover:text-muted-foreground/80 focus-visible:outline-muted-foreground/50",
       },
     },
     defaultVariants: {

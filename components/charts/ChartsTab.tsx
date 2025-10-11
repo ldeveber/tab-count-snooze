@@ -76,7 +76,7 @@ export default function ChartsTab() {
       <StickyTabSubMenuBar>
         <TabsList>
           <TabsTrigger value="bar">
-            <BarChart3Icon className="size-4" /> Bar - Open Origin Counts
+            <BarChart3Icon className="size-4" /> Bar - Top Open Origins
           </TabsTrigger>
           <TabsTrigger value="sunburst">
             <SunIcon className="size-4" /> Sunburst - Top Open Tabs
