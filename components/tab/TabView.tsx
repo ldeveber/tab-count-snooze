@@ -92,7 +92,7 @@ export default function TabView({
             </span>
             <TabState tab={tab} />
           </span>
-          <span className="flex flex-col gap-1 text-muted-foreground text-xs lg:flex-row lg:items-center lg:justify-between">
+          <span className="flex flex-col gap-1 font-medium text-muted-foreground text-xs lg:flex-row lg:items-center lg:justify-between">
             <span
               className="overflow-hidden text-ellipsis text-nowrap"
               title={tab.url ?? undefined}

@@ -1,8 +1,14 @@
+import { WindIcon } from "lucide-react";
 import type { Browser } from "#imports";
-import Empty from "@/components/Empty";
 import WindowView, {
   Loading as WindowLoading,
 } from "@/components/tab/WindowView";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+} from "@/components/ui/empty";
 
 export function Loading() {
   return <WindowLoading />;
@@ -25,10 +31,17 @@ export default function WindowList({
           <WindowView key={w.id} win={w} id={w.id!} />
         ))}
       </div>
-      <div className={`hidden peer-empty:block`}>
-        <Empty
-          message={`No ${minimized ? "minimized" : ""} windows match search`}
-        />
+      <div className="hidden font-medium peer-empty:block">
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <WindIcon />
+            </EmptyMedia>
+            <EmptyDescription>
+              No {minimized ? "minimized" : ""} windows match search
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       </div>
     </>
   );

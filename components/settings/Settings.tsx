@@ -1,5 +1,6 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { Settings2Icon } from "lucide-react";
+import { useAppConfig } from "#imports";
 import {
   FieldDescription,
   FieldGroup,
@@ -16,10 +17,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import pkg from "@/package.json";
 import { ThemeMode } from "./ThemeMode";
 
 export function Settings() {
+  const { version } = useAppConfig();
   return (
     <Sheet>
       <SheetTrigger
@@ -32,7 +33,7 @@ export function Settings() {
         <SheetHeader>
           <SheetTitle className="text-2xl">Settings</SheetTitle>
           <SheetDescription>
-            Tab Count Snooze version {pkg?.version ?? "unknown"}
+            Tab Count Snooze version {version}
           </SheetDescription>
         </SheetHeader>
 

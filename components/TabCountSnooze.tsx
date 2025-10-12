@@ -49,17 +49,17 @@ export default function TabCountSnooze() {
           <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-card/50 px-4 py-2 backdrop-blur-xs">
             <TabsList variant="nav">
               <TabsTrigger value="tab" variant="nav">
-                <PanelTopIcon className="size-4" /> Tab
+                <PanelTopIcon className="size-4" strokeWidth={3} /> Tab
               </TabsTrigger>
               <TabsTrigger
                 value="count"
                 variant="nav"
                 className="hidden md:flex"
               >
-                <ChartPieIcon className="size-4" /> Count
+                <ChartPieIcon className="size-4" strokeWidth={3} /> Count
               </TabsTrigger>
               <TabsTrigger value="snooze" variant="nav">
-                <CloudMoonIcon className="size-4" /> Snooze
+                <CloudMoonIcon className="size-4" strokeWidth={3} /> Snooze
               </TabsTrigger>
             </TabsList>
             <Settings />
