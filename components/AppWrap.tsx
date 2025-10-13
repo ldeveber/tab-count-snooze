@@ -2,10 +2,12 @@ import { type PropsWithChildren, Suspense } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Spinner } from "@/components/ui/spinner";
+import DataHandler from "@/lib/dataStore/DataHandler";
+import DataProvider from "@/lib/dataStore/DataProvider";
 
 function Loading() {
   return (
-    <div className="flex grow items-center justify-center">
+    <div className="@container/main flex min-h-screen grow items-center justify-center">
       <Spinner />
     </div>
   );
@@ -13,12 +15,17 @@ function Loading() {
 
 export default function AppWrap({ children }: PropsWithChildren) {
   return (
-    <div className="text-base">
-      <ThemeProvider>
-        <ErrorBoundary>
-          <Suspense fallback={<Loading />}>{children}</Suspense>
-        </ErrorBoundary>
-      </ThemeProvider>
-    </div>
+    <ThemeProvider>
+      <ErrorBoundary>
+        <div className="@container/main flex min-h-screen w-full flex-col">
+          <Suspense fallback={<Loading />}>
+            <DataProvider>
+              <DataHandler />
+              {children}
+            </DataProvider>
+          </Suspense>
+        </div>
+      </ErrorBoundary>
+    </ThemeProvider>
   );
 }

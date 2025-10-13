@@ -10,24 +10,9 @@ import SnoozeTab, {
 import WindowsTab, {
   Loading as WindowsTabLoading,
 } from "@/components/tab/WindowsTab";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ErrorDisplay from "./ErrorDisplay";
 import { Settings } from "./settings/Settings";
-
-export function Loading() {
-  return (
-    <div className="flex min-h-screen w-full flex-col">
-      <div className="flex flex-none items-center justify-center">
-        <Skeleton className="h-12 w-sm rounded-full" />
-      </div>
-      <div className="flex size-full grow items-center justify-center">
-        <Spinner />
-      </div>
-    </div>
-  );
-}
 
 export default function TabCountSnooze() {
   const [tab, setTab] = useState("tab");

@@ -1,18 +1,12 @@
 import { WindIcon } from "lucide-react";
 import type { Browser } from "#imports";
-import WindowView, {
-  Loading as WindowLoading,
-} from "@/components/tab/WindowView";
+import WindowView from "@/components/tab/WindowView";
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
 } from "@/components/ui/empty";
-
-export function Loading() {
-  return <WindowLoading />;
-}
 
 export default function WindowList({
   minimized = false,
