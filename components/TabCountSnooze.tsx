@@ -13,8 +13,6 @@ import WindowsTab, {
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import DataHandler from "@/lib/dataStore/DataHandler";
-import DataProvider from "@/lib/dataStore/DataProvider";
 import ErrorDisplay from "./ErrorDisplay";
 import { Settings } from "./settings/Settings";
 
@@ -39,54 +37,47 @@ export default function TabCountSnooze() {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <DataProvider>
-        <DataHandler />
-        <Tabs
-          value={tab}
-          onValueChange={handleChange}
-          className="size-full flex-grow"
-        >
-          <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-card/50 px-4 py-2 backdrop-blur-xs">
-            <TabsList variant="nav">
-              <TabsTrigger value="tab" variant="nav">
-                <PanelTopIcon className="size-4" strokeWidth={3} /> Tab
-              </TabsTrigger>
-              <TabsTrigger
-                value="count"
-                variant="nav"
-                className="hidden md:flex"
-              >
-                <ChartPieIcon className="size-4" strokeWidth={3} /> Count
-              </TabsTrigger>
-              <TabsTrigger value="snooze" variant="nav">
-                <CloudMoonIcon className="size-4" strokeWidth={3} /> Snooze
-              </TabsTrigger>
-            </TabsList>
-            <Settings />
-          </div>
-          <TabsContent value="tab">
-            <ErrorBoundary FallbackComponent={ErrorDisplay}>
-              <Suspense fallback={<WindowsTabLoading />}>
-                <WindowsTab />
-              </Suspense>
-            </ErrorBoundary>
-          </TabsContent>
-          <TabsContent value="count" className="flex size-full">
-            <ErrorBoundary FallbackComponent={ErrorDisplay}>
-              <Suspense fallback={<ChartsTabLoading />}>
-                <ChartsTab />
-              </Suspense>
-            </ErrorBoundary>
-          </TabsContent>
-          <TabsContent value="snooze">
-            <ErrorBoundary FallbackComponent={ErrorDisplay}>
-              <Suspense fallback={<SnoozeTabLoading />}>
-                <SnoozeTab />
-              </Suspense>
-            </ErrorBoundary>
-          </TabsContent>
-        </Tabs>
-      </DataProvider>
+      <Tabs
+        value={tab}
+        onValueChange={handleChange}
+        className="size-full flex-grow"
+      >
+        <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-card/50 px-4 py-2 backdrop-blur-xs">
+          <TabsList variant="nav">
+            <TabsTrigger value="tab" variant="nav">
+              <PanelTopIcon className="size-4" strokeWidth={3} /> Tab
+            </TabsTrigger>
+            <TabsTrigger value="count" variant="nav" className="hidden md:flex">
+              <ChartPieIcon className="size-4" strokeWidth={3} /> Count
+            </TabsTrigger>
+            <TabsTrigger value="snooze" variant="nav">
+              <CloudMoonIcon className="size-4" strokeWidth={3} /> Snooze
+            </TabsTrigger>
+          </TabsList>
+          <Settings />
+        </div>
+        <TabsContent value="tab">
+          <ErrorBoundary FallbackComponent={ErrorDisplay}>
+            <Suspense fallback={<WindowsTabLoading />}>
+              <WindowsTab />
+            </Suspense>
+          </ErrorBoundary>
+        </TabsContent>
+        <TabsContent value="count" className="flex size-full">
+          <ErrorBoundary FallbackComponent={ErrorDisplay}>
+            <Suspense fallback={<ChartsTabLoading />}>
+              <ChartsTab />
+            </Suspense>
+          </ErrorBoundary>
+        </TabsContent>
+        <TabsContent value="snooze">
+          <ErrorBoundary FallbackComponent={ErrorDisplay}>
+            <Suspense fallback={<SnoozeTabLoading />}>
+              <SnoozeTab />
+            </Suspense>
+          </ErrorBoundary>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
