@@ -1,6 +1,6 @@
 import { type PropsWithChildren, Suspense } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { Spinner } from "@/components/ui/spinner";
 import DataHandler from "@/lib/dataStore/DataHandler";
 import DataProvider from "@/lib/dataStore/DataProvider";

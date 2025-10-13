@@ -1,4 +1,4 @@
-import { type Theme, useTheme } from "@/components/theme/ThemeProvider";
+import { type Theme, useTheme } from "@/components/ThemeProvider";
 import {
   Field,
   FieldDescription,
