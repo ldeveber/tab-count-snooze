@@ -1,6 +1,7 @@
 import { ChevronUpIcon } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { type Browser, browser } from "#imports";
+import { Card } from "@/components/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
@@ -15,7 +16,6 @@ import {
   useTabs,
 } from "@/lib/dataStore";
 import { filterSortTabs } from "@/utils/filterTabs";
-import { Card } from "../ui/card";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
 
@@ -28,10 +28,6 @@ type RenderListType = {
   readonly tab?: Browser.tabs.Tab;
   readonly group?: GroupType;
 };
-
-export function Loading() {
-  return null;
-}
 
 export default function WindowView({
   id,

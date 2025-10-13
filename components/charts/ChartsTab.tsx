@@ -23,22 +23,18 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { useAllTabs } from "@/lib/dataStore";
-import StickyTabSubMenuBar, {
-  Loading as StickyTabSubMenuBarLoading,
-} from "../StickyTabSubMenuBar";
+import StickyTabSubMenuBar from "../StickyTabSubMenuBar";
 import TabCountTagline from "../TabCountTagline";
 
 export function Loading() {
   return (
     <div className="flex flex-col">
-      <StickyTabSubMenuBarLoading>
+      <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4">
           <Skeleton className="h-8 w-sm" />
         </div>
-        <div className="flex shrink items-center gap-4 @4xl/main:px-8">
-          <Skeleton className="h-8 w-sm" />
-        </div>
-      </StickyTabSubMenuBarLoading>
+        <Skeleton className="h-5 w-32 rounded-full" />
+      </StickyTabSubMenuBar>
       <div className="flex grow items-center justify-center">
         <Spinner />
       </div>
@@ -76,7 +72,7 @@ export default function ChartsTab() {
       <StickyTabSubMenuBar>
         <TabsList>
           <TabsTrigger value="bar">
-            <BarChart3Icon className="size-4" /> Bar - Open Origin Counts
+            <BarChart3Icon className="size-4" /> Bar - Top Open Origins
           </TabsTrigger>
           <TabsTrigger value="sunburst">
             <SunIcon className="size-4" /> Sunburst - Top Open Tabs

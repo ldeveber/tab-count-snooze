@@ -1,12 +1,15 @@
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { Settings2Icon } from "lucide-react";
-import { ModeToggle } from "@/components/theme/ThemeToggle";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { useAppConfig } from "#imports";
+import {
+  FieldDescription,
+  FieldGroup,
+  FieldLegend,
+  FieldSet,
+} from "@/components/ui/field";
 import { Link } from "@/components/ui/link";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
   SheetFooter,
@@ -14,38 +17,50 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import pkg from "@/package.json";
+import { ThemeMode } from "./ThemeMode";
 
 export function Settings() {
+  const { version } = useAppConfig();
   return (
     <Sheet>
       <SheetTrigger
-        className="absolute top-3 right-3 inline-flex size-7 shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md bg-input/50 font-medium text-sm shadow-xs outline-none transition-all hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 dark:hover:bg-accent/50 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+        className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
         aria-label="Open settings"
       >
         <Settings2Icon className="size-4" />
       </SheetTrigger>
-      <SheetContent side="top">
+      <SheetContent side="top" className="max-h-screen overflow-hidden">
         <SheetHeader>
           <SheetTitle className="text-2xl">Settings</SheetTitle>
           <SheetDescription>
-            Tab Count Snooze version {pkg?.version ?? "unknown"}
+            Tab Count Snooze version {version}
           </SheetDescription>
         </SheetHeader>
 
-        <div className="grid flex-1 auto-rows-min gap-6 px-4">
-          <div className="grid gap-3">
-            <Label htmlFor="sheet-demo-name">Theme Mode</Label>
-            <ModeToggle />
-          </div>
-          <p>More settings coming soon.</p>
-          <div className="flex items-center justify-center gap-4">
-            <Button disabled type="submit">
-              Save
-            </Button>
-            <SheetClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </SheetClose>
+        <div className="flex-1 overflow-y-auto px-4">
+          <div className="grid auto-rows-min gap-6">
+            <FieldGroup>
+              <FieldSet>
+                <FieldLegend>Display</FieldLegend>
+                <FieldDescription>
+                  Settings related to the display.
+                </FieldDescription>
+                <FieldGroup>
+                  <ThemeMode />
+                </FieldGroup>
+              </FieldSet>
+            </FieldGroup>
+
+            <p>More settings coming soon.</p>
+
+            {/* <div className="flex items-center justify-center gap-4">
+              <Button disabled type="submit">
+                Save
+              </Button>
+              <SheetClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </SheetClose>
+            </div> */}
           </div>
         </div>
         <SheetFooter>

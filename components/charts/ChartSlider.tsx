@@ -1,7 +1,7 @@
 import { CircleQuestionMarkIcon, Undo2Icon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Slider } from "@/components/ui/slider";
 import {
   Tooltip,
@@ -48,13 +48,13 @@ export function ChartSlider({
   };
 
   return (
-    <div className="space-y-3">
+    <Field>
       <div className="flex flex-row gap-2">
-        <Label htmlFor={id}>{label}</Label>
+        <FieldLabel>{label}</FieldLabel>
         {tooltip && (
           <Tooltip>
-            <TooltipTrigger>
-              <CircleQuestionMarkIcon className="size-3 text-muted-foreground" />
+            <TooltipTrigger aria-label={`Help for ${label}`}>
+              <CircleQuestionMarkIcon className="size-4 text-muted-foreground" />
             </TooltipTrigger>
             <TooltipContent>
               <p>{tooltip}</p>
@@ -69,7 +69,7 @@ export function ChartSlider({
             onClick={handleReset}
             aria-label={`Undo ${label} change`}
           >
-            <Undo2Icon className="size-3" />
+            <Undo2Icon className="size-4" />
           </Button>
         )}
       </div>
@@ -81,6 +81,6 @@ export function ChartSlider({
         onValueChange={handleChange}
         onValueCommit={handleCommit}
       />
-    </div>
+    </Field>
   );
 }

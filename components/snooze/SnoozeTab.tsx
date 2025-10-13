@@ -1,19 +1,15 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
-import StickyTabSubMenuBar, {
-  Loading as StickyTabSubMenuBarLoading,
-} from "../StickyTabSubMenuBar";
+import StickyTabSubMenuBar from "../StickyTabSubMenuBar";
 import TabCountTagline from "../TabCountTagline";
 
 export function Loading() {
   return (
     <div className="flex flex-col">
-      <StickyTabSubMenuBarLoading>
+      <StickyTabSubMenuBar>
         <div className="flex grow items-center gap-4"></div>
-        <div className="flex shrink items-center gap-4">
-          <Skeleton className="h-8 w-sm" />
-        </div>
-      </StickyTabSubMenuBarLoading>
+        <Skeleton className="h-5 w-32 rounded-full" />
+      </StickyTabSubMenuBar>
       <div className="flex grow items-center justify-center @4xl/main:px-8">
         <Spinner />
       </div>

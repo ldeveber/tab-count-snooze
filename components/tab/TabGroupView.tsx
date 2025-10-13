@@ -13,15 +13,15 @@ import TabView from "./TabView";
 const listVariants = cva("border-l-4", {
   variants: {
     color: {
-      grey: "border-l-gray-300 dark:border-l-gray-800",
-      blue: "border-l-blue-300 dark:border-l-blue-800",
-      red: "border-l-red-300 dark:border-l-red-800",
-      yellow: "border-l-yellow-300 dark:border-l-yellow-800",
-      green: "border-l-green-300 dark:border-l-green-800",
-      pink: "border-l-pink-300 dark:border-l-pink-800",
-      purple: "border-l-purple-300 dark:border-l-purple-800",
-      cyan: "border-l-cyan-300 dark:border-l-cyan-800",
-      orange: "border-l-orange-300 dark:border-l-orange-800",
+      grey: "border-l-gray-300",
+      blue: "border-l-blue-300",
+      red: "border-l-red-300",
+      yellow: "border-l-yellow-300",
+      green: "border-l-green-300",
+      pink: "border-l-pink-300",
+      purple: "border-l-purple-300",
+      cyan: "border-l-cyan-300",
+      orange: "border-l-orange-300",
     },
   },
   defaultVariants: {
@@ -30,19 +30,19 @@ const listVariants = cva("border-l-4", {
 });
 
 const pillVariants = cva(
-  "flex-shrink overflow-hidden text-ellipsis text-nowrap rounded-full px-3 py-1 font-medium text-sm",
+  "flex-shrink overflow-hidden text-ellipsis text-nowrap rounded-full px-3 py-1 font-medium text-neutral-900 text-sm",
   {
     variants: {
       color: {
-        grey: "bg-gray-300 dark:bg-gray-800",
-        blue: "bg-blue-300 dark:bg-blue-800",
-        red: "bg-red-300 dark:bg-red-800",
-        yellow: "bg-yellow-300 dark:bg-yellow-800",
-        green: "bg-green-300 dark:bg-green-800",
-        pink: "bg-pink-300 dark:bg-pink-800",
-        purple: "bg-purple-300 dark:bg-purple-800",
-        cyan: "bg-cyan-300 dark:bg-cyan-800",
-        orange: "bg-orange-300 dark:bg-orange-800",
+        grey: "bg-gray-300",
+        blue: "bg-blue-300",
+        red: "bg-red-300",
+        yellow: "bg-yellow-300",
+        green: "bg-green-300",
+        pink: "bg-pink-300",
+        purple: "bg-purple-300",
+        cyan: "bg-cyan-300",
+        orange: "bg-orange-300",
       },
     },
     defaultVariants: {
