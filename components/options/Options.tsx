@@ -17,7 +17,9 @@ export default function Options() {
           Options UI is under construction.
         </p>
       </div>
-      <OptFooter />
+      <div className="mt-auto flex flex-col gap-2 p-4">
+        <OptFooter />
+      </div>
     </div>
   );
 }

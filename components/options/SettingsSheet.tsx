@@ -35,7 +35,6 @@ export function SettingsSheet() {
             Tab Count Snooze version {version}
           </SheetDescription>
         </SheetHeader>
-
         <div className="flex-1 overflow-y-auto px-4">
           <div className="grid auto-rows-min gap-6">
             <FieldGroup>
