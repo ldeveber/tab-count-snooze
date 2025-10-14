@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { ThemeMode } from "./ThemeMode";
 
-export function Settings() {
+export function SettingsSheet() {
   const { version } = useAppConfig();
   return (
     <Sheet>
