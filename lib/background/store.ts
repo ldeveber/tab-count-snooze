@@ -1,12 +1,19 @@
 import type { Browser } from "#imports";
-import { browser } from "#imports";
+import { browser, storage } from "#imports";
+import { cloneTab, cloneTabGroup, cloneWindow } from "@/lib/clone";
 import type {
   DataInboundMessage,
   DataOutboundMessage,
 } from "@/lib/dataStore/messages";
 import { type BackgroundAction, dataReducer } from "@/lib/dataStore/reducer";
 import { createInitialState, type State } from "@/lib/dataStore/state";
-import { cloneTab, cloneTabGroup, cloneWindow } from "../clone";
+import {
+  getStorageKey,
+  MAX_TABS_THRESHOLD,
+  MAX_WINS_THRESHOLD,
+  POPUP_COUNT,
+  POPUP_COUNT_COLOR,
+} from "@/lib/storage";
 
 type SerializedState = {
   windows: Browser.windows.Window[];
@@ -45,10 +52,43 @@ function computeCounts(current: State) {
   };
 }
 
+async function hasExceededThreshold(tabCount: number, windowCount: number) {
+  const maxTabsThreshold = await storage.getItem(
+    getStorageKey(MAX_TABS_THRESHOLD),
+    { fallback: 0 },
+  );
+  const maxWinsThreshold = await storage.getItem(
+    getStorageKey(MAX_WINS_THRESHOLD),
+    { fallback: 0 },
+  );
+  return (
+    (maxTabsThreshold !== 0 && maxTabsThreshold < tabCount) ||
+    (maxWinsThreshold !== 0 && maxWinsThreshold < windowCount)
+  );
+}
+
 async function updateBadge() {
   const { tabCount, windowCount } = computeCounts(state);
   try {
-    await browser.action.setBadgeText({ text: `${tabCount}` });
+    const showCount = await storage.getItem(getStorageKey(POPUP_COUNT), {
+      fallback: "false",
+    });
+    const enableCountColor = await storage.getItem(
+      getStorageKey(POPUP_COUNT_COLOR),
+      {
+        fallback: false,
+      },
+    );
+    const isOverThreshold = await hasExceededThreshold(tabCount, windowCount);
+    if (
+      showCount === "always" ||
+      (showCount === "warning" && isOverThreshold)
+    ) {
+      await browser.action.setBadgeText({ text: `${tabCount}` });
+      if (isOverThreshold && enableCountColor) {
+        await browser.action.setBadgeBackgroundColor({ color: `orange` });
+      }
+    }
     await browser.action.setTitle({
       title: `Tab Count Snooze (${tabCount}/${windowCount})`,
     });
@@ -147,6 +187,20 @@ function registerTabGroupListeners() {
   );
 }
 
+function registerStorageListeners() {
+  browser.storage.onChanged.addListener((changes, areaName) => {
+    if (
+      areaName === "local" &&
+      (Object.hasOwn(changes, MAX_TABS_THRESHOLD) ||
+        Object.hasOwn(changes, MAX_WINS_THRESHOLD) ||
+        Object.hasOwn(changes, POPUP_COUNT) ||
+        Object.hasOwn(changes, POPUP_COUNT_COLOR))
+    ) {
+      updateBadge();
+    }
+  });
+}
+
 function registerWindowListeners() {
   browser.windows.onCreated.addListener((win: Browser.windows.Window) => {
     lastFocusedWindowId = win.id ?? browser.windows.WINDOW_ID_NONE;
@@ -189,6 +243,7 @@ export async function initializeStore() {
     console.error("Error initializing background store", err);
   }
 
+  registerStorageListeners();
   registerWindowListeners();
   registerTabGroupListeners();
   registerTabListeners();

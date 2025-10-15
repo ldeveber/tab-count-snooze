@@ -5,6 +5,12 @@ import StickyTabSubMenuBar from "@/components/StickyTabSubMenuBar";
 import TabCountTagline from "@/components/TabCountTagline";
 import WindowList from "@/components/tab/WindowList";
 import { Divider } from "@/components/ui/divider";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyMedia,
+} from "@/components/ui/empty";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import {
@@ -13,7 +19,7 @@ import {
   useWindowCount,
   useWindows,
 } from "@/lib/dataStore";
-import { Empty, EmptyDescription, EmptyHeader, EmptyMedia } from "../ui/empty";
+import { ThresholdWarning } from "./ThresholdWarning";
 import WindowsBulkActions from "./WindowsBulkActions";
 
 export function Loading() {
@@ -69,6 +75,8 @@ export default function WindowsTab() {
       </StickyTabSubMenuBar>
 
       <div className="flex grow flex-col gap-4 @4xl/main:px-8 px-4 py-2">
+        <ThresholdWarning />
+
         <WindowList windows={open} />
         {minimized.length > 0 && (
           <Divider aria-label="Minimized Windows">Minimized</Divider>
