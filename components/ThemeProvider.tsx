@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { TailwindIndicator } from "./tailwind-indicator";
 
 export type Theme = "dark" | "light" | "system";
 
@@ -59,6 +60,7 @@ export function ThemeProvider({
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
       {children}
+      <TailwindIndicator />
     </ThemeProviderContext.Provider>
   );
 }
