@@ -7,7 +7,7 @@ import DataProvider from "@/lib/dataStore/DataProvider";
 
 function Loading() {
   return (
-    <div className="@container/main flex min-h-screen grow items-center justify-center">
+    <div className="flex size-full grow items-center justify-center">
       <Spinner />
     </div>
   );
@@ -17,14 +17,12 @@ export default function AppWrap({ children }: PropsWithChildren) {
   return (
     <ThemeProvider>
       <ErrorBoundary>
-        <div className="@container/main flex min-h-screen w-full flex-col">
-          <Suspense fallback={<Loading />}>
-            <DataProvider>
-              <DataHandler />
-              {children}
-            </DataProvider>
-          </Suspense>
-        </div>
+        <Suspense fallback={<Loading />}>
+          <DataProvider>
+            <DataHandler />
+            {children}
+          </DataProvider>
+        </Suspense>
       </ErrorBoundary>
     </ThemeProvider>
   );

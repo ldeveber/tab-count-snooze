@@ -12,7 +12,7 @@ import WindowsTab, {
 } from "@/components/tab/WindowsTab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ErrorDisplay from "./ErrorDisplay";
-import { Settings } from "./settings/Settings";
+import { SettingsSheet } from "./options/SettingsSheet";
 
 export default function TabCountSnooze() {
   const [tab, setTab] = useState("tab");
@@ -39,7 +39,7 @@ export default function TabCountSnooze() {
               <CloudMoonIcon className="size-4" strokeWidth={3} /> Snooze
             </TabsTrigger>
           </TabsList>
-          <Settings />
+          <SettingsSheet />
         </div>
         <TabsContent value="tab">
           <ErrorBoundary FallbackComponent={ErrorDisplay}>
