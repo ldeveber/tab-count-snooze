@@ -1,5 +1,6 @@
 import { useAppConfig } from "wxt/utils/app-config";
 import { OptFooter } from "./OptFooter";
+import { SettingsBody } from "./SettingsBody";
 
 export default function Options() {
   const { version } = useAppConfig();
@@ -12,10 +13,7 @@ export default function Options() {
         </p>
       </div>
       <div className="mt-22 mb-16 flex-grow overflow-y-auto p-4">
-        <h1 className="font-semibold text-lg">Options</h1>
-        <p className="text-muted-foreground text-sm">
-          Options UI is under construction.
-        </p>
+        <SettingsBody />
       </div>
       <div className="fixed bottom-0 z-50 flex w-full flex-shrink flex-col gap-2 bg-background p-4">
         <OptFooter />
