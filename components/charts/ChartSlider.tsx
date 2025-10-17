@@ -65,7 +65,7 @@ export function ChartSlider({
           <Button
             disabled={disabled}
             variant="ghost"
-            size="iconSm"
+            size="icon-xs"
             onClick={handleReset}
             aria-label={`Undo ${label} change`}
           >

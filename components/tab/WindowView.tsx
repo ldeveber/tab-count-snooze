@@ -103,7 +103,7 @@ export default function WindowView({
     return null;
   }
   return (
-    <Card className="overflow-hidden rounded-3xl">
+    <Card className="overflow-hidden rounded-3xl py-0">
       <Collapsible
         id={`window-${id}`}
         open={expanded}
