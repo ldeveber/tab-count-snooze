@@ -50,7 +50,7 @@
     "use-debounce": "^10.0.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.2.5",
+    "@biomejs/biome": "2.2.7",
     "@faker-js/faker": "^10.1.0",
     "@tailwindcss/vite": "^4.1.15",
     "@testing-library/jest-dom": "^6.9.1",
