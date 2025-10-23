@@ -1,5 +1,10 @@
 import type { Browser } from "#imports";
-import { SORT_OPTION } from "./options";
+import {
+  type FilterOptions,
+  SORT_BY,
+  SORT_OPTION,
+  type SortOptions,
+} from "./options";
 
 export type DedupeConfig = {
   dedupe: boolean;
@@ -8,11 +13,12 @@ export type DedupeConfig = {
 
 export function filterTabs(
   tabs: Browser.tabs.Tab[] | undefined,
-  search: string = "",
+  filters: FilterOptions,
 ) {
   if (!tabs || !tabs.length) {
     return [];
   }
+  const { search } = filters;
   return tabs.filter(
     ({ title, url }) =>
       title?.toLowerCase().includes(search.toLowerCase()) ||
@@ -20,22 +26,32 @@ export function filterTabs(
   );
 }
 
-export function sortTabs(tabs: Browser.tabs.Tab[], sort: SORT_OPTION) {
-  if ((sort as SORT_OPTION) === SORT_OPTION.LastAccessed) {
-    tabs.sort((a, b) =>
-      a.lastAccessed && b.lastAccessed ? b.lastAccessed - a.lastAccessed : 0,
-    );
+export function sortTabs(tabs: Browser.tabs.Tab[], sort: SortOptions) {
+  if (sort.key === SORT_OPTION.LastAccessed) {
+    if (sort.direction === SORT_BY.Ascending) {
+      tabs.sort((a, b) =>
+        a.lastAccessed && b.lastAccessed ? b.lastAccessed - a.lastAccessed : 0,
+      );
+    } else {
+      tabs.sort((b, a) =>
+        a.lastAccessed && b.lastAccessed ? b.lastAccessed - a.lastAccessed : 0,
+      );
+    }
   } else {
-    tabs.sort((a, b) => a.index - b.index);
+    if (sort.direction === SORT_BY.Ascending) {
+      tabs.sort((a, b) => a.index - b.index);
+    } else {
+      tabs.sort((b, a) => a.index - b.index);
+    }
   }
   return tabs;
 }
 
 export function filterSortTabs(
   tabs: Browser.tabs.Tab[],
-  search: string,
-  sort: SORT_OPTION,
+  filters: FilterOptions,
+  sort: SortOptions,
 ) {
-  const t = filterTabs(tabs, search);
+  const t = filterTabs(tabs, filters);
   return sortTabs(t, sort);
 }

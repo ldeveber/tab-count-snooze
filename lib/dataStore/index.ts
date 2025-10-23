@@ -30,19 +30,15 @@ export function useWindowsContext() {
 
 export function useIsFiltered() {
   const context = useDisplayContext();
-  return context.filters.dupes || context.filters.search.length > 0;
+  return context.filters.dupesOnly || context.filters.search.length > 0;
 }
 
-export function useSearch() {
-  return useDisplayContext().filters.search;
-}
-
-export function useDuplicateFilter() {
-  return useDisplayContext().filters.dupes;
+export function useFilters() {
+  return useDisplayContext().filters;
 }
 
 export function useSort() {
-  return useDisplayContext().sort.key;
+  return useDisplayContext().sort;
 }
 
 // -- Windows -------------------------------------------------------------- //

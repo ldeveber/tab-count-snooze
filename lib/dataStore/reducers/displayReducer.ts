@@ -1,33 +1,28 @@
-import { SORT_BY, SORT_OPTION } from "@/utils/options";
-
-type FilterState = {
-  dupes: boolean;
-  search: string;
-};
-
-type SortState = {
-  key: SORT_OPTION;
-  direction: SORT_BY;
-};
+import {
+  type FilterOptions,
+  SORT_BY,
+  SORT_OPTION,
+  type SortOptions,
+} from "@/utils/options";
 
 export type State = {
-  filters: FilterState;
-  sort: SortState;
+  filters: FilterOptions;
+  sort: SortOptions;
 };
 
-const createInitialFilterState = (): FilterState => ({
-  dupes: false,
+const createInitialFilterOptions = (): FilterOptions => ({
+  dupesOnly: false,
   search: "",
 });
 
-const createInitialSortState = (): SortState => ({
+const createInitialSortOptions = (): SortOptions => ({
   key: SORT_OPTION.Default,
   direction: SORT_BY.Ascending,
 });
 
 export const createInitialState = (): State => ({
-  filters: createInitialFilterState(),
-  sort: createInitialSortState(),
+  filters: createInitialFilterOptions(),
+  sort: createInitialSortOptions(),
 });
 
 export const initialState: State = createInitialState();
@@ -69,13 +64,13 @@ export default function displayReducer(state: State, action: Action): State {
     case "resetFilter": {
       return {
         ...state,
-        filters: createInitialFilterState(),
+        filters: createInitialFilterOptions(),
       };
     }
     case "resetSort": {
       return {
         ...state,
-        sort: createInitialSortState(),
+        sort: createInitialSortOptions(),
       };
     }
     case "sort": {
