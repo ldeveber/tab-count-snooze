@@ -8,9 +8,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
+  useFilters,
   useIsFiltered,
   useMostRecentTabFromWindow,
-  useSearch,
   useSort,
   useTabGroups,
   useTabs,
@@ -40,7 +40,7 @@ export default function WindowView({
   const windowTabs = useTabs(win.id);
   const isFiltered = useIsFiltered();
   const sort = useSort();
-  const search = useSearch();
+  const filters = useFilters();
   const mostRecentTab = useMostRecentTabFromWindow(win.id);
   const [lastViewed, setLastViewed] = useState<Date | null>(
     mostRecentTab?.lastAccessed ? new Date(mostRecentTab.lastAccessed) : null,
@@ -64,8 +64,8 @@ export default function WindowView({
   }, [onActivated]);
 
   const visibleTabs = useMemo(
-    () => filterSortTabs(windowTabs, search, sort),
-    [windowTabs, search, sort],
+    () => filterSortTabs(windowTabs, filters, sort),
+    [windowTabs, filters, sort],
   );
 
   const tabList: RenderListType[] = useMemo(() => {

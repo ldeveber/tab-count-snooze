@@ -2,7 +2,7 @@ import { describe, expect, test } from "vitest";
 import type { Browser } from "#imports";
 import { mockTab } from "@/tests/utils/mockDataHelper";
 import { filterSortTabs, filterTabs, sortTabs } from "@/utils/filterTabs";
-import { SORT_OPTION } from "@/utils/options";
+import { SORT_BY, SORT_OPTION } from "@/utils/options";
 
 const tabMock = (props?: Partial<Browser.tabs.Tab>) => {
   const initProps: Partial<Browser.tabs.Tab> = {
@@ -15,14 +15,8 @@ const tabMock = (props?: Partial<Browser.tabs.Tab>) => {
 
 describe("filterTabs utils", () => {
   describe("filterTabs", () => {
-    test("should return same result if no search or filters", () => {
-      const tabs = [mockTab(), mockTab(), mockTab()];
-      const res = filterTabs(tabs);
-      expect(res).toEqual(tabs);
-    });
-
     test("should not blow up if tabs is empty", () => {
-      const res = filterTabs([]);
+      const res = filterTabs([], { search: "", dupesOnly: false });
       expect(res).toEqual([]);
     });
 
@@ -36,7 +30,7 @@ describe("filterTabs utils", () => {
         const tab6 = tabMock({ index: 5, title: "category meow" });
         const tabs = [tab1, tab2, tab3, tab4, tab5, tab6];
 
-        const res = filterTabs(tabs, "cat");
+        const res = filterTabs(tabs, { search: "cat", dupesOnly: false });
         expect(res).toEqual([tabs[3], tabs[5]]);
       });
 
@@ -49,27 +43,55 @@ describe("filterTabs utils", () => {
         const tab6 = tabMock({ index: 5, url: "http://i-love-CATS.com" });
         const tabs = [tab1, tab2, tab3, tab4, tab5, tab6];
 
-        const res = filterTabs(tabs, "cats");
+        const res = filterTabs(tabs, { search: "cats", dupesOnly: false });
         expect(res).toEqual([tabs[0], tabs[3], tabs[5]]);
       });
     });
   });
 
   describe("sortTabs", () => {
-    test("should sort by default", () => {
+    test("should sort by default ascending", () => {
       const tab1 = mockTab({ index: 1 });
       const tab2 = mockTab({ index: 0 });
       const tab3 = mockTab({ index: 2 });
-      const res = sortTabs([tab1, tab2, tab3], SORT_OPTION.Default);
+      const res = sortTabs([tab1, tab2, tab3], {
+        key: SORT_OPTION.Default,
+        direction: SORT_BY.Ascending,
+      });
       expect(res).toEqual([tab2, tab1, tab3]);
     });
 
-    test("should sort by last accessed", () => {
+    test("should sort by default descending", () => {
+      const tab1 = mockTab({ index: 1 });
+      const tab2 = mockTab({ index: 0 });
+      const tab3 = mockTab({ index: 2 });
+      const res = sortTabs([tab1, tab2, tab3], {
+        key: SORT_OPTION.Default,
+        direction: SORT_BY.Descending,
+      });
+      expect(res).toEqual([tab3, tab1, tab2]);
+    });
+
+    test("should sort by last accessed ascending", () => {
       const tab1 = mockTab({ index: 0, lastAccessed: 2222222222222 });
       const tab2 = mockTab({ index: 1, lastAccessed: 3333333333333 });
       const tab3 = mockTab({ index: 2, lastAccessed: 1111111111111 });
-      const res = sortTabs([tab1, tab2, tab3], SORT_OPTION.LastAccessed);
+      const res = sortTabs([tab1, tab2, tab3], {
+        key: SORT_OPTION.LastAccessed,
+        direction: SORT_BY.Ascending,
+      });
       expect(res).toEqual([tab2, tab1, tab3]);
+    });
+
+    test("should sort by last accessed descending", () => {
+      const tab1 = mockTab({ index: 0, lastAccessed: 2222222222222 });
+      const tab2 = mockTab({ index: 1, lastAccessed: 3333333333333 });
+      const tab3 = mockTab({ index: 2, lastAccessed: 1111111111111 });
+      const res = sortTabs([tab1, tab2, tab3], {
+        key: SORT_OPTION.LastAccessed,
+        direction: SORT_BY.Descending,
+      });
+      expect(res).toEqual([tab3, tab1, tab2]);
     });
   });
 
@@ -78,7 +100,11 @@ describe("filterTabs utils", () => {
       const tab1 = mockTab({ index: 0 });
       const tab2 = mockTab({ index: 1 });
       const tab3 = mockTab({ index: 2 });
-      const res = filterSortTabs([tab1, tab2, tab3], "", SORT_OPTION.Default);
+      const res = filterSortTabs(
+        [tab1, tab2, tab3],
+        { search: "", dupesOnly: false },
+        { key: SORT_OPTION.Default, direction: SORT_BY.Ascending },
+      );
       expect(res).toEqual([tab1, tab2, tab3]);
     });
   });

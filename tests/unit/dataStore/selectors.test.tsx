@@ -85,7 +85,7 @@ describe("data store selectors", () => {
   it("identifies filtered state", () => {
     const state = createInitialState();
     state.display.filters.search = "zz";
-    state.display.filters.dupes = false;
+    state.display.filters.dupesOnly = false;
     state.display.sort = {
       key: SORT_OPTION.LastAccessed,
       direction: SORT_BY.Descending,

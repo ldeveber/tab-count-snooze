@@ -4,19 +4,19 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { TooltipButton } from "@/components/ui/tooltip-button";
 import type { TabIdType } from "@/lib/browser/actions";
 import { closeTabsAction, groupTabsAction } from "@/lib/browser/actions";
-import { useAllTabs, useSearch, useSelectedTabs } from "@/lib/dataStore";
+import { useAllTabs, useFilters, useSelectedTabs } from "@/lib/dataStore";
 import { filterTabs } from "@/utils/filterTabs";
 
 export default function WindowsBulkActions() {
   const selected = useSelectedTabs();
-  const search = useSearch();
+  const filters = useFilters();
   const allTabs = useAllTabs();
 
   const getSelectedTabIds = (): ReadonlyArray<TabIdType> => {
     if (selected.length > 0) {
       return selected;
     }
-    const tabs = filterTabs(allTabs, search);
+    const tabs = filterTabs(allTabs, filters);
     const tabIds: TabIdType[] = [];
 
     if (selected.length > 0) {
@@ -40,8 +40,8 @@ export default function WindowsBulkActions() {
   };
 
   const filtleredCount = useMemo(() => {
-    return filterTabs(allTabs, search).length;
-  }, [allTabs, search]);
+    return filterTabs(allTabs, filters).length;
+  }, [allTabs, filters]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: need to move to data store
   const disabled = useMemo(() => {
@@ -50,7 +50,7 @@ export default function WindowsBulkActions() {
 
   const onGroup: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
-    void groupTabsAction(tabIds as [number, ...number[]], search);
+    void groupTabsAction(tabIds as [number, ...number[]], filters.search);
   };
   const onClose: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
