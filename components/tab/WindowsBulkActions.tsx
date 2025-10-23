@@ -4,23 +4,21 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { TooltipButton } from "@/components/ui/tooltip-button";
 import type { TabIdType } from "@/lib/browser/actions";
 import { closeTabsAction, groupTabsAction } from "@/lib/browser/actions";
-import { useAllTabs, useFilters, useSelectedTabs } from "@/lib/dataStore";
-import { filterTabs } from "@/utils/filterTabs";
+import { useDisplayedTabs, useFilters, useSelectedTabs } from "@/lib/dataStore";
 
 export default function WindowsBulkActions() {
   const selected = useSelectedTabs();
   const filters = useFilters();
-  const allTabs = useAllTabs();
+  const visibleTabs = useDisplayedTabs();
 
   const getSelectedTabIds = (): ReadonlyArray<TabIdType> => {
     if (selected.length > 0) {
       return selected;
     }
-    const tabs = filterTabs(allTabs, filters);
     const tabIds: TabIdType[] = [];
 
     if (selected.length > 0) {
-      tabs.forEach(({ id }) => {
+      visibleTabs.forEach(({ id }) => {
         if (!id) {
           return;
         }
@@ -29,7 +27,7 @@ export default function WindowsBulkActions() {
         }
       });
     } else {
-      tabs.forEach(({ id }) => {
+      visibleTabs.forEach(({ id }) => {
         if (!id) {
           return;
         }
@@ -39,10 +37,6 @@ export default function WindowsBulkActions() {
     return tabIds;
   };
 
-  const filtleredCount = useMemo(() => {
-    return filterTabs(allTabs, filters).length;
-  }, [allTabs, filters]);
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: need to move to data store
   const disabled = useMemo(() => {
     return getSelectedTabIds().length === 0;
@@ -50,13 +44,20 @@ export default function WindowsBulkActions() {
 
   const onGroup: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
-    void groupTabsAction(tabIds as [number, ...number[]], filters.search);
+    let name = filters.search;
+    if (filters.dupesOnly) {
+      name = "dupes";
+    } else if (filters.stale) {
+      name = "stale";
+    }
+    void groupTabsAction(tabIds as [number, ...number[]], name);
   };
   const onClose: MouseEventHandler<HTMLButtonElement> = () => {
     const tabIds = getSelectedTabIds();
     void closeTabsAction(tabIds);
   };
 
+  const filtleredCount = visibleTabs.length;
   return (
     <div className="flex flex-grow flex-row items-center justify-end gap-2">
       <div>

@@ -29,6 +29,7 @@ export default function DataHandler() {
           tabGroups: message.payload.tabGroups,
         });
         dispatch({ type: "setTabs", tabs: message.payload.tabs });
+        dispatch({ type: "setDupeCount", dupes: message.payload.dupes });
         return;
       }
 

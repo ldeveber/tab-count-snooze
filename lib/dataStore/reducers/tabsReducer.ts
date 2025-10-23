@@ -5,17 +5,20 @@ import { cloneTab } from "@/lib/clone";
 export type State = {
   selectedTabIds: TabIdType[];
   map: Map<TabIdType, Browser.tabs.Tab>;
+  dupes: Record<string, number>;
 };
 
 export const createInitialState = (): State => ({
   selectedTabIds: [],
   map: new Map<TabIdType, Browser.tabs.Tab>(),
+  dupes: {},
 });
 
 export const initialState: State = createInitialState();
 
 export const ACTION_TYPES = [
   "setTabs",
+  "setDupeCount",
   "addTab",
   "updateTab",
   "removeTab",
@@ -31,6 +34,10 @@ export type Action =
   | {
       type: "setTabs";
       tabs: Browser.tabs.Tab[];
+    }
+  | {
+      type: "setDupeCount";
+      dupes: State["dupes"];
     }
   | {
       type: "addTab";
@@ -70,6 +77,9 @@ export default function tabsReducer(state: State, action: Action): State {
       });
       const selectedTabIds = state.selectedTabIds.filter((id) => map.has(id));
       return { ...state, map, selectedTabIds };
+    }
+    case "setDupeCount": {
+      return { ...state, dupes: action.dupes };
     }
     case "addTab": {
       if (action.tab.id === undefined) {

@@ -19,4 +19,5 @@ export type SortOptions = {
 export type FilterOptions = {
   search: string;
   dupesOnly: boolean;
+  stale: boolean;
 };

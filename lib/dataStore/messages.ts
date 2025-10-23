@@ -1,13 +1,16 @@
 import type { Browser } from "#imports";
 import type { BackgroundAction } from "./reducer";
 
+export type SerializedState = {
+  windows: Browser.windows.Window[];
+  tabGroups: Browser.tabGroups.TabGroup[];
+  tabs: Browser.tabs.Tab[];
+  dupes: Record<string, number>;
+};
+
 export type DataInitMessage = {
   type: "init";
-  payload: {
-    windows: Browser.windows.Window[];
-    tabGroups: Browser.tabGroups.TabGroup[];
-    tabs: Browser.tabs.Tab[];
-  };
+  payload: SerializedState;
 };
 
 export type DataActionMessage = {

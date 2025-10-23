@@ -1,5 +1,6 @@
 import { useContext, useMemo } from "react";
 import type { Browser } from "#imports";
+import { filterSortTabs } from "../filterTabs";
 import { DataContext, DataDispatchContext } from "./DataProvider";
 
 export function useDataDispatch() {
@@ -30,7 +31,11 @@ export function useWindowsContext() {
 
 export function useIsFiltered() {
   const context = useDisplayContext();
-  return context.filters.dupesOnly || context.filters.search.length > 0;
+  return (
+    context.filters.dupesOnly ||
+    context.filters.stale ||
+    context.filters.search.length > 0
+  );
 }
 
 export function useFilters() {
@@ -91,6 +96,19 @@ export function useTabs(windowId?: number) {
 
   return arr;
 }
+
+export function useDisplayedTabs(windowId?: number) {
+  const { map, dupes } = useTabsContext();
+  const { filters, sort } = useDisplayContext();
+  const arr = useMemo(
+    () =>
+      filterSortTabs(Array.from(map.values()), dupes, filters, sort, windowId),
+    [map, dupes, windowId, filters, sort],
+  );
+
+  return arr;
+}
+
 export function useTabCount() {
   return useTabsContext().map.size;
 }
@@ -116,4 +134,25 @@ export function useMostRecentTabFromWindow(windowId?: number) {
     })[0];
   }, [arr]);
   return mostRecentTab;
+}
+
+export function useAllOtherTabs(tabId?: number) {
+  const tabs = useAllTabs();
+  return useMemo(() => tabs.filter((t) => t.id !== tabId), [tabs, tabId]);
+}
+
+export function useTabHasDupes(tab: Browser.tabs.Tab) {
+  const tabs = useAllOtherTabs(tab.id);
+  return useMemo(() => {
+    let hasDupe = false;
+    for (const t of tabs) {
+      if (!hasDupe) {
+        hasDupe = t.url === tab.url;
+      }
+      if (hasDupe) {
+        break;
+      }
+    }
+    return { hasDupe };
+  }, [tabs, tab.url]);
 }

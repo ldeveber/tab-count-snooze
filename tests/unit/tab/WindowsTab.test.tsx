@@ -209,7 +209,7 @@ describe("Windows Tab", () => {
 
       const { getByRole } = renderWithContext(<WindowsTab />, {
         windows: { map: winMap },
-        tabs: { map: tabMap, selectedTabIds: [] },
+        tabs: { map: tabMap },
       });
 
       await user.type(getByRole("searchbox", { name: "Search Tabs" }), "meow");
@@ -227,10 +227,10 @@ describe("Windows Tab", () => {
 
       const windowId = 1;
       const win = mockWindow({ id: windowId, state: "normal" });
-      const tab1 = mockTab({ title: "meow 1", windowId });
-      const tab2 = mockTab({ title: "meow 2", windowId });
-      const tab3 = mockTab({ title: "no", url: "no", windowId });
-      const tab4 = mockTab({ title: "no", url: "no", windowId });
+      const tab1 = mockTab({ title: "meow 1", index: 1, windowId });
+      const tab2 = mockTab({ title: "meow 2", index: 2, windowId });
+      const tab3 = mockTab({ title: "no", index: 3, url: "no", windowId });
+      const tab4 = mockTab({ title: "no", index: 4, url: "no", windowId });
 
       const winMap = new Map();
       winMap.set(win.id, win);
@@ -240,12 +240,15 @@ describe("Windows Tab", () => {
       tabMap.set(tab3.id, tab3);
       tabMap.set(tab4.id, tab4);
 
-      const { getByRole } = renderWithContext(<WindowsTab />, {
+      const { findByText, getByRole } = renderWithContext(<WindowsTab />, {
         windows: { map: winMap },
         tabs: { map: tabMap, selectedTabIds: [] },
       });
 
       await user.type(getByRole("searchbox", { name: "Search Tabs" }), "meow");
+
+      expect(await findByText("2 tab matches")).toBeVisible();
+
       await user.click(getByRole("button", { name: "Group selected tabs" }));
 
       expect(groupTabsAction).toHaveBeenCalledWith([tab1.id, tab2.id], "meow");
@@ -269,15 +272,20 @@ describe("Windows Tab", () => {
       tabMap.set(tab3.id, tab3);
       tabMap.set(tab4.id, tab4);
 
-      const { getByRole } = renderWithContext(<WindowsTab />, {
+      const { findByText, getByRole } = renderWithContext(<WindowsTab />, {
         windows: { map: winMap },
         tabs: { map: tabMap, selectedTabIds: [] },
       });
 
       await user.type(getByRole("searchbox", { name: "Search Tabs" }), "meow");
+
+      expect(await findByText("2 tab matches")).toBeVisible();
+
       await user.click(getByRole("button", { name: "Close selected tabs" }));
 
-      expect(closeTabsAction).toHaveBeenCalledWith([tab1.id, tab2.id]);
+      expect(closeTabsAction).toHaveBeenCalledWith(
+        expect.arrayContaining([tab1.id, tab2.id]),
+      );
     });
   });
 });

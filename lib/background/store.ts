@@ -4,6 +4,7 @@ import { cloneTab, cloneTabGroup, cloneWindow } from "@/lib/clone";
 import type {
   DataInboundMessage,
   DataOutboundMessage,
+  SerializedState,
 } from "@/lib/dataStore/messages";
 import { type BackgroundAction, dataReducer } from "@/lib/dataStore/reducer";
 import { createInitialState, type State } from "@/lib/dataStore/state";
@@ -14,12 +15,6 @@ import {
   POPUP_COUNT,
   POPUP_COUNT_COLOR,
 } from "@/lib/storage";
-
-type SerializedState = {
-  windows: Browser.windows.Window[];
-  tabGroups: Browser.tabGroups.TabGroup[];
-  tabs: Browser.tabs.Tab[];
-};
 
 type BrowserPort = ReturnType<typeof browser.runtime.connect>;
 
@@ -32,6 +27,7 @@ function serializeState(current: State): SerializedState {
     windows: Array.from(current.windows.map.values(), cloneWindow),
     tabGroups: Array.from(current.tabGroups.map.values(), cloneTabGroup),
     tabs: Array.from(current.tabs.map.values(), cloneTab),
+    dupes: { ...current.tabs.dupes },
   };
 }
 
@@ -97,7 +93,28 @@ async function updateBadge() {
   }
 }
 
-function applyAction(action: BackgroundAction, { notify = true } = {}) {
+async function recalculateDuplicates() {
+  if (state.tabs.map.size === 0) {
+    return;
+  }
+  try {
+    const dupes: Record<string, number> = {};
+    state.tabs.map.forEach((tab) => {
+      if (tab.url) {
+        const count = (dupes[tab.url] ?? 0) + 1;
+        dupes[tab.url] = count;
+      }
+    });
+    sendAction({ type: "setDupeCount", dupes });
+  } catch (err) {
+    console.error("Error recalculating duplicates", err);
+  }
+}
+
+/**
+ * Update background state and broadcast message.
+ */
+function sendAction(action: BackgroundAction, { notify = true } = {}) {
   const nextState = dataReducer(state, action);
   if (nextState === state) {
     return;
@@ -107,7 +124,22 @@ function applyAction(action: BackgroundAction, { notify = true } = {}) {
   if (notify) {
     broadcast({ type: "action", action });
   }
+}
+
+/**
+ * Apply action and re-run related triggers
+ * @param action
+ * @param options
+ */
+function applyAction(
+  action: BackgroundAction,
+  { notify = true, dupes = true } = {},
+) {
+  sendAction(action, { notify });
   void updateBadge();
+  if (dupes) {
+    void recalculateDuplicates();
+  }
 }
 
 async function refreshWindow(windowId: number) {
@@ -119,13 +151,13 @@ async function refreshWindow(windowId: number) {
   }
 }
 
-function handlePortMessage(port: BrowserPort, message: DataInboundMessage) {
-  if (message?.type === "requestInit") {
-    port.postMessage({
-      type: "init",
-      payload: serializeState(state),
-    } satisfies DataOutboundMessage);
-  }
+function respondInit(port: BrowserPort) {
+  const payload = serializeState(state);
+  console.debug("responding to init request", payload);
+  port.postMessage({
+    type: "init",
+    payload,
+  } satisfies DataOutboundMessage);
 }
 
 export function handleRuntimeConnect(port: BrowserPort) {
@@ -134,16 +166,15 @@ export function handleRuntimeConnect(port: BrowserPort) {
   }
 
   connectedPorts.add(port);
-  port.postMessage({
-    type: "init",
-    payload: serializeState(state),
-  } satisfies DataOutboundMessage);
+  respondInit(port);
 
   port.onDisconnect.addListener(() => {
     connectedPorts.delete(port);
   });
   port.onMessage.addListener((message: DataInboundMessage) => {
-    handlePortMessage(port, message);
+    if (message?.type === "requestInit") {
+      respondInit(port);
+    }
   });
 }
 
@@ -228,6 +259,7 @@ function registerWindowListeners() {
 }
 
 export async function initializeStore() {
+  console.debug("initializing store...");
   try {
     const [windows, tabGroups, tabs] = await Promise.all([
       browser.windows.getAll(),
@@ -235,14 +267,14 @@ export async function initializeStore() {
       browser.tabs.query({}),
     ]);
 
-    applyAction({ type: "setWindows", wins: windows });
-    applyAction({ type: "setTabGroups", tabGroups });
+    applyAction({ type: "setWindows", wins: windows }, { dupes: false });
+    applyAction({ type: "setTabGroups", tabGroups }, { dupes: false });
     applyAction({ type: "setTabs", tabs });
-    void updateBadge();
   } catch (err) {
     console.error("Error initializing background store", err);
   }
 
+  console.debug("initializing listeners...");
   registerStorageListeners();
   registerWindowListeners();
   registerTabGroupListeners();
