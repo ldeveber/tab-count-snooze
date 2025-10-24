@@ -33,6 +33,7 @@ export default defineConfig({
       ],
       exclude: [
         "components/App.tsx",
+        "components/AppOptions.tsx",
         "components/AppWrap.tsx",
         "entrypoints/**/main.tsx",
         "utils/dayjs.ts",

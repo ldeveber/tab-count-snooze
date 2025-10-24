@@ -13,8 +13,8 @@ import {
 } from "@/lib/dataStore";
 import DataProvider from "@/lib/dataStore/DataProvider";
 import { createInitialState, type State } from "@/lib/dataStore/state";
+import { SORT_BY, SORT_OPTION } from "@/lib/options";
 import { mockTab, mockWindow } from "@/tests/utils/mockDataHelper";
-import { SORT_BY, SORT_OPTION } from "@/utils/options";
 
 function withProvider(state: State) {
   return ({ children }: PropsWithChildren) => (

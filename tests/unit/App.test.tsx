@@ -19,7 +19,7 @@ describe("App", () => {
     const tab = mockTab({ windowId });
     emitRuntimeMessage({
       type: "init",
-      payload: { windows: [win], tabs: [tab], tabGroups: [] },
+      payload: { windows: [win], tabs: [tab], tabGroups: [], dupes: {} },
     });
 
     expect(getByRole("tab", { name: "Tab" })).toBeVisible();

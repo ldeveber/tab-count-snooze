@@ -8,14 +8,11 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import {
-  useFilters,
+  useDisplayedTabs,
   useIsFiltered,
   useMostRecentTabFromWindow,
-  useSort,
   useTabGroups,
-  useTabs,
 } from "@/lib/dataStore";
-import { filterSortTabs } from "@/utils/filterTabs";
 import TabGroupView from "./TabGroupView";
 import TabView from "./TabView";
 
@@ -37,10 +34,8 @@ export default function WindowView({
   readonly win: Browser.windows.Window;
 }) {
   const groups = useTabGroups(win.id);
-  const windowTabs = useTabs(win.id);
+  const visibleTabs = useDisplayedTabs(win.id);
   const isFiltered = useIsFiltered();
-  const sort = useSort();
-  const filters = useFilters();
   const mostRecentTab = useMostRecentTabFromWindow(win.id);
   const [lastViewed, setLastViewed] = useState<Date | null>(
     mostRecentTab?.lastAccessed ? new Date(mostRecentTab.lastAccessed) : null,
@@ -62,11 +57,6 @@ export default function WindowView({
       browser.tabs.onActivated.removeListener(onActivated);
     };
   }, [onActivated]);
-
-  const visibleTabs = useMemo(
-    () => filterSortTabs(windowTabs, filters, sort),
-    [windowTabs, filters, sort],
-  );
 
   const tabList: RenderListType[] = useMemo(() => {
     const list: RenderListType[] = [];

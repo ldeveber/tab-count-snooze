@@ -3,7 +3,7 @@ import {
   SORT_BY,
   SORT_OPTION,
   type SortOptions,
-} from "@/utils/options";
+} from "@/lib/options";
 
 export type State = {
   filters: FilterOptions;
@@ -12,6 +12,7 @@ export type State = {
 
 const createInitialFilterOptions = (): FilterOptions => ({
   dupesOnly: false,
+  stale: false,
   search: "",
 });
 
@@ -30,6 +31,7 @@ export const initialState: State = createInitialState();
 export const ACTION_TYPES = [
   "search",
   "resetFilter",
+  "filter",
   "sort",
   "resetSort",
   "clear",
@@ -38,6 +40,11 @@ export type Action =
   | {
       search: string;
       type: "search";
+    }
+  | {
+      dupesOnly: boolean;
+      stale: boolean;
+      type: "filter";
     }
   | {
       type: "resetFilter";
@@ -59,6 +66,16 @@ export default function displayReducer(state: State, action: Action): State {
       return {
         ...state,
         filters: { ...state.filters, search: action.search },
+      };
+    }
+    case "filter": {
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          dupesOnly: action.dupesOnly,
+          stale: action.stale,
+        },
       };
     }
     case "resetFilter": {

@@ -19,6 +19,7 @@ import {
   useWindowCount,
   useWindows,
 } from "@/lib/dataStore";
+import { FilterTabs } from "./FilterTabs";
 import { ThresholdWarning } from "./ThresholdWarning";
 import WindowsBulkActions from "./WindowsBulkActions";
 
@@ -70,6 +71,7 @@ export default function WindowsTab() {
       <StickyTabSubMenuBar>
         <div className="flex items-center gap-4">
           <SearchTabs />
+          <FilterTabs />
         </div>
         {isFiltered ? <WindowsBulkActions /> : <TabCountTagline />}
       </StickyTabSubMenuBar>

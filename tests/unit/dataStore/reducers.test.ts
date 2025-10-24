@@ -11,12 +11,12 @@ import tabsReducer, {
 import windowsReducer, {
   createInitialState as createWindowsState,
 } from "@/lib/dataStore/reducers/windowsReducer";
+import { SORT_BY, SORT_OPTION } from "@/lib/options";
 import {
   mockTab,
   mockTabGroup,
   mockWindow,
 } from "@/tests/utils/mockDataHelper";
-import { SORT_BY, SORT_OPTION } from "@/utils/options";
 
 describe("tabsReducer", () => {
   it("sets tabs and prunes selected ids", () => {
