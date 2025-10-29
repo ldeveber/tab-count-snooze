@@ -33,7 +33,7 @@ import { getStorageKey } from "@/lib/storage";
 // fix eval error @see https://github.com/colinhacks/zod/issues/4461
 z.config({ jitless: true });
 
-const formSchema = z.object({
+export const formSchema = z.object({
   enableThresholdWarning: z.boolean(),
   enableThresholdNotification: z.boolean(),
   maxTabsThreshold: z
@@ -49,7 +49,7 @@ const formSchema = z.object({
   popupCount: z.literal(["never", "warning", "always"]),
   enablePopupCountColor: z.boolean(),
 });
-type Options = z.infer<typeof formSchema>;
+export type Options = z.infer<typeof formSchema>;
 
 const defaultValues: Options = {
   popupCount: "warning",
@@ -64,7 +64,7 @@ function getKey(keyname: keyof Options) {
   return getStorageKey(keyname);
 }
 
-async function getUserValues(): Promise<Options> {
+export async function getUserValues(): Promise<Options> {
   const [
     enableThresholdWarning,
     enableThresholdNotification,

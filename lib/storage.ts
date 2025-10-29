@@ -25,6 +25,7 @@ export function getStorageKey(key: string): StorageItemKey {
     case MAX_WINS_THRESHOLD:
     case POPUP_COUNT:
     case POPUP_COUNT_COLOR:
+    case "displayedCharts":
       return `local:${key}`;
     default:
       throw new Error(`Unknown key "${key}"`);

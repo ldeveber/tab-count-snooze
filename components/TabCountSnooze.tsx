@@ -1,9 +1,9 @@
 import { ChartPieIcon, CloudMoonIcon, PanelTopIcon } from "lucide-react";
 import { Suspense, useState } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import ChartsTab, {
-  Loading as ChartsTabLoading,
-} from "@/components/charts/ChartsTab";
+import CountTab, {
+  Loading as CountTabLoading,
+} from "@/components/count/CountTab";
 import SnoozeTab, {
   Loading as SnoozeTabLoading,
 } from "@/components/snooze/SnoozeTab";
@@ -22,11 +22,7 @@ export default function TabCountSnooze() {
 
   return (
     <div className="flex min-h-screen w-full flex-col">
-      <Tabs
-        value={tab}
-        onValueChange={handleChange}
-        className="size-full flex-grow"
-      >
+      <Tabs value={tab} onValueChange={handleChange} className="size-full grow">
         <div className="sticky top-0 z-1 flex h-14 items-center justify-center bg-card/50 px-4 py-2 backdrop-blur-xs">
           <TabsList variant="nav">
             <TabsTrigger value="tab" variant="nav">
@@ -50,8 +46,8 @@ export default function TabCountSnooze() {
         </TabsContent>
         <TabsContent value="count" className="flex size-full">
           <ErrorBoundary FallbackComponent={ErrorDisplay}>
-            <Suspense fallback={<ChartsTabLoading />}>
-              <ChartsTab />
+            <Suspense fallback={<CountTabLoading />}>
+              <CountTab />
             </Suspense>
           </ErrorBoundary>
         </TabsContent>
