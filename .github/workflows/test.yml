@@ -77,7 +77,7 @@ jobs:
         run: npx vitest --coverage.reportsDirectory ./coverage-main
 
       - name: "Download Coverage Artifacts for PR"
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v6
         with:
           name: coverage
           path: coverage
