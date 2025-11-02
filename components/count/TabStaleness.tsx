@@ -144,7 +144,7 @@ export function TabStaleness() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <PieChart accessibilityLayer>
+          <PieChart accessibilityLayer title="Tab Staleness">
             <Pie
               dataKey="count"
               nameKey="label"

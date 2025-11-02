@@ -52,7 +52,6 @@ export function TopOriginsChart(props: TopOriginsChartProps) {
             data={data}
             layout="vertical"
             title="Top Open Sites"
-            data-testid="chart"
           >
             <CartesianGrid horizontal={false} />
             <YAxis

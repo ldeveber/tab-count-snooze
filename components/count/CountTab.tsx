@@ -59,7 +59,7 @@ export default function CountTab() {
             <TopOriginsChart />
           </ErrorBoundary>
         )}
-        {options.ageOfTabs && (
+        {options.tabStaleness && (
           <ErrorBoundary FallbackComponent={ErrorDisplay}>
             <TabStaleness />
           </ErrorBoundary>

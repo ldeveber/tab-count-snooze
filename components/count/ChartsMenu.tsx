@@ -22,7 +22,7 @@ import { getStorageKey } from "@/lib/storage";
 
 export type Options = {
   topOpenSites: boolean;
-  ageOfTabs: boolean;
+  tabStaleness: boolean;
   tabMap: boolean;
 };
 
@@ -30,7 +30,7 @@ export const STORAGE_KEY = getStorageKey("displayedCharts");
 
 export const defaultCharts: Options = {
   topOpenSites: true,
-  ageOfTabs: true,
+  tabStaleness: true,
   tabMap: true,
 };
 
@@ -42,8 +42,8 @@ async function getUserValues(): Promise<Options> {
 
 const LABELS: Record<keyof Options, string> = {
   topOpenSites: "Top Open Sites",
-  ageOfTabs: "Age of Tabs",
-  tabMap: "Tab Map",
+  tabStaleness: "Tab Staleness",
+  tabMap: "Map of Tabs",
 };
 
 export function ChartsMenu() {
@@ -128,7 +128,7 @@ export function ChartsMenu() {
                       />
                       <FieldContent>
                         <FieldTitle>{LABELS[optKey]}</FieldTitle>
-                        <FieldDescription>???</FieldDescription>
+                        <FieldDescription>Description TBD?</FieldDescription>
                       </FieldContent>
                     </Field>
                   </FieldLabel>
