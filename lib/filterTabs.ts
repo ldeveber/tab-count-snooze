@@ -47,7 +47,7 @@ export function _filterTabs(
   return tabs.filter(matchCheck);
 }
 
-export function _sortTabs(tabs: Browser.tabs.Tab[], sort: SortOptions) {
+export function sortTabs(tabs: Browser.tabs.Tab[], sort: SortOptions) {
   if (sort.key === SORT_OPTION.LastAccessed) {
     if (sort.direction === SORT_BY.Ascending) {
       tabs.sort((a, b) =>
@@ -76,5 +76,5 @@ export function filterSortTabs(
   windowId?: number,
 ) {
   const t = _filterTabs(tabs, dupes, filters, windowId);
-  return _sortTabs(t, sort);
+  return sortTabs(t, sort);
 }

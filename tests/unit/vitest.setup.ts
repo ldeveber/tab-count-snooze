@@ -3,6 +3,7 @@ import { cleanup } from "@testing-library/react";
 import { afterEach, vi } from "vitest";
 import { type Browser, browser } from "#imports";
 import { connectMock, resetConnectMock } from "./message-utils";
+import "@/lib/dayjs";
 
 Object.defineProperty(browser.runtime, "connect", {
   configurable: true,

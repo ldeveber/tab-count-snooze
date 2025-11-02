@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import type { Browser } from "#imports";
-import { _filterTabs, _sortTabs, filterSortTabs } from "@/lib/filterTabs";
+import { _filterTabs, filterSortTabs, sortTabs } from "@/lib/filterTabs";
 import { SORT_BY, SORT_OPTION } from "@/lib/options";
 import { mockTab } from "@/tests/utils/mockDataHelper";
 
@@ -127,7 +127,7 @@ describe("filterTabs utils", () => {
       const tab1 = mockTab({ index: 1 });
       const tab2 = mockTab({ index: 0 });
       const tab3 = mockTab({ index: 2 });
-      const res = _sortTabs([tab1, tab2, tab3], {
+      const res = sortTabs([tab1, tab2, tab3], {
         key: SORT_OPTION.Default,
         direction: SORT_BY.Ascending,
       });
@@ -138,7 +138,7 @@ describe("filterTabs utils", () => {
       const tab1 = mockTab({ index: 1 });
       const tab2 = mockTab({ index: 0 });
       const tab3 = mockTab({ index: 2 });
-      const res = _sortTabs([tab1, tab2, tab3], {
+      const res = sortTabs([tab1, tab2, tab3], {
         key: SORT_OPTION.Default,
         direction: SORT_BY.Descending,
       });
@@ -149,7 +149,7 @@ describe("filterTabs utils", () => {
       const tab1 = mockTab({ index: 0, lastAccessed: 2222222222222 });
       const tab2 = mockTab({ index: 1, lastAccessed: 3333333333333 });
       const tab3 = mockTab({ index: 2, lastAccessed: 1111111111111 });
-      const res = _sortTabs([tab1, tab2, tab3], {
+      const res = sortTabs([tab1, tab2, tab3], {
         key: SORT_OPTION.LastAccessed,
         direction: SORT_BY.Ascending,
       });
@@ -160,7 +160,7 @@ describe("filterTabs utils", () => {
       const tab1 = mockTab({ index: 0, lastAccessed: 2222222222222 });
       const tab2 = mockTab({ index: 1, lastAccessed: 3333333333333 });
       const tab3 = mockTab({ index: 2, lastAccessed: 1111111111111 });
-      const res = _sortTabs([tab1, tab2, tab3], {
+      const res = sortTabs([tab1, tab2, tab3], {
         key: SORT_OPTION.LastAccessed,
         direction: SORT_BY.Descending,
       });
