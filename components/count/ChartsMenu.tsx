@@ -73,8 +73,6 @@ export function ChartsMenu() {
     name: keyof Options,
     value: string | boolean,
   ) => {
-    console.log(name, value);
-
     startTransition(async () => {
       try {
         const payload = { ...values, [name]: value };
