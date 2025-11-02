@@ -1,6 +1,7 @@
 import { useContext, useMemo } from "react";
 import type { Browser } from "#imports";
-import { filterSortTabs } from "../filterTabs";
+import { filterSortTabs, sortTabs } from "../filterTabs";
+import { SORT_BY, SORT_OPTION, type SortOptions } from "../options";
 import { DataContext, DataDispatchContext } from "./DataProvider";
 
 export function useDataDispatch() {
@@ -87,6 +88,20 @@ export function useAllTabs() {
   return arr;
 }
 
+export function useAllSortedTabs(
+  sort: SortOptions = {
+    key: SORT_OPTION.LastAccessed,
+    direction: SORT_BY.Descending,
+  },
+) {
+  const { map } = useTabsContext();
+  const arr = useMemo(
+    () => sortTabs(Array.from(map.values()), sort),
+    [map, sort],
+  );
+  return arr;
+}
+
 export function useTabs(windowId?: number) {
   const { map } = useTabsContext();
   const arr = useMemo(
@@ -107,6 +122,40 @@ export function useDisplayedTabs(windowId?: number) {
   );
 
   return arr;
+}
+
+/**
+ * @param limit The number to limit by. Defaulted to 0 to return all.
+ * @returns A list of tab origins with counts, sorted by count.
+ */
+export function useTabOrigins(
+  limit: number = 0,
+): Array<{ origin: string; count: number }> {
+  const allTabs = useAllTabs();
+
+  const topOrigins = useMemo(() => {
+    const counts: Array<{ origin: string; count: number }> = [];
+    allTabs.forEach((tab) => {
+      if (!tab.url) {
+        return;
+      }
+      const url = new URL(tab.url);
+      let c = counts.find((d) => d.origin === url.origin);
+      if (!c) {
+        c = { origin: url.origin, count: 0 };
+        counts.push(c);
+      }
+      c.count++;
+    });
+
+    const sortedCounts = counts.sort((a, b) => b.count - a.count);
+
+    if (limit === 0) {
+      return sortedCounts;
+    }
+    return sortedCounts.slice(0, limit);
+  }, [allTabs, limit]);
+  return topOrigins;
 }
 
 export function useTabCount() {

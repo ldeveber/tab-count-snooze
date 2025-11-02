@@ -1,4 +1,9 @@
-import { type RenderOptions, render } from "@testing-library/react";
+import {
+  type RenderHookOptions,
+  type RenderOptions,
+  render,
+  renderHook,
+} from "@testing-library/react";
 import type React from "react";
 import type { PropsWithChildren } from "react";
 import DataProviderProvider from "@/lib/dataStore/DataProvider";
@@ -46,10 +51,12 @@ function createInitialTestState(testState?: DeepPartial<State>): State {
   return deepMerge(state, testState);
 }
 
+type TestProviderState = DeepPartial<State>;
+
 function DataProvider({
   children,
   state = {},
-}: PropsWithChildren<{ state?: DeepPartial<State> }>) {
+}: PropsWithChildren<{ state?: TestProviderState }>) {
   const testState = createInitialTestState(state);
   return (
     <DataProviderProvider testState={testState}>
@@ -60,7 +67,7 @@ function DataProvider({
 
 const renderWithContext = (
   ui: React.ReactElement,
-  state?: DeepPartial<State>,
+  state?: TestProviderState,
   options?: Omit<RenderOptions, "wrapper">,
 ) =>
   render(ui, {
@@ -68,5 +75,22 @@ const renderWithContext = (
     ...options,
   });
 
+function renderHookWithContext<Result, Props>(
+  initialProps: (initialProps: Props) => Result,
+  state?: TestProviderState,
+  options?: Omit<RenderHookOptions<Props>, "wrapper">,
+) {
+  return renderHook<Result, Props>(initialProps, {
+    wrapper: ({ ...props }) => <DataProvider state={state} {...props} />,
+    ...options,
+  });
+}
+
 export * from "@testing-library/react";
-export { render as origRender, renderWithContext };
+export {
+  type TestProviderState,
+  render as origRender,
+  renderHook as origRenderHook,
+  renderHookWithContext,
+  renderWithContext,
+};

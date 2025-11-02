@@ -1,13 +1,8 @@
-import { CircleQuestionMarkIcon, Undo2Icon } from "lucide-react";
+import { Undo2Icon } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldTitle } from "@/components/ui/field";
 import { Slider } from "@/components/ui/slider";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 type SliderProps = React.ComponentProps<typeof Slider>;
 interface ChartSliderProps
@@ -18,7 +13,7 @@ interface ChartSliderProps
   defaultValue: number;
   id: Required<SliderProps>["id"];
   label: string;
-  tooltip?: string;
+  description?: string;
   onValueCommit: (value: number) => void;
 }
 
@@ -27,7 +22,7 @@ export function ChartSlider({
   defaultValue,
   disabled,
   label,
-  tooltip,
+  description,
   onValueCommit,
   ...props
 }: ChartSliderProps) {
@@ -50,17 +45,7 @@ export function ChartSlider({
   return (
     <Field>
       <div className="flex flex-row gap-2">
-        <FieldLabel>{label}</FieldLabel>
-        {tooltip && (
-          <Tooltip>
-            <TooltipTrigger aria-label={`Help for ${label}`}>
-              <CircleQuestionMarkIcon className="size-4 text-muted-foreground" />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{tooltip}</p>
-            </TooltipContent>
-          </Tooltip>
-        )}
+        <FieldTitle>{label}</FieldTitle>
         {commitValue !== defaultValue && (
           <Button
             disabled={disabled}
@@ -73,6 +58,7 @@ export function ChartSlider({
           </Button>
         )}
       </div>
+      {description && <FieldDescription>{description}</FieldDescription>}
       <Slider
         {...props}
         id={id}
@@ -80,6 +66,7 @@ export function ChartSlider({
         value={value}
         onValueChange={handleChange}
         onValueCommit={handleCommit}
+        aria-label={`${label} range`}
       />
     </Field>
   );

@@ -1,3 +1,5 @@
+import "@/lib/dayjs";
+
 import { type PropsWithChildren, Suspense } from "react";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ThemeProvider } from "@/components/ThemeProvider";
