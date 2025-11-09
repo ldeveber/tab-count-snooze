@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { z } from "zod";
 import { storage } from "#imports";
 import { Button } from "@/components/ui/button";
 import {
@@ -28,70 +27,12 @@ import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Spinner } from "@/components/ui/spinner";
 import { Switch } from "@/components/ui/switch";
-import { getStorageKey } from "@/lib/storage";
-
-// fix eval error @see https://github.com/colinhacks/zod/issues/4461
-z.config({ jitless: true });
-
-const formSchema = z.object({
-  enableThresholdWarning: z.boolean(),
-  enableThresholdNotification: z.boolean(),
-  maxTabsThreshold: z
-    .number()
-    .int()
-    .nonnegative()
-    .max(9999, "Will you realistically have this many tabs open?"),
-  maxWinsThreshold: z
-    .number()
-    .int()
-    .nonnegative()
-    .max(9999, "Will you realistically have this many windows open?"),
-  popupCount: z.literal(["never", "warning", "always"]),
-  enablePopupCountColor: z.boolean(),
-});
-type Options = z.infer<typeof formSchema>;
-
-const defaultValues: Options = {
-  popupCount: "warning",
-  enableThresholdWarning: false,
-  enableThresholdNotification: false,
-  maxTabsThreshold: 250,
-  maxWinsThreshold: 20,
-  enablePopupCountColor: true,
-};
-
-function getKey(keyname: keyof Options) {
-  return getStorageKey(keyname);
-}
-
-async function getUserValues(): Promise<Options> {
-  const [
-    enableThresholdWarning,
-    enableThresholdNotification,
-    maxTabsThreshold,
-    maxWinsThreshold,
-    popupCount,
-    enablePopupCountColor,
-  ] = await Promise.all([
-    storage.getItem<boolean | null>(getKey("enableThresholdWarning")),
-    storage.getItem<boolean | null>(getKey("enableThresholdNotification")),
-    storage.getItem<number | null>(getKey("maxTabsThreshold")),
-    storage.getItem<number | null>(getKey("maxWinsThreshold")),
-    storage.getItem<Options["popupCount"] | null>(getKey("popupCount")),
-    storage.getItem<boolean | null>(getKey("enablePopupCountColor")),
-  ]);
-  return {
-    enableThresholdWarning:
-      enableThresholdWarning ?? defaultValues.enableThresholdWarning,
-    enableThresholdNotification:
-      enableThresholdNotification ?? defaultValues.enableThresholdNotification,
-    maxTabsThreshold: maxTabsThreshold ?? defaultValues.maxTabsThreshold,
-    maxWinsThreshold: maxWinsThreshold ?? defaultValues.maxWinsThreshold,
-    popupCount: popupCount ?? defaultValues.popupCount,
-    enablePopupCountColor:
-      enablePopupCountColor ?? defaultValues.enablePopupCountColor,
-  };
-}
+import {
+  defaultTabOptionsConfigValues as defaultValues,
+  tabOptionsConfigSchema as formSchema,
+  getUserTabOptionConfig,
+  type TabOptionsConfig,
+} from "@/lib/storage";
 
 export function TabOptions() {
   const {
@@ -100,7 +41,7 @@ export function TabOptions() {
     handleSubmit,
     reset,
     watch,
-  } = useForm<Options>({
+  } = useForm<TabOptionsConfig>({
     resolver: zodResolver(formSchema),
     mode: "onChange",
     defaultValues,
@@ -113,7 +54,7 @@ export function TabOptions() {
   const loadDefaults = useCallback(async () => {
     setIsLoading(true);
     try {
-      const values = await getUserValues();
+      const values = await getUserTabOptionConfig();
       reset(values);
     } catch (error) {
       console.error("Failed to load tab options:", error);
@@ -126,10 +67,12 @@ export function TabOptions() {
     loadDefaults();
   }, [loadDefaults]);
 
-  const onSubmit: SubmitHandler<Options> = async (value) => {
+  const onSubmit: SubmitHandler<TabOptionsConfig> = async (value) => {
     const saves: Array<Promise<void>> = [];
     Object.keys(value).forEach((k) => {
-      saves.push(storage.setItem(`local:${k}`, value[k as keyof Options]));
+      saves.push(
+        storage.setItem(`local:${k}`, value[k as keyof TabOptionsConfig]),
+      );
     });
     Promise.all(saves)
       .then(() => {
@@ -163,7 +106,7 @@ export function TabOptions() {
               </FieldDescription>
               <FieldGroup>
                 <Controller
-                  name="enableThresholdWarning"
+                  name="enableThresholdDisplayInTabList"
                   control={control}
                   render={({ field, fieldState }) => (
                     <Field

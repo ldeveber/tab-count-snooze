@@ -18,29 +18,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { getStorageKey } from "@/lib/storage";
+import {
+  type ChartOptionsConfig,
+  defaultChartOptionsConfigValues,
+  getUserChartOptionConfig,
+  SK_DISPLAYED_CHARTS,
+} from "@/lib/storage";
 
-export type Options = {
-  topOpenSites: boolean;
-  tabStaleness: boolean;
-  tabMap: boolean;
-};
+export type DisplayedChartConfig = ChartOptionsConfig["displayedCharts"];
 
-export const STORAGE_KEY = getStorageKey("displayedCharts");
+export const defaultCharts: DisplayedChartConfig =
+  defaultChartOptionsConfigValues.displayedCharts;
 
-export const defaultCharts: Options = {
-  topOpenSites: true,
-  tabStaleness: true,
-  tabMap: true,
-};
-
-async function getUserValues(): Promise<Options> {
-  return storage.getItem<Options>(STORAGE_KEY, {
-    fallback: defaultCharts,
-  });
-}
-
-const LABELS: Record<keyof Options, string> = {
+const LABELS: Record<keyof DisplayedChartConfig, string> = {
   topOpenSites: "Top Open Sites",
   tabStaleness: "Tab Staleness",
   tabMap: "Map of Tabs",
@@ -56,8 +46,8 @@ export function ChartsMenu() {
   const loadDefaults = useCallback(async () => {
     setIsLoading(true);
     try {
-      const v = await getUserValues();
-      setValues(v);
+      const v = await getUserChartOptionConfig();
+      setValues(v.displayedCharts);
     } catch (error) {
       console.error("Failed to load tab options:", error);
     } finally {
@@ -70,14 +60,14 @@ export function ChartsMenu() {
   }, [loadDefaults]);
 
   const handleCheckedChange = (
-    name: keyof Options,
+    name: keyof DisplayedChartConfig,
     value: string | boolean,
   ) => {
     startTransition(async () => {
       try {
         const payload = { ...values, [name]: value };
         setValues(payload);
-        await storage.setItem(STORAGE_KEY, payload);
+        await storage.setItem(SK_DISPLAYED_CHARTS, payload);
       } catch (err) {
         console.error("Error saving chosen charts", err);
       }
@@ -89,7 +79,9 @@ export function ChartsMenu() {
   };
 
   const isDefaults = Object.keys(values).every(
-    (k) => values[k as keyof Options] === defaultCharts[k as keyof Options],
+    (k) =>
+      values[k as keyof DisplayedChartConfig] ===
+      defaultCharts[k as keyof DisplayedChartConfig],
   );
 
   const loading = isLoading || isPending;
@@ -113,7 +105,7 @@ export function ChartsMenu() {
             </FieldDescription>
             <FieldGroup className="grid grid-cols-2">
               {Object.keys(values).map((key) => {
-                const optKey = key as keyof Options;
+                const optKey = key as keyof DisplayedChartConfig;
                 return (
                   <FieldLabel key={key} htmlFor={`${key}-choice`}>
                     <Field orientation="horizontal">

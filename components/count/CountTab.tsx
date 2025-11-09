@@ -6,13 +6,13 @@ import ErrorDisplay from "@/components/ErrorDisplay";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Spinner } from "@/components/ui/spinner";
 import { useTabCount } from "@/lib/dataStore";
+import { SK_DISPLAYED_CHARTS } from "@/lib/storage";
 import StickyTabSubMenuBar from "../StickyTabSubMenuBar";
 import TabCountTagline from "../TabCountTagline";
 import {
   ChartsMenu,
+  type DisplayedChartConfig,
   defaultCharts,
-  type Options,
-  STORAGE_KEY,
 } from "./ChartsMenu";
 import { TabMapChart } from "./TabMapChart";
 import { TopOriginsChart } from "./TopOriginsChart";
@@ -36,7 +36,7 @@ export default function CountTab() {
   const [options, setOptions] = useState(defaultCharts);
 
   useEffect(() => {
-    storage.watch<Options>(STORAGE_KEY, (newValue) => {
+    storage.watch<DisplayedChartConfig>(SK_DISPLAYED_CHARTS, (newValue) => {
       setOptions(newValue ?? defaultCharts);
     });
     return () => storage.unwatch();
