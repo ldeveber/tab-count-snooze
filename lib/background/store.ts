@@ -1,5 +1,5 @@
 import type { Browser } from "#imports";
-import { browser, storage } from "#imports";
+import { browser } from "#imports";
 import { cloneTab, cloneTabGroup, cloneWindow } from "@/lib/clone";
 import type {
   DataInboundMessage,
@@ -8,13 +8,7 @@ import type {
 } from "@/lib/dataStore/messages";
 import { type BackgroundAction, dataReducer } from "@/lib/dataStore/reducer";
 import { createInitialState, type State } from "@/lib/dataStore/state";
-import {
-  getStorageKey,
-  MAX_TABS_THRESHOLD,
-  MAX_WINS_THRESHOLD,
-  POPUP_COUNT,
-  POPUP_COUNT_COLOR,
-} from "@/lib/storage";
+import { changesHasOwnTabOptions, getUserTabOptionConfig } from "@/lib/storage";
 
 type BrowserPort = ReturnType<typeof browser.runtime.connect>;
 
@@ -48,40 +42,25 @@ function computeCounts(current: State) {
   };
 }
 
-async function hasExceededThreshold(tabCount: number, windowCount: number) {
-  const maxTabsThreshold = await storage.getItem(
-    getStorageKey(MAX_TABS_THRESHOLD),
-    { fallback: 0 },
-  );
-  const maxWinsThreshold = await storage.getItem(
-    getStorageKey(MAX_WINS_THRESHOLD),
-    { fallback: 0 },
-  );
-  return (
-    (maxTabsThreshold !== 0 && maxTabsThreshold < tabCount) ||
-    (maxWinsThreshold !== 0 && maxWinsThreshold < windowCount)
-  );
-}
-
 async function updateBadge() {
   const { tabCount, windowCount } = computeCounts(state);
   try {
-    const showCount = await storage.getItem(getStorageKey(POPUP_COUNT), {
-      fallback: "false",
-    });
-    const enableCountColor = await storage.getItem(
-      getStorageKey(POPUP_COUNT_COLOR),
-      {
-        fallback: false,
-      },
-    );
-    const isOverThreshold = await hasExceededThreshold(tabCount, windowCount);
+    const {
+      popupCount,
+      enablePopupCountColor,
+      maxTabsThreshold,
+      maxWinsThreshold,
+    } = await getUserTabOptionConfig();
+
+    const isOverThreshold =
+      (maxTabsThreshold !== 0 && maxTabsThreshold < tabCount) ||
+      (maxWinsThreshold !== 0 && maxWinsThreshold < windowCount);
     if (
-      showCount === "always" ||
-      (showCount === "warning" && isOverThreshold)
+      popupCount === "always" ||
+      (popupCount === "warning" && isOverThreshold)
     ) {
       await browser.action.setBadgeText({ text: `${tabCount}` });
-      if (isOverThreshold && enableCountColor) {
+      if (isOverThreshold && enablePopupCountColor) {
         await browser.action.setBadgeBackgroundColor({ color: `orange` });
       }
     }
@@ -222,10 +201,12 @@ function registerStorageListeners() {
   browser.storage.onChanged.addListener((changes, areaName) => {
     if (
       areaName === "local" &&
-      (Object.hasOwn(changes, MAX_TABS_THRESHOLD) ||
-        Object.hasOwn(changes, MAX_WINS_THRESHOLD) ||
-        Object.hasOwn(changes, POPUP_COUNT) ||
-        Object.hasOwn(changes, POPUP_COUNT_COLOR))
+      changesHasOwnTabOptions(changes, [
+        "popupCount",
+        "enablePopupCountColor",
+        "maxTabsThreshold",
+        "maxWinsThreshold",
+      ])
     ) {
       updateBadge();
     }

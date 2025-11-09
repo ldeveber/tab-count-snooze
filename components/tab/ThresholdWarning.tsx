@@ -3,11 +3,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { storage } from "#imports";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { useIsFiltered, useTabCount, useWindowCount } from "@/lib/dataStore";
-import { getStorageKey } from "@/lib/storage";
-
-const SHOW_WARNING_KEY = getStorageKey("enableThresholdWarning");
-const TABS_THRESHOLD_KEY = getStorageKey("maxTabsThreshold");
-const WIN_THRESHOLD_KEY = getStorageKey("maxWinsThreshold");
+import {
+  getUserTabOptionConfig,
+  SK_ENABLE_THRESHOLD_DISPLAY_IN_TAB_LIST,
+  SK_MAX_TABS_THRESHOLD,
+  SK_MAX_WINS_THRESHOLD,
+} from "@/lib/storage";
 
 export function ThresholdWarning() {
   const tabCount = useTabCount();
@@ -18,22 +19,14 @@ export function ThresholdWarning() {
   const [tabCountThreshold, setTabCountThreshold] = useState(0);
 
   const getStorage = useCallback(async () => {
-    const enable = await storage.getItem(SHOW_WARNING_KEY, {
-      fallback: false,
-    });
-    setShowWarning(enable);
-    if (enable) {
-      const [winThreshold, tabThreshold] = await Promise.all([
-        await storage.getItem(WIN_THRESHOLD_KEY, {
-          fallback: 0,
-        }),
-        await storage.getItem(TABS_THRESHOLD_KEY, {
-          fallback: 0,
-        }),
-      ]);
-      setWinCountThreshold(winThreshold);
-      setTabCountThreshold(tabThreshold);
-    }
+    const {
+      enableThresholdDisplayInTabList,
+      maxTabsThreshold,
+      maxWinsThreshold,
+    } = await getUserTabOptionConfig();
+    setShowWarning(enableThresholdDisplayInTabList);
+    setWinCountThreshold(maxWinsThreshold);
+    setTabCountThreshold(maxTabsThreshold);
   }, []);
 
   useEffect(() => {
@@ -41,17 +34,20 @@ export function ThresholdWarning() {
   }, [getStorage]);
 
   useEffect(() => {
-    storage.watch<boolean>(SHOW_WARNING_KEY, (newValue) => {
-      if (typeof newValue === "boolean") {
-        setShowWarning(newValue);
-      }
-    });
-    storage.watch<number>(TABS_THRESHOLD_KEY, (newValue) => {
+    storage.watch<boolean>(
+      SK_ENABLE_THRESHOLD_DISPLAY_IN_TAB_LIST,
+      (newValue) => {
+        if (typeof newValue === "boolean") {
+          setShowWarning(newValue);
+        }
+      },
+    );
+    storage.watch<number>(SK_MAX_TABS_THRESHOLD, (newValue) => {
       if (typeof newValue === "number") {
         setTabCountThreshold(newValue);
       }
     });
-    storage.watch<number>(WIN_THRESHOLD_KEY, (newValue) => {
+    storage.watch<number>(SK_MAX_WINS_THRESHOLD, (newValue) => {
       if (typeof newValue === "number") {
         setWinCountThreshold(newValue);
       }
