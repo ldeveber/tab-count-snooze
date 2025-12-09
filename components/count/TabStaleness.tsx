@@ -28,14 +28,10 @@ function renderActiveShape({
   // React does not recognize the vvv prop on a DOM element
   percent,
   value,
-  label,
-  count,
   cornerRadius,
   tooltipPayload,
   middleRadius,
   tooltipPosition,
-  ageThreshold,
-  ageLabel,
   maxRadius,
   paddingAngle,
   // ^^^ not needed
