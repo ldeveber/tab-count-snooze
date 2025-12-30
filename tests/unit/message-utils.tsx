@@ -27,12 +27,7 @@ function createEvent<
     callback?.([]);
   }) as Browser.events.Event<T>["getRules"];
 
-  const removeRules: Browser.events.Event<T>["removeRules"] = (
-    _ruleIdentifiers?: string[],
-    callback?: () => void,
-  ) => {
-    callback?.();
-  };
+  const removeRules: Browser.events.Event<T>["removeRules"] = () => {};
 
   const addRules: Browser.events.Event<T>["addRules"] = (
     _rules: Browser.events.Rule[],
