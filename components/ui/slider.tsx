@@ -29,7 +29,7 @@ function Slider({
       min={min}
       max={max}
       className={cn(
-        "relative flex w-full touch-none select-none items-center pb-5 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-[disabled]:opacity-50",
+        "relative flex w-full touch-none select-none items-center pb-5 data-[orientation=vertical]:h-full data-[orientation=vertical]:min-h-44 data-[orientation=vertical]:w-auto data-[orientation=vertical]:flex-col data-disabled:opacity-50",
         className,
       )}
       {...props}
@@ -54,7 +54,7 @@ function Slider({
           key={index}
           className="block size-4 shrink-0 rounded-full border border-primary bg-background shadow-sm ring-ring/50 transition-[color,box-shadow] hover:ring-4 focus-visible:outline-hidden focus-visible:ring-4 disabled:pointer-events-none disabled:opacity-50"
         >
-          <span className="-translate-x-1/2 absolute top-4.5 left-1/2 whitespace-nowrap">
+          <span className="absolute top-4.5 left-1/2 -translate-x-1/2 whitespace-nowrap">
             <span className="font-medium text-xs">{value}</span>
           </span>
         </SliderPrimitive.Thumb>
