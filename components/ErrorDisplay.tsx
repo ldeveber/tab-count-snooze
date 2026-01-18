@@ -1,15 +1,33 @@
 import { AlertCircleIcon } from "lucide-react";
-import type { FallbackProps } from "react-error-boundary";
+import { type FallbackProps, getErrorMessage } from "react-error-boundary";
 import { Button } from "@/components/ui/button";
 
-interface ErrorDisplayProps extends FallbackProps {
-  error: Error;
+function getErrorValue(error: FallbackProps["error"], key: keyof Error) {
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "name" in error &&
+    "message" in error
+  ) {
+    const err = error as Error;
+    switch (key) {
+      case "name":
+        return err.name;
+      case "message":
+        return err.message;
+      case "stack":
+        return err.stack;
+    }
+  }
+  return null;
 }
 
 export default function ErrorDisplay({
   error,
   resetErrorBoundary,
-}: ErrorDisplayProps) {
+}: FallbackProps) {
+  const message = getErrorMessage(error);
+  const stacktrace = getErrorValue(error, "stack");
   return (
     <div className="flex size-full flex-col gap-4 p-4">
       <div className="flex flex-row gap-4 rounded-2xl bg-destructive px-4 py-2 text-destructive-foreground">
@@ -28,14 +46,14 @@ export default function ErrorDisplay({
               </Button>
             )}
           </div>
-          {error?.message && <p className="">{error?.message}</p>}
+          {message && <p className="">{message}</p>}
         </div>
       </div>
 
-      {error?.stack && (
+      {stacktrace && (
         <div className="rounded-2xl border border-border border-dashed px-4 py-2">
           <pre className="line-clamp-5 size-full overflow-scroll">
-            <code>{error.stack}</code>
+            <code>{stacktrace}</code>
           </pre>
         </div>
       )}
