@@ -35,7 +35,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@radix-ui/react-tabs": "^1.1.13",
     "@radix-ui/react-tooltip": "^1.2.8",
-    "@wxt-dev/storage": "1.2.6",
+    "@wxt-dev/storage": "^1.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
@@ -62,13 +62,13 @@
     "@types/react": "^19.2.8",
     "@types/react-dom": "^19.2.3",
     "@vitest/coverage-v8": "^4.0.17",
-    "@wxt-dev/auto-icons": "^1.1.0",
-    "@wxt-dev/module-react": "^1.1.5",
+    "@wxt-dev/auto-icons": "^1.1.1",
+    "@wxt-dev/module-react": "^1.2.2",
     "happy-dom": "^20.3.1",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
     "vitest": "^4.0.17",
-    "wxt": "^0.20.13"
+    "wxt": "^0.20.20"
   },
   "packageManager": "pnpm@10.32.1+sha512.a706938f0e89ac1456b6563eab4edf1d1faf3368d1191fc5c59790e96dc918e4456ab2e67d613de1043d2e8c81f87303e6b40d4ffeca9df15ef1ad567348f2be"
 }
