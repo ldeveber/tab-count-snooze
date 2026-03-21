@@ -88,9 +88,9 @@ function renderHookWithContext<Result, Props>(
 
 export * from "@testing-library/react";
 export {
-  type TestProviderState,
   render as origRender,
   renderHook as origRenderHook,
   renderHookWithContext,
   renderWithContext,
+  type TestProviderState,
 };
