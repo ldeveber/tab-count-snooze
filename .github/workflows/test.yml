@@ -46,7 +46,7 @@ jobs:
 
   # @see https://github.com/davelosert/vitest-coverage-report-action/tree/v2/?tab=readme-ov-file#coverage-trend-indicator
   report-coverage:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -83,7 +83,6 @@ jobs:
           path: coverage
 
       - name: "Report Coverage"
-        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           json-summary-compare-path: coverage-main/coverage-summary.json
