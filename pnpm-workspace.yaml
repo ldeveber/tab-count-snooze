@@ -4,3 +4,7 @@ onlyBuiltDependencies:
   - msw
   - sharp
   - spawn-sync
+overrides:
+  multimatch@<8.0.0: '>=8.0.0'
+  picomatch@<4.0.4: '>=4.0.4'
+

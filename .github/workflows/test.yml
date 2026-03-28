@@ -13,16 +13,16 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         name: Install pnpm
         with:
           # @see https://github.com/marketplace/actions/setup-pnpm#use-cache-to-reduce-installation-time
           run_install: false
 
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -38,7 +38,7 @@ jobs:
         run: pnpm test
 
       - name: "Upload Coverage"
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: tests/unit/coverage/coverage-*.json
@@ -46,7 +46,7 @@ jobs:
 
   # @see https://github.com/davelosert/vitest-coverage-report-action/tree/v2/?tab=readme-ov-file#coverage-trend-indicator
   report-coverage:
-    if: ${{ github.event_name == 'pull_request' }}
+    if: ${{ !cancelled() && github.event_name == 'pull_request' }}
     needs: test
     runs-on: ubuntu-latest
     permissions:
@@ -54,19 +54,19 @@ jobs:
       # Required to put a comment into the pull-request
       pull-requests: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           ref: main
           ## Set repository to correctly checkout from forks
           repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v5
         name: Install pnpm
         with:
           # @see https://github.com/marketplace/actions/setup-pnpm#use-cache-to-reduce-installation-time
           run_install: false
       - name: Setup Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version-file: ".nvmrc"
           cache: "pnpm"
@@ -77,13 +77,12 @@ jobs:
         run: npx vitest --coverage.reportsDirectory ./coverage-main
 
       - name: "Download Coverage Artifacts for PR"
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v8
         with:
           name: coverage
           path: coverage
 
       - name: "Report Coverage"
-        if: always()
         uses: davelosert/vitest-coverage-report-action@v2
         with:
           json-summary-compare-path: coverage-main/coverage-summary.json

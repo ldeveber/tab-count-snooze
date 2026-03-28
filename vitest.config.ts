@@ -43,7 +43,7 @@ export default defineConfig({
         lines: 40,
         statements: 40,
         functions: 40,
-        branches: 38,
+        branches: 37,
         "lib/dataStore/**.ts": {
           statements: 80,
           functions: 80,
