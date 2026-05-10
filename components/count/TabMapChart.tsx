@@ -359,13 +359,12 @@ export function TabMapChart(props: TabsSankeyChartProps) {
             aspect="custom"
           >
             <Sankey
-              accessibilityLayer
+              // accessibilityLayer
               data={data}
               iterations={iterations}
               link={Link}
-              // @ts-expect-error Recharts type does not allow null but it should! TODO fix
               node={Node}
-              title="Map of Tabs"
+              // title="Map of Tabs"
             >
               <defs>
                 <linearGradient id="gradient-0-1">
